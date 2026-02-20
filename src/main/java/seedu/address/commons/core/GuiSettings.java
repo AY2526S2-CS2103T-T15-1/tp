@@ -8,7 +8,7 @@ import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * A Serializable class that contains the GUI settings.
- * Guarantees: immutable.
+ * Guarantees: immutable
  */
 public class GuiSettings implements Serializable {
 
