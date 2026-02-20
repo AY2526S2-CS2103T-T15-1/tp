@@ -40,7 +40,7 @@ public class Config {
             return true;
         }
 
-        // instanceof handles nulls
+        // instanceof handles null's
         if (!(other instanceof Config)) {
             return false;
         }
