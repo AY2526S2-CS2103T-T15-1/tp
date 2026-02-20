@@ -10,11 +10,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
+import seedu.address.model.person.attributes.Address;
+import seedu.address.model.person.attributes.Email;
+import seedu.address.model.person.attributes.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.attributes.Phone;
+import seedu.address.model.person.attributes.Points;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,14 +30,19 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String points;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(
+            @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("address") String address,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("points") String points) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,19 +50,21 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.points = points;
     }
 
     /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        name = source.getName().fullName;
+        name = source.getName().value;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        points = source.getPoints().value;
     }
 
     /**
@@ -65,35 +73,29 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
+        final List<Tag> personTags = getTags();
+        final Name modelName = validateAndGetName();
+        final Phone modelPhone = validateAndGetPhone();
+        final Email modelEmail = validateAndGetEmail();
+        final Address modelAddress = validateAndGetAddress();
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+        final Points modelPoints = validateAndGetPoints();
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
-        }
-        final Name modelName = new Name(name);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelPoints);
+    }
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+    private Points validateAndGetPoints() throws IllegalValueException {
+        if (points == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Points.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        if (!Points.isValidPoints(points)) {
+            throw new IllegalValueException(Points.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(phone);
+        final Points modelPoints = new Points(points);
+        return modelPoints;
+    }
 
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-        final Email modelEmail = new Email(email);
-
+    private Address validateAndGetAddress() throws IllegalValueException {
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -101,9 +103,48 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = new Address(address);
+        return modelAddress;
+    }
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+    private Email validateAndGetEmail() throws IllegalValueException {
+        if (email == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        }
+        if (!Email.isValidEmail(email)) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
+        final Email modelEmail = new Email(email);
+        return modelEmail;
+    }
+
+    private List<Tag> getTags() throws IllegalValueException {
+        final List<Tag> personTags = new ArrayList<>();
+        for (JsonAdaptedTag tag : tags) {
+            personTags.add(tag.toModelType());
+        }
+        return personTags;
+    }
+
+    private Name validateAndGetName() throws IllegalValueException {
+        if (name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        }
+        if (!Name.isValidName(name)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        final Name modelName = new Name(name);
+        return modelName;
+    }
+
+    private Phone validateAndGetPhone() throws IllegalValueException {
+        if (phone == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        }
+        if (!Phone.isValidPhone(phone)) {
+            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        }
+        final Phone modelPhone = new Phone(phone);
+        return modelPhone;
     }
 
 }

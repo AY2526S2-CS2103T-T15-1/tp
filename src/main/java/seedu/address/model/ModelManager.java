@@ -145,4 +145,12 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
+    @Override
+    public String toString() {
+        return "ModelManager{"
+                + "addressBook=" + addressBook
+                + ", userPrefs=" + userPrefs
+                + ", filteredPersons=" + filteredPersons
+                + '}';
+    }
 }

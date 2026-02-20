@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.person.attributes;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -7,7 +7,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address extends PersonAttribute {
 
     public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
 
@@ -17,29 +17,22 @@ public class Address {
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
 
-    public final String value;
-
     /**
      * Constructs an {@code Address}.
      *
      * @param address A valid address.
      */
     public Address(String address) {
+        super(address);
         requireNonNull(address);
         checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
-        value = address;
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Standardised attribute validator that delegates to {@link #isValidAddress(String)}.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(VALIDATION_REGEX);
-    }
-
-    @Override
-    public String toString() {
-        return value;
     }
 
     @Override
@@ -56,10 +49,4 @@ public class Address {
         Address otherAddress = (Address) other;
         return value.equals(otherAddress.value);
     }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
 }

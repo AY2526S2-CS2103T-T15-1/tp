@@ -8,6 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.attributes.Address;
+import seedu.address.model.person.attributes.Email;
+import seedu.address.model.person.attributes.Name;
+import seedu.address.model.person.attributes.Phone;
+import seedu.address.model.person.attributes.Points;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,17 +29,19 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Points points;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Points points) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.points = points;
     }
 
     public Name getName() {
@@ -59,6 +66,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Points getPoints() {
+        return points;
     }
 
     /**
@@ -94,13 +105,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && points.equals(otherPerson.points);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, points);
     }
 
     @Override
@@ -111,6 +123,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("points", points)
                 .toString();
     }
 

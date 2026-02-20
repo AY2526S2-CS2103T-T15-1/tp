@@ -1,26 +1,41 @@
-package seedu.address.model.person;
+package seedu.address.model.person.attributes;
+
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's points in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPoints(Integer)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidPoints(String)}
  */
-public class Points {
+public class Points extends PersonAttribute {
+    public static final String MESSAGE_CONSTRAINTS = "Points can take any positive integer value, and it should not " +
+            "be blank";
+
     private final Integer points;
 
-    public Points(Integer points) {
+    private Points(Integer points) {
+        super(points.toString());
         this.points = points;
     }
 
-    /**
-     * Returns true if a given integer is a valid value for points.
-     */
-    public boolean isValidPoints(Integer test) {
-        return test >= 0;
+    public Points(String points) {
+        super(points);
+        checkArgument(isValidPoints(points), MESSAGE_CONSTRAINTS);
+        this.points = Integer.parseInt(points);
     }
 
-    @Override
-    public String toString() {
-        return points.toString();
+     /**
+     * Returns true if a given Integer is a valid points value.
+     */
+    /**
+     * Returns true if a given String is a valid points value.
+     */
+    public static boolean isValidPoints(String test) {
+        try {
+            int points = Integer.parseInt(test);
+            return points >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
@@ -29,17 +44,10 @@ public class Points {
             return true;
         }
 
-        if (!(other instanceof Points)) {
+        if (!(other instanceof Points otherPoints)) {
             return false;
         }
 
-        Points otherPoints = (Points) other;
         return points.equals(otherPoints.points);
     }
-
-    @Override
-    public int hashCode() {
-        return points.hashCode();
-    }
 }
-

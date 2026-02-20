@@ -6,6 +6,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.person.attributes.Name;
+
 public class NameTest {
 
     @Test
@@ -20,7 +22,7 @@ public class NameTest {
     }
 
     @Test
-    public void isValidName() {
+    public void isAValidAttribute() {
         // null name
         assertThrows(NullPointerException.class, () -> Name.isValidName(null));
 
