@@ -21,6 +21,11 @@ jobs:
       - name: Merge to master
         run: git checkout --progress --force ${{ github.sha }}
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Run repository-wide tests
         if: runner.os == 'Linux'
         working-directory:  ${{ github.workspace }}/.github
