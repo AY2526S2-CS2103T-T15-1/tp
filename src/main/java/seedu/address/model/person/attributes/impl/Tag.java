@@ -1,18 +1,18 @@
-package seedu.address.model.tag;
+package seedu.address.model.person.attributes.impl;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.model.person.attributes.PersonAttribute;
+
 /**
- * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Represents a Tag attribute for a Person in the address book.
+ * Guarantees: immutable; name is valid as declared in {@link #isValidTag(String)}
  */
-public class Tag {
+public class Tag extends PersonAttribute {
 
     public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
-
-    public final String tagName;
 
     /**
      * Constructs a {@code Tag}.
@@ -20,15 +20,15 @@ public class Tag {
      * @param tagName A valid tag name.
      */
     public Tag(String tagName) {
+        super(tagName);
         requireNonNull(tagName);
-        checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
+        checkArgument(isValidTag(tagName), MESSAGE_CONSTRAINTS);
     }
 
     /**
      * Returns true if a given string is a valid tag name.
      */
-    public static boolean isValidTagName(String test) {
+    public static boolean isValidTag(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
@@ -38,25 +38,15 @@ public class Tag {
             return true;
         }
 
-        // instanceof handles nulls
-        if (!(other instanceof Tag)) {
+        if (!(other instanceof Tag otherTag)) {
             return false;
         }
 
-        Tag otherTag = (Tag) other;
-        return tagName.equals(otherTag.tagName);
+        return value.equals(otherTag.value);
     }
 
     @Override
-    public int hashCode() {
-        return tagName.hashCode();
-    }
-
-    /**
-     * Format state as text for viewing.
-     */
     public String toString() {
-        return '[' + tagName + ']';
+        return '[' + value + ']';
     }
-
 }

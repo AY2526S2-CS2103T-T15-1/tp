@@ -14,11 +14,11 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.attributes.Address;
-import seedu.address.model.person.attributes.Email;
-import seedu.address.model.person.attributes.Name;
-import seedu.address.model.person.attributes.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.attributes.impl.Address;
+import seedu.address.model.person.attributes.impl.Email;
+import seedu.address.model.person.attributes.impl.Name;
+import seedu.address.model.person.attributes.impl.Phone;
+import seedu.address.model.person.attributes.impl.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";

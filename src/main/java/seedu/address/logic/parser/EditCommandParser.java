@@ -18,7 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.attributes.impl.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -50,19 +50,16 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            editPersonDescriptor.setName((seedu.address.model.person.attributes.impl.Name) ParserUtil.parseAttribute(seedu.address.model.person.attributes.AttributeType.NAME, argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+            editPersonDescriptor.setPhone((seedu.address.model.person.attributes.impl.Phone) ParserUtil.parseAttribute(seedu.address.model.person.attributes.AttributeType.PHONE, argMultimap.getValue(PREFIX_PHONE).get()));
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            editPersonDescriptor.setEmail((seedu.address.model.person.attributes.impl.Email) ParserUtil.parseAttribute(seedu.address.model.person.attributes.AttributeType.EMAIL, argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_POINTS).isPresent()) {
-            editPersonDescriptor.setPoints(ParserUtil.parsePoints(argMultimap.getValue(PREFIX_POINTS).get()));
+            editPersonDescriptor.setAddress((seedu.address.model.person.attributes.impl.Address) ParserUtil.parseAttribute(seedu.address.model.person.attributes.AttributeType.ADDRESS, argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 

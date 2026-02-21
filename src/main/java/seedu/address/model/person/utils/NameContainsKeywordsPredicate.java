@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.attributes.AttributeType;
+import seedu.address.model.person.attributes.impl.Name;
 
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
@@ -20,7 +22,9 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().value, keyword));
+                .anyMatch(keyword -> person.get(AttributeType.NAME, Name.class)
+                    .map(n -> StringUtil.containsWordIgnoreCase(n.value, keyword))
+                    .orElse(false));
     }
 
     @Override

@@ -9,8 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -21,12 +23,14 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.attributes.Address;
-import seedu.address.model.person.attributes.Email;
-import seedu.address.model.person.attributes.Name;
+import seedu.address.model.person.attributes.AttributeType;
+import seedu.address.model.person.attributes.PersonAttribute;
+import seedu.address.model.person.attributes.impl.Address;
+import seedu.address.model.person.attributes.impl.Email;
+import seedu.address.model.person.attributes.impl.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.attributes.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.attributes.impl.Phone;
+import seedu.address.model.person.attributes.impl.Tag;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -95,13 +99,24 @@ public class EditCommand extends Command {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editPersonDescriptor.getName().orElseGet(() -> personToEdit.get(AttributeType.NAME, Name.class).orElse(null));
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElseGet(() -> personToEdit.get(AttributeType.PHONE, Phone.class).orElse(null));
+        Email updatedEmail = editPersonDescriptor.getEmail().orElseGet(() -> personToEdit.get(AttributeType.EMAIL, Email.class).orElse(null));
+        Address updatedAddress = editPersonDescriptor.getAddress().orElseGet(() -> personToEdit.get(AttributeType.ADDRESS, Address.class).orElse(null));
+        List<PersonAttribute> updatedTags = editPersonDescriptor.getTags()
+            .map(tags -> tags.stream().map(tag -> (PersonAttribute) tag).collect(java.util.stream.Collectors.toList()))
+            .orElseGet(() -> new java.util.ArrayList<>(personToEdit.getMultiAttribute(AttributeType.TAG)));
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Map<AttributeType, PersonAttribute> singleAttributes = new EnumMap<>(AttributeType.class);
+        singleAttributes.put(AttributeType.NAME, updatedName);
+        singleAttributes.put(AttributeType.PHONE, updatedPhone);
+        singleAttributes.put(AttributeType.EMAIL, updatedEmail);
+        singleAttributes.put(AttributeType.ADDRESS, updatedAddress);
+
+        Map<AttributeType, List<PersonAttribute>> multiAttributes = new EnumMap<>(AttributeType.class);
+        multiAttributes.put(AttributeType.TAG, updatedTags);
+
+        return new Person(singleAttributes, multiAttributes);
     }
 
     @Override

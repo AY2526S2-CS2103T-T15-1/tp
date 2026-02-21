@@ -8,6 +8,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.attributes.AttributeType;
+import seedu.address.model.person.attributes.impl.Address;
+import seedu.address.model.person.attributes.impl.Email;
+import seedu.address.model.person.attributes.impl.Name;
+import seedu.address.model.person.attributes.impl.Phone;
+import seedu.address.model.person.attributes.impl.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -48,12 +54,13 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().value);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        name.setText(person.get(AttributeType.NAME, Name.class).map(n -> n.value).orElse(""));
+        phone.setText(person.get(AttributeType.PHONE, Phone.class).map(p -> p.value).orElse(""));
+        address.setText(person.get(AttributeType.ADDRESS, Address.class).map(a -> a.value).orElse(""));
+        email.setText(person.get(AttributeType.EMAIL, Email.class).map(e -> e.value).orElse(""));
+        person.getMultiAttribute(AttributeType.TAG, Tag.class)
+            .stream()
+            .sorted(Comparator.comparing(tag -> tag.value))
+            .forEach(tag -> tags.getChildren().add(new Label(tag.value)));
     }
 }

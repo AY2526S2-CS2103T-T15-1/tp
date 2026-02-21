@@ -1,22 +1,23 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.EnumMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.attributes.Address;
-import seedu.address.model.person.attributes.Email;
-import seedu.address.model.person.attributes.Name;
+import seedu.address.model.person.attributes.AttributeType;
+import seedu.address.model.person.attributes.PersonAttribute;
+import seedu.address.model.person.attributes.impl.Address;
+import seedu.address.model.person.attributes.impl.Email;
+import seedu.address.model.person.attributes.impl.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.attributes.Phone;
-import seedu.address.model.person.attributes.Points;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.attributes.impl.Phone;
+import seedu.address.model.person.attributes.impl.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -30,7 +31,6 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-    private final String points;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -41,8 +41,7 @@ class JsonAdaptedPerson {
             @JsonProperty("phone") String phone,
             @JsonProperty("email") String email,
             @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("points") String points) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -50,21 +49,18 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        this.points = points;
     }
 
     /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        name = source.getName().value;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
-        points = source.getPoints().value;
+        name = source.get(AttributeType.NAME, Name.class).map(n -> n.value).orElse(null);
+        phone = source.get(AttributeType.PHONE, Phone.class).map(p -> p.value).orElse(null);
+        email = source.get(AttributeType.EMAIL, Email.class).map(e -> e.value).orElse(null);
+        address = source.get(AttributeType.ADDRESS, Address.class).map(a -> a.value).orElse(null);
+        tags.addAll(source.getMultiAttribute(AttributeType.TAG, Tag.class)
+                .stream().map(JsonAdaptedTag::new).collect(Collectors.toList()));
     }
 
     /**
@@ -73,26 +69,28 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = getTags();
+        final List<Tag> personTags = tags.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList());
         final Name modelName = validateAndGetName();
         final Phone modelPhone = validateAndGetPhone();
         final Email modelEmail = validateAndGetEmail();
         final Address modelAddress = validateAndGetAddress();
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        final Points modelPoints = validateAndGetPoints();
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelPoints);
-    }
+        Map<AttributeType, PersonAttribute> singleAttributes = new EnumMap<>(AttributeType.class);
+        singleAttributes.put(AttributeType.NAME, modelName);
+        singleAttributes.put(AttributeType.PHONE, modelPhone);
+        singleAttributes.put(AttributeType.EMAIL, modelEmail);
+        singleAttributes.put(AttributeType.ADDRESS, modelAddress);
 
-    private Points validateAndGetPoints() throws IllegalValueException {
-        if (points == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Points.class.getSimpleName()));
-        }
-        if (!Points.isValidPoints(points)) {
-            throw new IllegalValueException(Points.MESSAGE_CONSTRAINTS);
-        }
-        final Points modelPoints = new Points(points);
-        return modelPoints;
+        Map<AttributeType, List<PersonAttribute>> multiAttributes = new EnumMap<>(AttributeType.class);
+        multiAttributes.put(AttributeType.TAG, new java.util.ArrayList<>(personTags));
+
+        return new Person(singleAttributes, multiAttributes);
     }
 
     private Address validateAndGetAddress() throws IllegalValueException {
@@ -115,14 +113,6 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
         return modelEmail;
-    }
-
-    private List<Tag> getTags() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
-        return personTags;
     }
 
     private Name validateAndGetName() throws IllegalValueException {

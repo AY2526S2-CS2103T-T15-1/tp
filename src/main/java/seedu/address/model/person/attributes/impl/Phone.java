@@ -1,7 +1,9 @@
-package seedu.address.model.person.attributes;
+package seedu.address.model.person.attributes.impl;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import seedu.address.model.person.attributes.PersonAttribute;
 
 /**
  * Represents a Person's phone number in the address book.

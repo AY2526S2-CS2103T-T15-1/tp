@@ -2,19 +2,18 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.attributes.Address;
-import seedu.address.model.person.attributes.Email;
-import seedu.address.model.person.attributes.Name;
-import seedu.address.model.person.attributes.Phone;
-import seedu.address.model.person.attributes.Points;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.attributes.AttributeType;
+import seedu.address.model.person.attributes.impl.Tag;
+import seedu.address.model.person.attributes.PersonAttribute;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -37,63 +36,40 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Generic method to parse any attribute type defined in {@link AttributeType}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code name} is invalid.
+     * @param type The attribute type to parse.
+     * @param value The string value to parse.
+     * @return A new PersonAttribute instance of the appropriate type.
+     * @throws ParseException if the given value is invalid for the attribute type.
      */
-    public static Name parseName(String name) throws ParseException {
-        requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
-            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+    public static PersonAttribute parseAttribute(AttributeType type, String value) throws ParseException {
+        requireNonNull(type);
+        requireNonNull(value);
+        String trimmed = value.trim();
+        if (!type.isValid(trimmed)) {
+            throw new ParseException(type.getMessageConstraints());
         }
-        return new Name(trimmedName);
+        return type.create(trimmed);
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses multiple values for a multi-value attribute type.
      *
-     * @throws ParseException if the given {@code phone} is invalid.
+     * @param type The attribute type to parse.
+     * @param values The collection of string values to parse.
+     * @return A list of parsed attributes.
+     * @throws ParseException if any value is invalid.
      */
-    public static Phone parsePhone(String phone) throws ParseException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+    public static List<PersonAttribute> parseAttributes(AttributeType type, Collection<String> values) throws ParseException {
+        requireNonNull(type);
+        requireNonNull(values);
+        List<PersonAttribute> result = new ArrayList<>();
+        for (String value : values) {
+            result.add(parseAttribute(type, value));
         }
-        return new Phone(trimmedPhone);
-    }
-
-    /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code address} is invalid.
-     */
-    public static Address parseAddress(String address) throws ParseException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
-        }
-        return new Address(trimmedAddress);
-    }
-
-    /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code email} is invalid.
-     */
-    public static Email parseEmail(String email) throws ParseException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
-        }
-        return new Email(trimmedEmail);
+        return result;
     }
 
     /**
@@ -105,7 +81,7 @@ public class ParserUtil {
     public static Tag parseTag(String tag) throws ParseException {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
+        if (!Tag.isValidTag(trimmedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
         return new Tag(trimmedTag);
@@ -122,20 +98,4 @@ public class ParserUtil {
         }
         return tagSet;
     }
-
-    /**
-     * Parses a {@code String points} into a {@code Points}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code points} is invalid.
-     */
-    public static Points parsePoints(String points) throws ParseException {
-        requireNonNull(points);
-        String trimmedPoints = points.trim();
-        if (!Points.isValidPoints(trimmedPoints)) {
-            throw new ParseException(Points.MESSAGE_CONSTRAINTS);
-        }
-        return new Points(trimmedPoints);
-    }
-
 }
