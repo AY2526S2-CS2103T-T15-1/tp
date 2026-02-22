@@ -19,7 +19,7 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "Viewing person: %d";
+    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "Viewing person: %d. %s";
 
     private final Index index;
 
@@ -40,7 +40,9 @@ public class ViewCommand extends Command {
 
         model.setSelectedPerson(personToView);
 
-        return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, index.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS,
+                index.getOneBased(),
+                personToView.getName()));
     }
 
 }
