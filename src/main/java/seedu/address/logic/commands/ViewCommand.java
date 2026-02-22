@@ -42,7 +42,7 @@ public class ViewCommand extends Command {
 
         model.setPerson(personToView);
 
-        return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, index));
+        return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, index.getOneBased()));
     }
 
 }

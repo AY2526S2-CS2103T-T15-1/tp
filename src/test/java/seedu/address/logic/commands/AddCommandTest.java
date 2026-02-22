@@ -144,7 +144,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setPerson(Person target, Person editedPerson) {
+        public void editPerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
         }
 

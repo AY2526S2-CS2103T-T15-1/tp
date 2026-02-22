@@ -138,8 +138,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setPerson(Person person) {
-        this.person.map(p -> person)
-                .orElseGet(() -> Optional.empty());
+        this.person.map(p -> person);
     }
 
     /**
