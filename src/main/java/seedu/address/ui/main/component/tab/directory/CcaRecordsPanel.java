@@ -88,6 +88,6 @@ public class CcaRecordsPanel extends UiPart<Region> {
     }
 
     // Dummy class for UI placeholder binding
-        private record CcaRecordDummy(int points, String time, String description) {
+    private record CcaRecordDummy(int points, String time, String description) {
     }
 }

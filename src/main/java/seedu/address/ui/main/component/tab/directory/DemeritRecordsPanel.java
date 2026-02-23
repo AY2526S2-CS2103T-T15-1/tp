@@ -86,6 +86,6 @@ public class DemeritRecordsPanel extends UiPart<Region> {
     }
 
     // Dummy class for UI placeholder binding
-        public record DemeritRecordDummy(String date, String description, int severity) {
+    public record DemeritRecordDummy(String date, String description, int severity) {
     }
 }

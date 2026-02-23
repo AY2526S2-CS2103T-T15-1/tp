@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-  <ListView fx:id="personListView" stylesheets="@../../../css/PersonList.css" VBox.vgrow="ALWAYS" />
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12">
+    <ListView fx:id="personListView" stylesheets="@../../../css/PersonList.css" VBox.vgrow="ALWAYS"/>
 </VBox>
