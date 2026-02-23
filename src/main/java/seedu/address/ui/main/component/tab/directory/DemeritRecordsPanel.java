@@ -2,6 +2,7 @@ package seedu.address.ui.main.component.tab.directory;
 
 import java.util.Optional;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,7 @@ import seedu.address.ui.UiPart;
 public class DemeritRecordsPanel extends UiPart<Region> {
 
     /** The person whose demerit records would be shown **/
-    private ObservableValue<Optional<Person>> selectedPerson;
+    private ObjectProperty<Optional<Person>> selectedPerson;
 
     private static final String FXML = "main/component/tab/directory/DemeritRecordsPanel.fxml";
 
@@ -34,8 +35,9 @@ public class DemeritRecordsPanel extends UiPart<Region> {
     @FXML
     private TableColumn<DemeritRecordDummy, Integer> severityColumn;
 
-    public DemeritRecordsPanel(ObservableValue<Optional<Person>> selectedPerson) {
+    public DemeritRecordsPanel(ObjectProperty<Optional<Person>> selectedPerson) {
         super(FXML);
+        this.selectedPerson = selectedPerson;
 
         // Initialize columns
         indexColumn.setCellFactory(col -> new javafx.scene.control.TableCell<DemeritRecordDummy, Integer>() {
@@ -53,10 +55,35 @@ public class DemeritRecordsPanel extends UiPart<Region> {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         severityColumn.setCellValueFactory(new PropertyValueFactory<>("severity"));
 
-        // Placeholder data for UI testing
-        ObservableList<DemeritRecordDummy> placeholderData = FXCollections.observableArrayList(
-                new DemeritRecordDummy("2023-10-15", "Noise Disturbance", 1));
-        demeritTableView.setItems(placeholderData);
+        // Initial render
+        updateDemeritRecords(selectedPerson.get());
+
+        // Listen for future changes
+        this.selectedPerson.addListener((observable, oldValue, newValue) -> {
+            updateDemeritRecords(newValue);
+        });
+    }
+
+    private void updateDemeritRecords(Optional<Person> personOpt) {
+        if (personOpt.isPresent()) {
+            Person person = personOpt.get();
+            // Assuming Person has getDemeritRecords() returning
+            // ObservableList<DemeritRecordDummy>
+            // For now, populate with dummy data if needed, or clear until implemented
+            // demeritTableView.setItems(person.getDemeritRecords());
+            demeritTableView.getItems().clear();
+            // Placeholder data for UI testing if a person is selected
+            ObservableList<DemeritRecordDummy> placeholderData = FXCollections.observableArrayList(
+                    new DemeritRecordDummy("2023-10-15", "Noise Disturbance", 1),
+                    new DemeritRecordDummy("2023-11-01", "Late for Duty", 2));
+            demeritTableView.setItems(placeholderData);
+        } else {
+            demeritTableView.getItems().clear();
+            // Placeholder data for UI testing when no person is selected
+            ObservableList<DemeritRecordDummy> placeholderData = FXCollections.observableArrayList(
+                    new DemeritRecordDummy("2023-10-15", "Noise Disturbance", 1));
+            demeritTableView.setItems(placeholderData);
+        }
     }
 
     // Dummy class for UI placeholder binding

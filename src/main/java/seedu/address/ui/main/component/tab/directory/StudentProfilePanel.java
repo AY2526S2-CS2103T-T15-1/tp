@@ -2,7 +2,7 @@ package seedu.address.ui.main.component.tab.directory;
 
 import java.util.Optional;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -15,7 +15,7 @@ import seedu.address.ui.UiPart;
 public class StudentProfilePanel extends UiPart<Region> {
 
     /** The person whose detail would be shown in the student profile panel **/
-    private ObservableValue<Optional<Person>> selectedPerson;
+    private ObjectProperty<Optional<Person>> selectedPerson;
 
     private static final String FXML = "main/component/tab/directory/StudentProfilePanel.fxml";
 
@@ -32,8 +32,35 @@ public class StudentProfilePanel extends UiPart<Region> {
     @FXML
     private TextField tagsField;
 
-    public StudentProfilePanel(ObservableValue<Optional<Person>> selectedPerson) {
+    public StudentProfilePanel(ObjectProperty<Optional<Person>> selectedPerson) {
         super(FXML);
-        // Will map Person properties to these fields later during Phase 4 integration
+        this.selectedPerson = selectedPerson;
+
+        // Initial render
+        updateStudentProfilePanel(selectedPerson.get());
+
+        // Listen for future changes
+        this.selectedPerson.addListener((observable, oldValue, newValue) -> {
+            updateStudentProfilePanel(newValue);
+        });
+    }
+
+    private void updateStudentProfilePanel(Optional<Person> personOpt) {
+        if (personOpt.isPresent()) {
+            Person person = personOpt.get();
+            nameField.setText(person.getName().fullName);
+            genderField.setText("NOT IMPLEMENTED YET");
+            blockField.setText("NOT IMPLEMENTED YET");
+            floorField.setText("NOTE IMPLEMENTED YET");
+            addressField.setText(person.getAddress().value);
+            tagsField.setText(person.getTags().toString());
+        } else {
+            nameField.clear();
+            genderField.clear();
+            blockField.clear();
+            floorField.clear();
+            addressField.clear();
+            tagsField.clear();
+        }
     }
 }

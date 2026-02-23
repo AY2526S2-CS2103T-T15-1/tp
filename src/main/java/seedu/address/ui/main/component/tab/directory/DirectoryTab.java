@@ -2,7 +2,7 @@ package seedu.address.ui.main.component.tab.directory;
 
 import java.util.Optional;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Region;
@@ -16,7 +16,7 @@ import seedu.address.ui.UiPart;
 public class DirectoryTab extends UiPart<Region> {
 
     /** The person whose details would be shown in the directory tab **/
-    private ObservableValue<Optional<Person>> selectedPerson;
+    private ObjectProperty<Optional<Person>> selectedPerson;
 
     private static final String FXML = "main/component/tab/directory/DirectoryTab.fxml";
 
@@ -32,7 +32,7 @@ public class DirectoryTab extends UiPart<Region> {
     @FXML
     private StackPane demeritRecordsPlaceholder;
 
-    public DirectoryTab(ObservableValue<Optional<Person>> selectedPerson) {
+    public DirectoryTab(ObjectProperty<Optional<Person>> selectedPerson) {
         super(FXML);
         this.selectedPerson = selectedPerson;
         fillInnerParts();
