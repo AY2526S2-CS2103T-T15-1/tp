@@ -9,9 +9,9 @@ awk '
         ret = 0
     }
     {
-        # Only warn for markdown files (*.md) to accomodate text editors
-        # which do not properly handle trailing whitespace.
-        # (e.g. GitHub web editor)
+#         Only warn for markdown files (*.md) to accomodate text editors
+#         which do not properly handle trailing whitespace.
+#         (e.g. GitHub web editor)
         if ($1 ~ /\.md$/) {
             severity = "WARN"
         } else {
