@@ -6,6 +6,4 @@ ret=0 &&
 for checkscript in "$dir"/check-*; do
     if ! "$checkscript"; then
         ret=1
-    fi
-done
-exit $ret
+    f$ret
