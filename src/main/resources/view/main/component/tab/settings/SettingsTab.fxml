@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+    <children>
+        <VBox alignment="CENTER">
+            <children>
+                <Label styleClass="label-bright" text="Settings (Placeholder)"/>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

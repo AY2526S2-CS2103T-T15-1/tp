@@ -24,9 +24,9 @@ public class VersionTest {
     public void versionConstructor_correctParameter_valueAsExpected() {
         Version version = new Version(19, 10, 20, true);
 
-        assertEquals(19, version.getMajor());
-        assertEquals(10, version.getMinor());
-        assertEquals(20, version.getPatch());
+        assertEquals(19, version.major());
+        assertEquals(10, version.minor());
+        assertEquals(20, version.patch());
         assertEquals(true, version.isEarlyAccess());
     }
 
