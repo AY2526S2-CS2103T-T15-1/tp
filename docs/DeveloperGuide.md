@@ -1,10 +1,10 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Hall Ledger Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +67,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +84,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -101,7 +101,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to an `HallLedgerParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
@@ -112,11 +112,11 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `HallLedgerParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `HallLedgerParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -130,7 +130,7 @@ The `Model` component,
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `HallLedger`, which `Person` references. This allows `HallLedger` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -139,13 +139,13 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/se-edu/HallLedger-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `HallLedgerStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -162,42 +162,42 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VersionedHallLedger`. It extends `HallLedger` with an undo/redo history, stored internally as an `HallLedgerStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* `VersionedHallLedger#commit()` — Saves the current address book state in its history.
+* `VersionedHallLedger#undo()` — Restores the previous address book state from its history.
+* `VersionedHallLedger#redo()` — Restores a previously undone address book state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+These operations are exposed in the `Model` interface as `Model#commitHallLedger()`, `Model#undoHallLedger()` and `Model#redoHallLedger()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedHallLedger` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitHallLedger()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `HallLedgerStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitHallLedger()`, causing another modified address book state to be saved into the `HallLedgerStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitHallLedger()`, so the address book state will not be saved into the `HallLedgerStateList`.
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoHallLedger()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial HallLedger state, then there are no previous HallLedger states to restore. The `undo` command uses `Model#canUndoHallLedger()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -216,19 +216,19 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite — it calls `Model#redoHallLedger()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `HallLedgerStateList.size() - 1`, pointing to the latest address book state, then there are no undone HallLedger states to restore. The `redo` command uses `Model#canRedoHallLedger()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitHallLedger()`, `Model#undoHallLedger()` or `Model#redoHallLedger()`. Thus, the `HallLedgerStateList` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitHallLedger()`. Since the `currentStatePointer` is not pointing at the end of the `HallLedgerStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -285,47 +285,159 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
-
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
-*{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the HallLedger and the **Actor** is the Residential Assistant (RA), unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Add a new student**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. RA requests to add a new student, providing the student\'s details (e.g., name, phone, email, room number, tags).
+2. Hall Ledger adds the new student.
+3. Hall Ledger displays a success message with the added student\'s details.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. RA provides an invalid format for the details (e.g., incorrect phone number format).
+    * 1a1. Hall Ledger shows an error message indicating the correct format.
+      Use case resumes from step 1.
 
+* 1b. A student with the exact same details already exists in the system.
+    * 1b1. Hall Ledger indicates that the student already exists.
+      Use case ends.
+
+* 1c. RA fails to provide compulsory details (name, phone, email, room number).
+    * 1c1. Hall Ledger shows an error message indicating the compulsory details.
+      Use case resumes from step 1.
+
+**Use case: UC02 - View a student\'s details (basic info, CCA, and demerit records)**
+
+**MSS**
+
+1. RA requests to list all students.
+2. Hall Ledger shows a list of students.
+3. RA requests to view the details of a specific student in the list using their index.
+4. Hall Ledger displays the selected student\'s basic information, alongside their CCA records and demerit records.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
+    * 2a1. Hall Ledger indicates that the student list is empty.
+      Use case ends.
+
+* 3a. The given index is invalid.
+    * 3a1. Hall Ledger shows an error message indicating the invalid index.
+      Use case resumes at step 2.
+
+**Use case: UC03 - Edit a student\'s info**
+
+**MSS**
+
+1. RA requests to list all students.
+2. Hall Ledger shows a list of students.
+3. RA requests to edit, add (from default value), or delete specific details (e.g., phone, email, room number, tags) of a specific student using their index.
+4. Hall Ledger updates the student\'s details.
+5. Hall Ledger displays a success message with the updated student\'s details.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
   Use case ends.
 
 * 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
+    * 3a1. Hall Ledger shows an error message indicating the invalid index.
       Use case resumes at step 2.
 
-*{More to be added}*
+* 3b. RA provides an invalid format for the details to be updated.
+    * 3b1. Hall Ledger shows an error message indicating the correct format.
+      Use case resumes at step 2.
+
+* 3c. RA provides details that are exactly the same as the existing ones, resulting in no changes.
+      Use case resumes at step 2.
+
+**Use case: UC04 - Delete or Clear student records**
+
+**MSS**
+
+1. RA requests to delete a specific student or clear all current student records.
+2. Hall Ledger deletes the specified student or clears all data.
+3. Hall Ledger displays a success message reflecting the changes.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The student list is already empty.
+  Use case ends.
+
+* 1b. If deleting, the given index is invalid.
+    * 1b1. Hall Ledger shows an error message.
+      Use case resumes from step 1.
+
+**Use case: UC05 - Search, Filter, and Rank students**
+
+**MSS**
+
+1. RA requests to search by name, filter by specific attributes (e.g., block, year, tags), or rank students by name, CCA points, demerit points in a particular order.
+2. Hall Ledger processes the query.
+3. Hall Ledger shows a list of matching or ranked students.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. RA provides empty keywords or invalid criteria format.
+    * 1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
+      Use case ends.
+
+* 2a. No students match the given criteria.
+    * 2a1. Hall Ledger shows an empty list and indicates that 0 students were found.
+      Use case ends.
+
+**Use case: UC06 - Administer CCA point records**
+
+**MSS**
+
+1. RA requests to list all students.
+2. Hall Ledger shows a list of students.
+3. RA requests to add a CCA point record to a specific student using their index.
+4. Hall Ledger updates the student\'s CCA points.
+5. Hall Ledger displays a success message.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
+  Use case ends.
+
+* 3a. The given index is invalid.
+    * 3a1. Hall Ledger shows an error message indicating the invalid index.
+      Use case resumes at step 2.
+
+**Use case: UC08 - Export data**
+
+**MSS**
+
+1. RA requests to export all student details data to a CSV file.
+2. Hall Ledger gathers the relevant data.
+3. Hall Ledger exports the file to the user\'s system.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The student list is empty.
+    * 1a1. Hall Ledger indicates that there is no data to generate a report or export.
+      Use case ends.
 
 ### Non-Functional Requirements
 
