@@ -287,14 +287,25 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a(n) …​   | I want to …​                                                     | So that I can…​                                             
+|----------|--------------|------------------------------------------------------------------|-------------------------------------------------------------|
+| `* * *`  | new user     | see usage instructions                                           | refer to instructions when I forget how to use the App      |
+| `* * *`  | RA           | add a new student contact                                        | keep up-to-date records of students under my care           |
+| `* * *`  | RA           | list all student contacts                                        | get an overview of students assigned to me                  |
+| `* * *`  | RA           | search for existing student contacts                             | quickly find a specific resident's information              |
+| `* * *`  | RA           | delete records of students                                       | remove entries of students no longer in hall                |
+| `* * *`  | RA           | clear all current student records                                | quickly reset the system for a new semester                 |
+| `* * *`  | RA           | edit existing contacts                                           | maintain accurate and up-to-date student resident records   |
+| `* * `   | RA           | view the data file in JSON                                       | enjoy data portability without opening the app              |
+| `* * *`  | RA           | filter existing contacts based on attributes (e.g., block, year) | easily view and manage specific groups of resident students |
+| `* * *`  | RA           | add custom tags to students                                      | allow for efficient categorisation of students              |
+| `* * `   | RA           | add and administer CCA point records to a student's profile      | track their CCA contributions accurately                    |
+| `* * `   | RA           | View student's CCA records                                       | minimize chance of someone else seeing them by accident     |
+| `* `     | RA           | rank students by their total accumulated points                  | minimize chance of someone else seeing them by accident     |
+| `* *`    | RA           | view student demerit records                                     | assess student's overall behaviour                          |
+| `* `     | RA           | generate occupancy reports by block and room                     | plan effectively for next semester's housing allocation     |
+| `* `     | RA           | export all data to a CSV file                                    | share or analyse data externally for admin use              |
+
 
 *{More to be added}*
 
