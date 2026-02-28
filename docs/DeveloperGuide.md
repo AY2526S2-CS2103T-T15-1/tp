@@ -340,11 +340,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any mainstream OS as long as it has Java 17 or above installed.
 
-*{More to be added}*
+2. Should be able to store up to 1000 students without a noticeable sluggishness in performance for typical usage.
+
+3. Should have a response time of <2 seconds for all instructions
+
+4. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+5. Interaction with the product should be intuitive even for non-technical users, eg: simple error messages should be displayed and help easily available when needed
+
+6. The project is not required to handle more than one user at a time
+
+7. The product is free to use and open source
+
+8. The product should not need an internet connection to use
 
 ### Glossary
 
