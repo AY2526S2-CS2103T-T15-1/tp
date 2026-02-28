@@ -9,28 +9,20 @@ import seedu.address.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Tag}.
  */
-class JsonAdaptedTag {
-
-    private final String tagName;
+record JsonAdaptedTag(@JsonValue String tagName) {
 
     /**
      * Constructs a {@code JsonAdaptedTag} with the given {@code tagName}.
      */
     @JsonCreator
-    public JsonAdaptedTag(String tagName) {
-        this.tagName = tagName;
+    JsonAdaptedTag {
     }
 
     /**
      * Converts a given {@code Tag} into this class for Jackson use.
      */
     public JsonAdaptedTag(Tag source) {
-        tagName = source.tagName;
-    }
-
-    @JsonValue
-    public String getTagName() {
-        return tagName;
+        this(source.tagName());
     }
 
     /**

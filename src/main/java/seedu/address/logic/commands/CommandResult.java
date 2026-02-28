@@ -2,22 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Objects;
-
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * Represents the result of a command execution.
+ *
+ * @param showHelp Help information should be shown to the user.
+ * @param exit     The application should exit.
  */
-public class CommandResult {
-
-    private final String feedbackToUser;
-
-    /** Help information should be shown to the user. */
-    private final boolean showHelp;
-
-    /** The application should exit. */
-    private final boolean exit;
+public record CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
@@ -36,18 +29,6 @@ public class CommandResult {
         this(feedbackToUser, false, false);
     }
 
-    public String getFeedbackToUser() {
-        return feedbackToUser;
-    }
-
-    public boolean isShowHelp() {
-        return showHelp;
-    }
-
-    public boolean isExit() {
-        return exit;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -55,19 +36,13 @@ public class CommandResult {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof CommandResult)) {
+        if (!(other instanceof CommandResult otherCommandResult)) {
             return false;
         }
 
-        CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
     }
 
     @Override

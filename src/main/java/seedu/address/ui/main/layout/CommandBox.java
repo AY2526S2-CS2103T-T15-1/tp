@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.main.layout;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,6 +7,7 @@ import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.UiPart;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -14,7 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
-    private static final String FXML = "CommandBox.fxml";
+    private static final String FXML = "main/layout/CommandBox.fxml";
 
     private final CommandExecutor commandExecutor;
 
@@ -27,7 +28,8 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(CommandExecutor commandExecutor) {
         super(FXML);
         this.commandExecutor = commandExecutor;
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // calls #setStyleToDefault() whenever there is a change to the text of the
+        // command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 

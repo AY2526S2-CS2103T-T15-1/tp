@@ -1,0 +1,61 @@
+/* PersonListPanel */
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: derive(primary-medium-grey, +20%);
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: derive(primary-medium-grey, +9%);
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: derive(primary-blue, -30%);
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: primary-blue;
+    -fx-border-width: 2;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+
+/* PersonListCard  */
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.cell_big_label {
+    -fx-font-family: "SansSerif";
+    -fx-font-size: 16px !important;
+    -fx-text-fill: white !important;
+}
+
+.cell_small_label {
+    -fx-font-family: "SansSerif";
+    -fx-font-size: 12px !important;
+    -fx-text-fill: white !important;
+}
+
+/* the tags */
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: primary-dark-grey;
+    -fx-background-color: primary-yellow;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-size: 11;
+}
