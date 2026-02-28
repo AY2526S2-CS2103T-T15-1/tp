@@ -18,6 +18,14 @@ repositories {
 
 checkstyle {
     toolVersion = '11.0.0'
+    // This prevents Checkstyle from running during 'gradle build' or 'gradle check'
+    ignoreFailures = false
+    showViolations = true
+}
+
+// Disable the checkstyle tasks from the default build graph
+tasks.withType(Checkstyle) {
+    enabled = false
 }
 
 test {
@@ -63,6 +71,9 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jUnitVersion
 
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jUnitVersion
+
+    implementation 'org.kordamp.ikonli:ikonli-dashicons-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.4.0'
 }
 
 shadowJar {

@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.main;
 
 import java.util.logging.Logger;
 
@@ -16,6 +16,14 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.UiPart;
+import seedu.address.ui.help.HelpWindow;
+import seedu.address.ui.main.component.list.PersonListPanel;
+import seedu.address.ui.main.layout.CommandBox;
+import seedu.address.ui.main.layout.ListSection;
+import seedu.address.ui.main.layout.ResultDisplay;
+import seedu.address.ui.main.layout.StatusBarFooter;
+import seedu.address.ui.main.layout.TabSection;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -27,14 +35,13 @@ public class MainWindow extends UiPart<Stage> {
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
-    private Stage primaryStage;
-    private Logic logic;
+    private final Stage primaryStage;
 
+    private final Logic logic;
+    private final HelpWindow helpWindow;
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
-    private HelpWindow helpWindow;
-
     @FXML
     private StackPane commandBoxPlaceholder;
 
@@ -42,13 +49,16 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane tabSectionPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane listSectionPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -78,6 +88,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -109,30 +120,55 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    private void fillInnerParts() {
+        CommandBox commandBox = new CommandBox(this::executeCommand);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        ListSection listSection = new ListSection(logic);
+        listSectionPlaceholder.getChildren().add(listSection.getRoot());
+
+        TabSection tabSection = new TabSection(logic);
+        tabSectionPlaceholder.getChildren().add(tabSection.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
-        CommandBox commandBox = new CommandBox(this::executeCommand);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
     /**
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
-        primaryStage.setHeight(guiSettings.getWindowHeight());
-        primaryStage.setWidth(guiSettings.getWindowWidth());
         if (guiSettings.getWindowCoordinates() != null) {
-            primaryStage.setX(guiSettings.getWindowCoordinates().getX());
-            primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+            double x = guiSettings.getWindowCoordinates().getX();
+            double y = guiSettings.getWindowCoordinates().getY();
+
+            // Validate that the saved coordinates are within the bounds of an active
+            // screen.
+            // This prevents the application from opening off-screen if a monitor was
+            // disconnected.
+            boolean isScreenVisible = false;
+            for (javafx.stage.Screen screen : javafx.stage.Screen.getScreens()) {
+                if (screen.getVisualBounds().contains(x, y)) {
+                    isScreenVisible = true;
+                    break;
+                }
+            }
+
+            if (isScreenVisible) {
+                primaryStage.setX(x);
+                primaryStage.setY(y);
+                logger.config("Window initialized at position: (" + x + ", " + y + ")");
+            } else {
+                logger.config("Saved window position (" + x + ", " + y
+                        + ") is not visible on any active screen; ignoring saved coordinates.");
+            }
         }
+
+        // Ensure the application opens in a full-screen (maximized) state
+        primaryStage.setMaximized(true);
     }
 
     /**
@@ -147,8 +183,13 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
-    void show() {
+    /**
+     * Displays the main window with all subcomponents.
+     */
+    public void showAndFillInnerParts() {
         primaryStage.show();
+        fillInnerParts();
+
     }
 
     /**
@@ -175,14 +216,14 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
-            logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            logger.info("Result: " + commandResult.feedbackToUser());
+            resultDisplay.setFeedbackToUser(commandResult.feedbackToUser());
 
-            if (commandResult.isShowHelp()) {
+            if (commandResult.showHelp()) {
                 handleHelp();
             }
 
-            if (commandResult.isExit()) {
+            if (commandResult.exit()) {
                 handleExit();
             }
 
