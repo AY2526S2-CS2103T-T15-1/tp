@@ -272,15 +272,23 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:
+HallLedger is a desktop application for Resident Assistants (RAs) and other hall administrators who need to manage resident contact records quickly and accurately. It is optimized for hall-level resident administration, where users frequently need to search, update, and maintain resident details such as student ID, room assignment, contact information, and emergency contact details.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+Beyond basic resident record management, HallLedger is intended to support common hall-administration workflows such as tagging residents by attributes (e.g. year of study, major, gender), monitoring occupancy at the room level, and serving as a foundation for future hall-management features such as merit/demerit tracking, retention-related review, and other resident administration tasks.
+
+HallLedger is not intended to replace university-wide housing allocation systems, payment systems, or institutional access-control systems. Its scope is limited to block-level or hall-level resident management and operational tracking.
+
+**Target user profile:**
+* has a need to manage a significant number of resident records within a hall or block
+* is a Resident Assistant (RA), hall administrator, or student leader handling resident administration
+* frequently needs to search for residents by name, student ID, room number, or tagged attributes
+* needs quick access to resident contact details and emergency contacts
+* prefers a desktop app over manual spreadsheets or scattered notes
 * can type fast
 * prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using CLI-style commands
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition:** HallLedger helps hall administrators manage resident records faster and with fewer errors than spreadsheets or manual lists, while providing a centralized and command-driven workflow tailored to hall operations.
 
 
 ### User stories
