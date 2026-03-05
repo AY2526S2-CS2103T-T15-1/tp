@@ -272,15 +272,23 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:
+HallLedger is a desktop application for Resident Assistants (RAs) and other hall administrators who need to manage resident contact records quickly and accurately. It is optimized for hall-level resident administration, where users frequently need to search, update, and maintain resident details such as student ID, room assignment, contact information, and emergency contact details.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+Beyond basic resident record management, HallLedger is intended to support common hall-administration workflows such as tagging residents by attributes (e.g. year of study, major, gender), monitoring occupancy at the room level, and serving as a foundation for future hall-management features such as merit/demerit tracking, retention-related review, and other resident administration tasks.
+
+HallLedger is not intended to replace university-wide housing allocation systems, payment systems, or institutional access-control systems. Its scope is limited to block-level or hall-level resident management and operational tracking.
+
+**Target user profile:**
+* has a need to manage a significant number of resident records within a hall or block
+* is a Resident Assistant (RA), hall administrator, or student leader handling resident administration
+* frequently needs to search for residents by name, student ID, room number, or tagged attributes
+* needs quick access to resident contact details and emergency contacts
+* prefers a desktop app over manual spreadsheets or scattered notes
 * can type fast
 * prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using CLI-style commands
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition:** HallLedger helps hall administrators manage resident records faster and with fewer errors than spreadsheets or manual lists, while providing a centralized and command-driven workflow tailored to hall operations.
 
 
 ### User stories
@@ -311,32 +319,156 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the HallLedger and the **Actor** is the Residential Assistant (RA), unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Add a new student**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. RA requests to add a new student, providing the student\'s details (e.g., name, phone, email, room number, tags).
+2. Hall Ledger adds the new student.
+3. Hall Ledger displays a success message with the added student\'s details.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. RA provides an invalid format for the details (e.g., incorrect phone number format).
+    * 1a1. Hall Ledger shows an error message indicating the correct format.
+      Use case resumes from step 1.
 
+* 1b. A student with the exact same details already exists in the system.
+    * 1b1. Hall Ledger indicates that the student already exists.
+      Use case ends.
+
+* 1c. RA fails to provide compulsory details (name, phone, email, room number).
+    * 1c1. Hall Ledger shows an error message indicating the compulsory details.
+      Use case resumes from step 1.
+
+**Use case: UC02 - View a student\'s details (basic info, CCA, and demerit records)**
+
+**MSS**
+
+1. RA requests to list all students.
+2. Hall Ledger shows a list of students.
+3. RA requests to view the details of a specific student in the list using their index.
+4. Hall Ledger displays the selected student\'s basic information, alongside their CCA records and demerit records.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
+    * 2a1. Hall Ledger indicates that the student list is empty.
+      Use case ends.
+
+* 3a. The given index is invalid.
+    * 3a1. Hall Ledger shows an error message indicating the invalid index.
+      Use case resumes at step 2.
+
+**Use case: UC03 - Edit a student\'s info**
+
+**MSS**
+
+1. RA requests to list all students.
+2. Hall Ledger shows a list of students.
+3. RA requests to edit, add (from default value), or delete specific details (e.g., phone, email, room number, tags) of a specific student using their index.
+4. Hall Ledger updates the student\'s details.
+5. Hall Ledger displays a success message with the updated student\'s details.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
   Use case ends.
 
 * 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
+    * 3a1. Hall Ledger shows an error message indicating the invalid index.
       Use case resumes at step 2.
 
-*{More to be added}*
+* 3b. RA provides an invalid format for the details to be updated.
+    * 3b1. Hall Ledger shows an error message indicating the correct format.
+      Use case resumes at step 2.
+
+* 3c. RA provides details that are exactly the same as the existing ones, resulting in no changes.
+  Use case resumes at step 2.
+
+**Use case: UC04 - Delete or Clear student records**
+
+**MSS**
+
+1. RA requests to delete a specific student or clear all current student records.
+2. Hall Ledger deletes the specified student or clears all data.
+3. Hall Ledger displays a success message reflecting the changes.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The student list is already empty.
+  Use case ends.
+
+* 1b. If deleting, the given index is invalid.
+    * 1b1. Hall Ledger shows an error message.
+      Use case resumes from step 1.
+
+**Use case: UC05 - Search, Filter, and Rank students**
+
+**MSS**
+
+1. RA requests to search by name, filter by specific attributes (e.g., block, year, tags), or rank students by name, CCA points, demerit points in a particular order.
+2. Hall Ledger processes the query.
+3. Hall Ledger shows a list of matching or ranked students.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. RA provides empty keywords or invalid criteria format.
+    * 1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
+      Use case ends.
+
+* 2a. No students match the given criteria.
+    * 2a1. Hall Ledger shows an empty list and indicates that 0 students were found.
+      Use case ends.
+
+**Use case: UC06 - Administer CCA point records**
+
+**MSS**
+
+1. RA requests to list all students.
+2. Hall Ledger shows a list of students.
+3. RA requests to add a CCA point record to a specific student using their index.
+4. Hall Ledger updates the student\'s CCA points.
+5. Hall Ledger displays a success message.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The student list is empty.
+  Use case ends.
+
+* 3a. The given index is invalid.
+    * 3a1. Hall Ledger shows an error message indicating the invalid index.
+      Use case resumes at step 2.
+
+**Use case: UC08 - Export data**
+
+**MSS**
+
+1. RA requests to export all student details data to a CSV file.
+2. Hall Ledger gathers the relevant data.
+3. Hall Ledger exports the file to the user\'s system.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The student list is empty.
+    * 1a1. Hall Ledger indicates that there is no data to generate a report or export.
+      Use case ends.
 
 ### Non-Functional Requirements
 
