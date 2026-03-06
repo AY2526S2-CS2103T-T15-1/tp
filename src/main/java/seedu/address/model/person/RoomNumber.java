@@ -8,7 +8,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidRoomNumber(String)}
  */
 public class RoomNumber {
-    
     public static final String MESSAGE_CONSTRAINTS = "Room numbers can take any values, and it should not be blank";
 
     /*

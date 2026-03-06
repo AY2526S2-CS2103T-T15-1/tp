@@ -10,7 +10,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
 
@@ -99,7 +104,8 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (studentId == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StudentId.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    StudentId.class.getSimpleName()));
         }
         if (!StudentId.isValidStudentId(studentId)) {
             throw new IllegalValueException(StudentId.MESSAGE_CONSTRAINTS);
@@ -109,15 +115,20 @@ class JsonAdaptedPerson {
         if (roomNumber != null && !RoomNumber.isValidRoomNumber(roomNumber)) {
             throw new IllegalValueException(RoomNumber.MESSAGE_CONSTRAINTS);
         }
-        final RoomNumber modelRoomNumber = roomNumber != null ? new RoomNumber(roomNumber) : null;
+        final RoomNumber modelRoomNumber = roomNumber != null
+                                         ? new RoomNumber(roomNumber)
+                                         : null;
 
         if (emergencyContact != null && !EmergencyContact.isValidEmergencyContact(emergencyContact)) {
             throw new IllegalValueException(EmergencyContact.MESSAGE_CONSTRAINTS);
         }
-        final EmergencyContact modelEmergencyContact = emergencyContact != null ? new EmergencyContact(emergencyContact) : null;
+        final EmergencyContact modelEmergencyContact = emergencyContact != null
+                                                     ? new EmergencyContact(emergencyContact)
+                                                     : null;
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelStudentId, modelRoomNumber, modelEmergencyContact, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelStudentId, modelRoomNumber,
+                modelEmergencyContact, modelTags);
     }
 
 }

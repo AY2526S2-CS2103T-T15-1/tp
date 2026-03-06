@@ -9,12 +9,12 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.StudentId;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
-import seedu.address.model.person.EmergencyContact;
+import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -97,6 +97,12 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    /**
+     * Parses a {@code String roomNumber} into a {@code RoomNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code roomNumber} is invalid.
+     */
     public static RoomNumber parseRoomNumber(String roomNumber) throws ParseException {
         requireNonNull(roomNumber);
         String trimmedRoomNumber = roomNumber.trim();
@@ -106,6 +112,12 @@ public class ParserUtil {
         return new RoomNumber(trimmedRoomNumber);
     }
 
+    /**
+     * Parses a {@code String emergencyContact} into an {@code EmergencyContact}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code emergencyContact} is invalid.
+     */
     public static EmergencyContact parseEmergencyContact(String emergencyContact) throws ParseException {
         requireNonNull(emergencyContact);
         String trimmedEmergencyContact = emergencyContact.trim();
