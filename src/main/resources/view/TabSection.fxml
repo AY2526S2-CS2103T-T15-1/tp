@@ -9,12 +9,12 @@
          VBox.vgrow="ALWAYS"
          xmlns="http://javafx.com/javafx/17">
     <tabs>
-        <Tab fx:id="directoryTab" text="Directory">
+        <Tab fx:id="studentDetailsTab" text="Details">
             <graphic>
                 <FontIcon iconLiteral="dashicons-groups" iconSize="20" iconColor="white"/>
             </graphic>
             <content>
-                <StackPane fx:id="directoryTabPlaceholder" minHeight="500"/>
+                <StackPane fx:id="studentDetailsTabPlaceholder" minHeight="500"/>
             </content>
         </Tab>
         <Tab text="Dashboard">

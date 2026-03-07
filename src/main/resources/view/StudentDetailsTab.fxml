@@ -8,7 +8,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../../../css/Main.css" VBox.vgrow="ALWAYS"
       xmlns="http://javafx.com/javafx/17">
     <children>
-        <TabPane fx:id="detailsTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <TabPane fx:id="studentDetailsTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
             <tabs>
                 <Tab text="Profile">
                     <graphic>
@@ -20,6 +20,7 @@
                 </Tab>
                 <Tab text="CCA Records">
                     <graphic>
+                        <FontIcon iconLiteral="dashicons-admin-media" iconSize="16" iconColor="white"/>
                     </graphic>
                     <content>
                         <StackPane fx:id="ccaRecordsPlaceholder" styleClass="stack-pane"/>
@@ -27,6 +28,7 @@
                 </Tab>
                 <Tab text="Demerit Records">
                     <graphic>
+                        <FontIcon iconLiteral="dashicons-welcome-comments" iconSize="16" iconColor="white"/>
                     </graphic>
                     <content>
                         <StackPane fx:id="demeritRecordsPlaceholder" styleClass="stack-pane"/>

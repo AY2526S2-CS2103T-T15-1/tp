@@ -9,16 +9,16 @@ import seedu.address.ui.UiPart;
 /**
  * A ui for the main tab that is displayed on the main window.
  */
-public class PersonDetailTab extends UiPart<Region> {
+public class StudentDetailsTab extends UiPart<Region> {
 
-    private static final String FXML = "PersonDetailTab.fxml";
+    private static final String FXML = "StudentDetailsTab.fxml";
     /**
      * The person whose details would be shown in the directory tab
      **/
     // TODO: Implement selectedPerson logic
     //  private final ObjectProperty<Optional<Person>> selectedPerson;
     @FXML
-    private TabPane detailsTabPane;
+    private TabPane studentDetailsTabPane;
 
     @FXML
     private StackPane profilePlaceholder;
@@ -29,7 +29,7 @@ public class PersonDetailTab extends UiPart<Region> {
     @FXML
     private StackPane demeritRecordsPlaceholder;
 
-    public PersonDetailTab() {
+    public StudentDetailsTab() {
         super(FXML);
         fillInnerParts();
     }

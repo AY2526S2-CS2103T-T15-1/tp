@@ -6,7 +6,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.logic.Logic;
-import seedu.address.ui.tab.PersonDetailTab;
+import seedu.address.ui.tab.StudentDetailsTab;
 
 /**
  * UI for the TabSection that is displayed on the left hand side of the main
@@ -22,10 +22,10 @@ public class TabSection extends UiPart<Region> {
     private TabPane tabPaneRoot;
 
     @FXML
-    private Tab personDetailTab;
+    private Tab studentDetailsTab;
 
     @FXML
-    private StackPane directoryTabPlaceholder;
+    private StackPane studentDetailsTabPlaceholder;
 
     @FXML
     private StackPane dashboardTabPlaceholder;
@@ -40,7 +40,7 @@ public class TabSection extends UiPart<Region> {
     }
 
     private void fillInnerParts() {
-        PersonDetailTab personDetailTab = new PersonDetailTab();
-        directoryTabPlaceholder.getChildren().add(personDetailTab.getRoot());
+        StudentDetailsTab studentDetailsTab = new StudentDetailsTab();
+        studentDetailsTabPlaceholder.getChildren().add(studentDetailsTab.getRoot());
     }
 }
