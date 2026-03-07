@@ -13,6 +13,21 @@ public class Tag {
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
+    public final TagType type;
+
+    /**
+     * Constructs a {@code Tag}.
+     *
+     * @param type The type of the tag.
+     * @param tagName A valid tag name.
+     */
+    public Tag(TagType type, String tagName) {
+        requireNonNull(tagName);
+        requireNonNull(tagName);
+        checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
+        this.tagName = tagName;
+        this.type = type;
+    }
 
     /**
      * Constructs a {@code Tag}.
@@ -23,6 +38,7 @@ public class Tag {
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
         this.tagName = tagName;
+        this.type = null;
     }
 
     /**
@@ -31,6 +47,7 @@ public class Tag {
     public static boolean isValidTagName(String test) {
         return test.matches(VALIDATION_REGEX);
     }
+
 
     @Override
     public boolean equals(Object other) {
@@ -44,7 +61,7 @@ public class Tag {
         }
 
         Tag otherTag = (Tag) other;
-        return tagName.equals(otherTag.tagName);
+        return type.equals(otherTag.type) && tagName.equals(otherTag.tagName);
     }
 
     @Override
