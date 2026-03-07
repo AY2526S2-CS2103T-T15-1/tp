@@ -5,6 +5,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,9 +16,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 
 /**
@@ -43,6 +45,10 @@ public class TagCommand extends Command {
     public final Index index;
     public final Set<Tag> tags;
 
+    /**
+     * @param index of the person in the filtered person list to edit
+     * @param tags list of tags to add to the person
+     */
     public TagCommand(Index index, Set<Tag> tags) {
         requireNonNull(index);
         requireNonNull(tags);

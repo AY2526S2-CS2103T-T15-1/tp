@@ -1,21 +1,27 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.TagCommand.MESSAGE_USAGE;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.TagCommand.MESSAGE_USAGE;
-
+/**
+ * Parses input arguments and creates a TagCommand object.
+ */
 public class TagCommandParser implements Parser<TagCommand> {
 
-
+    /**
+     * Parses the given {@code String} of arguments in the context of the TagCommand
+     * and returns an TagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argumentMultimap =
@@ -28,7 +34,7 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         try {
             index = ParserUtil.parseIndex(argumentMultimap.getPreamble());
-        } catch(ParseException e) {
+        } catch (ParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE), e);
         }
 
