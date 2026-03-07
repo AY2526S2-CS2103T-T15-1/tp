@@ -16,9 +16,6 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
-
-
-
 /**
  * Adds a tag to a resident in the hall ledger.
  * The resident is identified using the index number from the displayed resident list.

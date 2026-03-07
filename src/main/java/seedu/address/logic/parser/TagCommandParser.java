@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagType;
 
 /**
  * Parses input arguments and creates a TagCommand object.
@@ -41,13 +42,13 @@ public class TagCommandParser implements Parser<TagCommand> {
         Set<Tag> tags = new HashSet<>();
 
         argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER)
-                .ifPresent(gender -> tags.add(new Tag(gender)));
+                .ifPresent(gender -> tags.add(new Tag(TagType.GENDER, gender)));
 
         argumentMultimap.getValue(CliSyntax.PREFIX_TAG_MAJOR)
-                .ifPresent(major -> tags.add(new Tag(major)));
+                .ifPresent(major -> tags.add(new Tag(TagType.MAJOR, major)));
 
         argumentMultimap.getValue(CliSyntax.PREFIX_TAG_YEAR)
-                .ifPresent(year -> tags.add(new Tag(year)));
+                .ifPresent(year -> tags.add(new Tag(TagType.YEAR, year)));
 
         if (tags.isEmpty()) {
             throw new ParseException(TagCommand.TAG_NOT_ADDED);

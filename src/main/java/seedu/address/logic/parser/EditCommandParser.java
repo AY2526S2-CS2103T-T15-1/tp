@@ -76,7 +76,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setEmergencyContact(ParserUtil.parseEmergencyContact(argMultimap
                     .getValue(PREFIX_EMERGENCY_CONTACT).get()));
         }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+        //parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
@@ -90,14 +90,14 @@ public class EditCommandParser implements Parser<EditCommand> {
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Tag>} containing zero tags.
      */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
+//    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
+//        assert tags != null;
+//
+//        if (tags.isEmpty()) {
+//            return Optional.empty();
+//        }
+//        Collection<Tag> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+//        return Optional.of(ParserUtil.parseTags(tagSet));
+//    }
 
 }
