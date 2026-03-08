@@ -30,6 +30,9 @@ public class FilterPanel extends UiPart<Region> {
     @FXML
     private FontIcon sortIcon;
 
+    /**
+     * Creates a {@code FilterPanel} with default filter and sort options.
+     */
     public FilterPanel() {
         super(FXML);
 

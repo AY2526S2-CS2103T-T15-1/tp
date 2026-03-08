@@ -33,6 +33,11 @@ public class TabSection extends UiPart<Region> {
     @FXML
     private StackPane settingsTabPlaceholder;
 
+    /**
+     * Creates a {@code TabSection} with the given {@code Logic}.
+     *
+     * @param logic
+     */
     public TabSection(Logic logic) {
         super(FXML);
         this.logic = logic;

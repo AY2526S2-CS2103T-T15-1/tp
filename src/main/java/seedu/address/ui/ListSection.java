@@ -21,6 +21,11 @@ public class ListSection extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    /**
+     * Creates a {@code ListSection} with the given {@code Logic}.
+     *
+     * @param logic
+     */
     public ListSection(Logic logic) {
         super(FXML);
         this.logic = logic;

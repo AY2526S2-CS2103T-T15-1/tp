@@ -29,6 +29,9 @@ public class StudentDetailsTab extends UiPart<Region> {
     @FXML
     private StackPane demeritRecordsPlaceholder;
 
+    /**
+     * Creates a {@code StudentDetailsTab} with the given {@code Logic}.
+     */
     public StudentDetailsTab() {
         super(FXML);
         fillInnerParts();
