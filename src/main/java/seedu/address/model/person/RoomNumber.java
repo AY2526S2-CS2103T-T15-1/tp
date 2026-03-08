@@ -8,13 +8,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidRoomNumber(String)}
  */
 public class RoomNumber {
-    public static final String MESSAGE_CONSTRAINTS = "Room numbers can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Room numbers should only contain alphanumeric characters,"
+            + "and the digit should be before the alphabet.";
 
     /*
      * The first character of the room number must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "^\\d{1,2}[A-Z]";
 
     public final String value;
 
