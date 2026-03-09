@@ -36,7 +36,7 @@ class JsonAdaptedTag {
         tagName = source.tagName;
     }
 
-    @JsonValue
+
     public String getTagName() {
         return tagName;
     }
