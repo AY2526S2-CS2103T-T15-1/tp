@@ -74,10 +74,16 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_STUDENTID_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withStudentId(VALID_STUDENTID_AMY) // ← fix
+                .withRoomNumber(VALID_ROOM_NUMBER_AMY) // ← add
+                .withEmergencyContact(VALID_EMERGENCY_CONTACT_AMY) // ← add
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_STUDENTID_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                .withStudentId(VALID_STUDENTID_BOB) // ← fix
+                .withRoomNumber(VALID_ROOM_NUMBER_BOB) // ← add
+                .withEmergencyContact(VALID_EMERGENCY_CONTACT_BOB) // ← add
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
@@ -90,7 +96,11 @@ public class CommandTestUtil {
             Model expectedModel) {
         try {
             CommandResult result = command.execute(actualModel);
+            System.out.println(result.getFeedbackToUser());
+            System.out.println(expectedCommandResult.getFeedbackToUser());
             assertEquals(expectedCommandResult, result);
+            System.out.println(actualModel.getAddressBook());
+            System.out.println(expectedModel.getAddressBook());
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);

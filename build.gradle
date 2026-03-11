@@ -23,6 +23,13 @@ checkstyle {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+    jvmArgs = [
+        '-Dtestfx.robot=glass',
+        '-Dtestfx.headless=true',
+        '-Dprism.order=sw',
+        '-Dprism.text=t2k',
+        '-Djava.awt.headless=true'
+    ]
 }
 
 task coverage(type: JacocoReport) {
