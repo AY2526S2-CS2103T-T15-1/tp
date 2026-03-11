@@ -1,10 +1,10 @@
 {
   "persons": [ {
     "name": "Hans Muster",
-    "phone": "9482424",
+    "phone": "+65 9482424",
     "email": "invalid@email!3e",
     "studentId": "A1234567X",
-    "roomNumber": "R123",
-    "emergencyContact": "91234567"
+    "roomNumber": "12R",
+    "emergencyContact": "+65 91234567"
   } ]
 }

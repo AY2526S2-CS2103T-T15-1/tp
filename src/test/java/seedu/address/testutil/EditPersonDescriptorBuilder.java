@@ -1,8 +1,7 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Email;
@@ -13,6 +12,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagType;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -99,8 +99,13 @@ public class EditPersonDescriptorBuilder {
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
+    public EditPersonDescriptorBuilder withTags(Object[]... tags) {
+        Set<Tag> tagSet = new HashSet<>();
+        for (Object[] pair: tags) {
+            TagType type = TagType.valueOf(pair[0].toString());
+            String tagName = pair[1].toString();
+            tagSet.add(new Tag(type, tagName));
+        }
         descriptor.setTags(tagSet);
         return this;
     }

@@ -32,23 +32,12 @@ public class Tag {
     }
 
     /**
-     * Constructs a {@code Tag}.
-     *
-     * @param tagName A valid tag name.
-     */
-    public Tag(String tagName) {
-        requireNonNull(tagName);
-        checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
-        this.type = null;
-    }
-
-    /**
      * Returns true if a given string is a valid tag name.
      */
     public static boolean isValidTagName(String test) {
         return test.matches(VALIDATION_REGEX);
     }
+
 
 
     @Override
@@ -60,7 +49,7 @@ public class Tag {
             return false;
         }
         Tag otherTag = (Tag) other;
-        return Objects.equals(type, otherTag.type) && tagName.equals(otherTag.tagName);
+        return type == otherTag.type && tagName.equals(otherTag.tagName);
     }
 
     @Override

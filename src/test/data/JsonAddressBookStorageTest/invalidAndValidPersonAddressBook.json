@@ -1,17 +1,17 @@
 {
   "persons": [ {
     "name": "Valid Person",
-    "phone": "9482424",
+    "phone": "+65 9482424",
     "email": "hans@example.com",
     "studentId": "A1234567X",
-    "roomNumber": "R123",
-    "emergencyContact": "91234567"
+    "roomNumber": "12R",
+    "emergencyContact": "+65 91234567"
   }, {
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
     "email": "hans@example.com",
     "studentId": "A1234567X",
-    "roomNumber": "R123",
-    "emergencyContact": "91234567"
+    "roomNumber": "12R",
+    "emergencyContact": "+65 91234567"
   } ]
 }

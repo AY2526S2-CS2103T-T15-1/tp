@@ -5,24 +5,24 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidStudentId(String)}
  */
 public class StudentId {
 
-    public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
-
+    public static final String MESSAGE_CONSTRAINTS = "The student ID should only contain alphanumeric characters,"
+            + " and it should be in the form of AXXXXXXXX";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "A\\d{6,8}[X-Z]";
 
     public final String value;
 
     /**
      * Constructs an {@code Address}.
      *
-     * @param address A valid address.
+     * @param studentId A valid address.
      */
     public StudentId(String studentId) {
         requireNonNull(studentId);

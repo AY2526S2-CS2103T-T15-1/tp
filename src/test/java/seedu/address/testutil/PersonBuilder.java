@@ -11,6 +11,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagType;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -19,11 +20,13 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_PHONE = "+65 85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_STUDENTID = "A1234567X";
-    public static final String DEFAULT_ROOM_NUMBER = "R123";
-    public static final String DEFAULT_EMERGENCY_CONTACT = "91234567";
+    public static final String DEFAULT_ROOM_NUMBER = "13E";
+    public static final String DEFAULT_EMERGENCY_CONTACT = "+65 91234567";
+    public static final Tag VALID_TAG_MAJOR = new Tag(TagType.MAJOR, "CS");
+    public static final Tag VALID_TAG_YEAR = new Tag(TagType.YEAR, "Y1");
 
     private Name name;
     private Phone phone;
@@ -31,7 +34,7 @@ public class PersonBuilder {
     private StudentId studentId;
     private RoomNumber roomNumber;
     private EmergencyContact emergencyContact;
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
 
     /**
@@ -44,7 +47,8 @@ public class PersonBuilder {
         studentId = new StudentId(DEFAULT_STUDENTID);
         roomNumber = new RoomNumber(DEFAULT_ROOM_NUMBER);
         emergencyContact = new EmergencyContact(DEFAULT_EMERGENCY_CONTACT);
-        tags = new HashSet<>();
+        tags.add(VALID_TAG_MAJOR);
+        tags.add(VALID_TAG_YEAR);
     }
 
     /**
@@ -71,7 +75,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PersonBuilder withTags(Object[]... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
