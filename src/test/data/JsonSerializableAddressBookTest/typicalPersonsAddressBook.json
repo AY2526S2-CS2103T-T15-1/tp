@@ -7,7 +7,16 @@
     "studentId" : "A1234567X",
     "roomNumber" : "13E",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"GENDER","tagName":"she"}]
+    "tags" : [ {
+      "tagName" : "CS",
+      "type" : "MAJOR"
+    }, {
+      "tagName" : "Y1",
+      "type" : "YEAR"
+    }, {
+      "tagName" : "Female",
+      "type" : "GENDER"
+    } ]
   }, {
     "name" : "Benson Meier",
     "phone" : "+65 98765432",
@@ -15,7 +24,19 @@
     "studentId" : "A8765432Y",
     "roomNumber" : "10A",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"MAJOR","tagName":"CS"},{"tagType":"YEAR","tagName":"Y2"}]
+    "tags" : [ {
+      "tagName" : "CS",
+      "type" : "MAJOR"
+    }, {
+      "tagName" : "Maths",
+      "type" : "MAJOR"
+    }, {
+      "tagName" : "Y2",
+      "type" : "YEAR"
+    }, {
+      "tagName" : "Male",
+      "type" : "GENDER"
+    } ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "+65 95352563",
@@ -23,7 +44,7 @@
     "studentId" : "A1111111X",
     "roomNumber" : "12B",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"MAJOR","tagName":"CS"},{"tagType":"YEAR","tagName":"Y1"}]
+    "tags" : [ ]
   }, {
     "name" : "Daniel Meier",
     "phone" : "+65 87652533",
@@ -31,7 +52,13 @@
     "studentId" : "A2222222X",
     "roomNumber" : "6C",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"YEAR","tagName":"Y2"}]
+    "tags" : [ {
+      "tagName" : "Y3",
+      "type" : "YEAR"
+    }, {
+      "tagName" : "Business",
+      "type" : "MAJOR"
+    } ]
   }, {
     "name" : "Elle Meyer",
     "phone" : "+65 9482224",
@@ -39,7 +66,13 @@
     "studentId" : "A3333333X",
     "roomNumber" : "7E",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"MAJOR","tagName":"CS"},{"tagType":"YEAR","tagName":"Y1"}]
+    "tags" : [ {
+      "tagName" : "Y1",
+      "type" : "YEAR"
+    }, {
+      "tagName" : "Female",
+      "type" : "GENDER"
+    } ]
   }, {
     "name" : "Fiona Kunz",
     "phone" : "+65 9482427",
@@ -47,7 +80,16 @@
     "studentId" : "A4444444X",
     "roomNumber" : "14A",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"MAJOR","tagName":"CS"},{"tagType":"YEAR","tagName":"Y1"}]
+    "tags" : [ {
+      "tagName" : "Economics",
+      "type" : "MAJOR"
+    }, {
+      "tagName" : "Female",
+      "type" : "GENDER"
+    }, {
+      "tagName" : "Statistics",
+      "type" : "MAJOR"
+    } ]
   }, {
     "name" : "George Best",
     "phone" : "+65 9482442",
@@ -55,6 +97,12 @@
     "studentId" : "A5555555X",
     "roomNumber" : "15N",
     "emergencyContact" : "+65 91234567",
-    "tags": [{"tagType":"MAJOR","tagName":"CS"},{"tagType":"YEAR","tagName":"Y1"}]
+    "tags" : [ {
+      "tagName" : "NB",
+      "type" : "GENDER"
+    }, {
+      "tagName" : "Y4",
+      "type" : "YEAR"
+    } ]
   } ]
 }
