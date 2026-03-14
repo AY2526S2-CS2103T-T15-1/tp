@@ -113,7 +113,7 @@ public class StringUtil {
      * @param s2 String to compare
      * @return true if the strings match exactly or fall within the typo threshold
      */
-    private static boolean fuzzyMatch(String s1, String s2) {
+    public static boolean fuzzyMatch(String s1, String s2) {
         requireNonNull(s1);
         requireNonNull(s2);
 

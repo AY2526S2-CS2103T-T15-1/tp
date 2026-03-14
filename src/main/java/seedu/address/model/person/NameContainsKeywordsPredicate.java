@@ -12,14 +12,26 @@ import seedu.address.commons.util.ToStringBuilder;
 public class NameContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
+    /**
+     * Creates a {@code NameContainsKeywordsPredicate} with the given list of keywords.
+     * <br></br>
+     * @param keywords the list of keywords to be used for matching the person's name
+     */
     public NameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
+    /**
+     * Returns true if the person's name fuzzy matches any of the keywords.
+     * Fuzzy matching is done by {@link StringUtil#fuzzyMatch(String, String)}.
+     * <br></br>
+     * @param person the person to be tested against the keywords
+     * @return true if the person's name fuzzy matches any of the keywords, false otherwise
+     */
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> StringUtil.fuzzyMatch(person.getName().fullName, keyword));
     }
 
     @Override
