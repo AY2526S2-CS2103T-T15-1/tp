@@ -23,6 +23,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.FilterDetails;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonMatchesDetailsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -64,8 +65,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         // Preamble is empty, prefixes exist -> FindCommand by prefixes
         if (argMultimap.getPreamble().isEmpty() && !argMultimap.hasEmptyPrefixArguments()) {
             FilterDetails filterDetails = buildFilterDetails(argMultimap);
-            // TODO: once PersonMatchesDetailsPredicate is ready, plug it here instead of empty predicate
-            return new FindCommand(new NameContainsKeywordsPredicate(List.of()));
+            return new FindCommand(new PersonMatchesDetailsPredicate(buildFilterDetails(argMultimap)));
         }
 
         // Should not reach here because all cases are covered above
@@ -85,7 +85,6 @@ public class FindCommandParser implements Parser<FindCommand> {
         Set<String> roomNumberKeywords = toSet(argMultimap.getAllValues(PREFIX_ROOM_NUMBER));
         Set<String> studentIdKeywords = toSet(argMultimap.getAllValues(PREFIX_STUDENT_ID));
         Set<String> emergencyContactKeywords = toSet(argMultimap.getAllValues(PREFIX_EMERGENCY_CONTACT));
-        Set<String> tagKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG));
         Set<String> tagYearKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG_YEAR));
         Set<String> tagMajorKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG_MAJOR));
         Set<String> tagGenderKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG_GENDER));
@@ -98,7 +97,6 @@ public class FindCommandParser implements Parser<FindCommand> {
         filterDetails.setRoomNumberKeywords(roomNumberKeywords);
         filterDetails.setStudentIdKeywords(studentIdKeywords);
         filterDetails.setEmergencyContactKeywords(emergencyContactKeywords);
-        filterDetails.setTagKeywords(tagKeywords);
         filterDetails.setTagYearKeywords(tagYearKeywords);
         filterDetails.setTagMajorKeywords(tagMajorKeywords);
         filterDetails.setTagGenderKeywords(tagGenderKeywords);
