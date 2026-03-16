@@ -83,13 +83,13 @@ class ArgumentMultimapTest {
     }
 
     @Test
-    public void removeEmptyValuesAndPrefix_removesEmptyStrings() {
+    public void removeEmptyValuesAndPrefixes_removesEmptyStrings() {
         ArgumentMultimap map = new ArgumentMultimap();
         map.put(PREFIX_NAME, " ");
         map.put(PREFIX_PHONE, "value");
         map.put(PREFIX_PHONE, "");
 
-        ArgumentMultimap cleanedMap = map.removeEmptyValuesAndPrefix();
+        ArgumentMultimap cleanedMap = map.removeEmptyValuesAndPrefixes();
 
         assertTrue(cleanedMap.getAllValues(PREFIX_NAME).isEmpty()); // Prefijo eliminado completamente
         assertEquals(List.of("value"), cleanedMap.getAllValues(PREFIX_PHONE)); // Solo queda el no vacío

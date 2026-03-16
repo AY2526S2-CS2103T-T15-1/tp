@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.text.similarity.LevenshteinDistance;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Helper functions for handling strings.
@@ -172,5 +174,21 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    /**
+     * Splits a given sentence into words and returns a set of the words in the sentence.
+     *
+     * @param sentence sentence to be split into words. Cannot be null.
+     * @return a {@code Set<String>} of the words in the sentence.
+     */
+    public static Set<String> splitSentenceIntoWords(String sentence) {
+        requireNonNull(sentence);
+        String trimmedSentence = sentence.trim();
+        if (trimmedSentence.isEmpty()) {
+            return new HashSet<>();
+        }
+        String[] wordsInSentence = trimmedSentence.split("\\s+");
+        return new HashSet<>(Arrays.asList(wordsInSentence));
     }
 }

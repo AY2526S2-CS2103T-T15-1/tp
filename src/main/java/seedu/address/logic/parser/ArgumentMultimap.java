@@ -78,11 +78,14 @@ public class ArgumentMultimap {
 
     /**
      * Returns a new ArgumentMultimap with all empty string values removed, and prefixes that only have empty string
-     * values will be removed entirely.
+     * values will also be removed.
+     *
+     * This is useful for commands like FindCommand where empty string values are not meaningful and should be treated
+     * as if the prefix was not provided at all.
      *
      * @return a new {@code ArgumentMultimap} with empty string values and empty prefixes removed
      */
-    public ArgumentMultimap removeEmptyValuesAndPrefix() {
+    public ArgumentMultimap removeEmptyValuesAndPrefixes() {
         ArgumentMultimap cleanedMap = new ArgumentMultimap();
         for (Map.Entry<Prefix, List<String>> entry : argMultimap.entrySet()) {
             List<String> nonEmptyValues = new ArrayList<>();
