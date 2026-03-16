@@ -77,7 +77,7 @@ public class FilterPanel extends UiPart<Region> {
         if (nameFilterText.trim().isEmpty()) {
             return;
         }
-        Set<String> nameFilterKeywordsSet = StringUtil.chunkSentenceIntoWords(nameFilterText);
+        Set<String> nameFilterKeywordsSet = StringUtil.splitSentenceIntoWords(nameFilterText);
         nameFilterKeywordsSet.forEach(tag -> nameTags.getChildren().add(new Label(tag)));
         nameFilterField.clear();
     }
