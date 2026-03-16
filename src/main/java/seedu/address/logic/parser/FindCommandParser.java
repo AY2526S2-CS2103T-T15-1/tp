@@ -43,7 +43,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argMultimap = tokenizer.tokenize(args,
                 PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER, PREFIX_STUDENT_ID,
                 PREFIX_EMERGENCY_CONTACT, PREFIX_TAG, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER)
-                .removeEmptyValuesAndPrefix();
+                .removeEmptyValuesAndPrefixes();
 
         // Preamble and prefixes are both empty -> Output empty argument message
         if (argMultimap.getPreamble().isEmpty() && argMultimap.hasEmptyPrefixArguments()) {
