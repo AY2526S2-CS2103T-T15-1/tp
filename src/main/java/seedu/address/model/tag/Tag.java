@@ -3,8 +3,6 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.Objects;
-
 /**
  * Represents a Tag in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
@@ -38,7 +36,19 @@ public class Tag {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * @return the tag name of this tag.
+     */
+    public String getTagName() {
+        return tagName;
+    }
 
+    /**
+     * @return the tag type of this tag.
+     */
+    public TagType getTagType() {
+        return type;
+    }
 
     @Override
     public boolean equals(Object other) {
