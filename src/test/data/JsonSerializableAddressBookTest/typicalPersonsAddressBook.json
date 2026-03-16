@@ -1,5 +1,4 @@
 {
-  "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
   "persons" : [ {
     "name" : "Alice Pauline",
     "phone" : "+65 94351253",
@@ -8,14 +7,14 @@
     "roomNumber" : "13E",
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
-      "tagName" : "CS",
-      "type" : "MAJOR"
+      "tagType" : "MAJOR",
+      "tagName" : "CS"
     }, {
-      "tagName" : "Y1",
-      "type" : "YEAR"
+      "tagType" : "YEAR",
+      "tagName" : "Y1"
     }, {
-      "tagName" : "Female",
-      "type" : "GENDER"
+      "tagType" : "GENDER",
+      "tagName" : "Female"
     } ]
   }, {
     "name" : "Benson Meier",
@@ -25,17 +24,17 @@
     "roomNumber" : "10A",
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
-      "tagName" : "CS",
-      "type" : "MAJOR"
+      "tagType" : "MAJOR",
+      "tagName" : "CS"
     }, {
-      "tagName" : "Maths",
-      "type" : "MAJOR"
+      "tagType" : "MAJOR",
+      "tagName" : "Maths"
     }, {
-      "tagName" : "Y2",
-      "type" : "YEAR"
+      "tagType" : "YEAR",
+      "tagName" : "Y2"
     }, {
-      "tagName" : "Male",
-      "type" : "GENDER"
+      "tagType" : "GENDER",
+      "tagName" : "Male"
     } ]
   }, {
     "name" : "Carl Kurz",
@@ -53,11 +52,11 @@
     "roomNumber" : "6C",
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
-      "tagName" : "Y3",
-      "type" : "YEAR"
+      "tagType" : "YEAR",
+      "tagName" : "Y3"
     }, {
-      "tagName" : "Business",
-      "type" : "MAJOR"
+      "tagType" : "MAJOR",
+      "tagName" : "Business"
     } ]
   }, {
     "name" : "Elle Meyer",
@@ -67,11 +66,11 @@
     "roomNumber" : "7E",
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
-      "tagName" : "Y1",
-      "type" : "YEAR"
+      "tagType" : "YEAR",
+      "tagName" : "Y1"
     }, {
-      "tagName" : "Female",
-      "type" : "GENDER"
+      "tagType" : "GENDER",
+      "tagName" : "Female"
     } ]
   }, {
     "name" : "Fiona Kunz",
@@ -81,14 +80,14 @@
     "roomNumber" : "14A",
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
-      "tagName" : "Economics",
-      "type" : "MAJOR"
+      "tagType" : "MAJOR",
+      "tagName" : "Economics"
     }, {
-      "tagName" : "Female",
-      "type" : "GENDER"
+      "tagType" : "GENDER",
+      "tagName" : "Female"
     }, {
-      "tagName" : "Statistics",
-      "type" : "MAJOR"
+      "tagType" : "MAJOR",
+      "tagName" : "Statistics"
     } ]
   }, {
     "name" : "George Best",
@@ -98,11 +97,11 @@
     "roomNumber" : "15N",
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
-      "tagName" : "NB",
-      "type" : "GENDER"
+      "tagType" : "GENDER",
+      "tagName" : "NB"
     }, {
-      "tagName" : "Y4",
-      "type" : "YEAR"
+      "tagType" : "YEAR",
+      "tagName" : "Y4"
     } ]
   } ]
 }
