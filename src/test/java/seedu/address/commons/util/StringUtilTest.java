@@ -48,7 +48,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.isNonZeroUnsignedInteger("10"));
     }
 
-    //---------------- Tests for matchesWordInSetIgnoreCase --------------------------------------
+    //---------------- Tests for equalsAnyIgnoreCase --------------------------------------
 
     @Test
     public void equalsAnyIgnoreCase_nullOrEmptyInputs_throwsException() {
@@ -77,70 +77,52 @@ public class StringUtilTest {
         assertTrue(StringUtil.equalsAnyIgnoreCase("BOB", wordSet));
 
         // Whitespace trimmed match
-        assertTrue(StringUtil.equalsAnyIgnoreCase("  Charlie  ", wordSet));
+        assertTrue(StringUtil.equalsAnyIgnoreCase("\n  Charlie  \t", wordSet));
 
         // No match
         assertFalse(StringUtil.equalsAnyIgnoreCase("Dave", wordSet));
-        assertFalse(StringUtil.equalsAnyIgnoreCase("Ali", wordSet)); // Partial match is false for this method
-    }
-
-    //---------------- Tests for matchesSubstringInSetIgnoreCase --------------------------------------
-
-    @Test
-    public void isSubstringOfAnyIgnoreCase_nullOrEmptyInputs_throwsException() {
-        Assertions.assertThrows(NullPointerException.class, () ->
-                StringUtil.isSubstringOfAnyIgnoreCase(null, Set.of("abc")));
-        Assertions.assertThrows(NullPointerException.class, () ->
-                StringUtil.isSubstringOfAnyIgnoreCase("abc", null));
-
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-                StringUtil.isSubstringOfAnyIgnoreCase("", Set.of("abc")));
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-                StringUtil.isSubstringOfAnyIgnoreCase("abc", Collections.emptySet()));
-    }
-
-    @Test
-    public void isSubstringOfAnyIgnoreCase_validInputs_correctResult() {
-        // Nota: Según la implementación, verifica si 'word' CONTIENE algún elemento del 'set'.
-        Set<String> keywords = Set.of("Ali", "Bo");
-
-        // Substring match: "Alice" contiene "Ali"
-        assertTrue(StringUtil.isSubstringOfAnyIgnoreCase("Alice", keywords));
-
-        // Case-insensitive substring
-        assertTrue(StringUtil.isSubstringOfAnyIgnoreCase("alice", keywords));
-        assertTrue(StringUtil.isSubstringOfAnyIgnoreCase("BOB", keywords));
-
-        // Keyword más larga que la palabra (No match)
-        assertFalse(StringUtil.isSubstringOfAnyIgnoreCase("Al", keywords));
-
-        // No match
-        assertFalse(StringUtil.isSubstringOfAnyIgnoreCase("Charlie", keywords));
+        assertFalse(StringUtil.equalsAnyIgnoreCase("Alic", wordSet));
     }
 
     //---------------- Tests for fuzzyMatchesIgnoresCase --------------------------------------
 
     @Test
     public void fuzzyMatchesIgnoresCase_nullOrEmptyInputs_throwsException() {
+        // Null inputs
         Assertions.assertThrows(NullPointerException.class, () -> StringUtil.fuzzyMatchesIgnoresCase(null, "abc"));
         Assertions.assertThrows(NullPointerException.class, () -> StringUtil.fuzzyMatchesIgnoresCase("abc", null));
 
+        // Empty inputs
         Assertions.assertThrows(IllegalArgumentException.class, () -> StringUtil.fuzzyMatchesIgnoresCase("", "abc"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> StringUtil.fuzzyMatchesIgnoresCase("abc", ""));
     }
 
     @Test
     public void fuzzyMatchesIgnoresCase_exactMatches_returnsTrue() {
+        // Exact match
         assertTrue(StringUtil.fuzzyMatchesIgnoresCase("abc", "abc"));
-        assertTrue(StringUtil.fuzzyMatchesIgnoresCase("abc", "ABC")); // Case-insensitive
-        // Short strings exact match
-        assertTrue(StringUtil.fuzzyMatchesIgnoresCase("a", "a"));
-        assertTrue(StringUtil.fuzzyMatchesIgnoresCase("ab", "ab"));
+
+        // Exact match, case-insensitive
+        assertTrue(StringUtil.fuzzyMatchesIgnoresCase("abc", "ABC"));
+    }
+
+    @Test
+    public void fuzzyMatchesIgnoresCase_substringMatches_returnsTrue() {
+        // query is substring of target
+        assertTrue(StringUtil.fuzzyMatchesIgnoresCase("bcd", "abcde"));
+
+        // query is substring of target - case-insensitive
+        assertTrue(StringUtil.fuzzyMatchesIgnoresCase("BcD", "abcde"));
     }
 
     @Test
     public void fuzzyMatchesIgnoresCase_shortStringsWithDifferences_returnsFalse() {
-        // Strings <= 2 chars logic: returns false if not exact match (according to impl)
+        // query is too short to be considered for fuzzy matching
+        assertFalse(StringUtil.fuzzyMatchesIgnoresCase("ab", "abc"));
+        assertFalse(StringUtil.fuzzyMatchesIgnoresCase("ab", "abcd"));
+
+        // both target and query are too short to be considered for fuzzy matching
+        assertFalse(StringUtil.fuzzyMatchesIgnoresCase("a", "ab"));
         assertFalse(StringUtil.fuzzyMatchesIgnoresCase("ab", "ac"));
         assertFalse(StringUtil.fuzzyMatchesIgnoresCase("a", "b"));
     }
@@ -161,13 +143,16 @@ public class StringUtilTest {
         // Distance > 2
         assertFalse(StringUtil.fuzzyMatchesIgnoresCase("kitten", "kitchren"));
         assertFalse(StringUtil.fuzzyMatchesIgnoresCase("hello", "olleh"));
+
+        // Not substring and distance > 2
+        assertFalse(StringUtil.fuzzyMatchesIgnoresCase("abc", "xyz"));
     }
 
-    //---------------- Tests for fuzzyMatchesWordInSetIgnoreCase --------------------------------------
+    //---------------- Tests for fuzzyMatchesAnyIgnoreCase --------------------------------------
 
     @Test
     public void fuzzyMatchesAnyIgnoreCase_validInputs_correctResult() {
-        Set<String> wordSet = Set.of("kitten", "puppy");
+        Set<String> wordSet = Set.of("kitten", "puppy", "Constitution");
 
         // Exact match
         assertTrue(StringUtil.fuzzyMatchesAnyIgnoreCase("kitten", wordSet));
@@ -178,8 +163,14 @@ public class StringUtilTest {
         // Fuzzy match (2 edits)
         assertTrue(StringUtil.fuzzyMatchesAnyIgnoreCase("kitti", wordSet));
 
-        // No match (too different)
+        // Substring match
+        assertTrue(StringUtil.fuzzyMatchesAnyIgnoreCase("stitu", wordSet));
+
+        // No match (too different and not substring)
         assertFalse(StringUtil.fuzzyMatchesAnyIgnoreCase("dragon", wordSet));
+
+        // Distance match with different case
+        assertTrue(StringUtil.fuzzyMatchesAnyIgnoreCase("kiTTens", wordSet));
     }
 
     //---------------- Tests for getDetails --------------------------------------

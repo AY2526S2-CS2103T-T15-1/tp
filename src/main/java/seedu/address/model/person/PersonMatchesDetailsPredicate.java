@@ -86,8 +86,7 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
         if (personValue.isEmpty()) {
             return false;
         }
-        return StringUtil.fuzzyMatchesAnyIgnoreCase(personValue, keywords)
-                || StringUtil.isSubstringOfAnyIgnoreCase(personValue, keywords);
+        return StringUtil.fuzzyMatchesAnyIgnoreCase(personValue, keywords);
     }
 
     /**
@@ -106,8 +105,7 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
         return personTags
                 .stream()
                 .map(tag -> tag.getTagName())
-                .anyMatch(tag -> StringUtil.fuzzyMatchesAnyIgnoreCase(tag, keywords)
-                    || StringUtil.isSubstringOfAnyIgnoreCase(tag, keywords));
+                .anyMatch(tag -> StringUtil.fuzzyMatchesAnyIgnoreCase(tag, keywords));
     }
 
     /**
