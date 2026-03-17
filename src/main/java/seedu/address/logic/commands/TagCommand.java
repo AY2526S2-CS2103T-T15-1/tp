@@ -5,9 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
@@ -41,13 +39,13 @@ public class TagCommand extends Command {
     public static final String TAG_NOT_ADDED = "At least one tag (year / major / gender) must be provided.";
 
     public final Index index;
-    public final Set<Tag> tags;
+    public final Map<TagType, Tag> tags;
 
     /**
      * @param index of the person in the filtered person list to edit
      * @param tags list of tags to add to the person
      */
-    public TagCommand(Index index, Set<Tag> tags) {
+    public TagCommand(Index index, Map<TagType, Tag> tags) {
         requireNonNull(index);
         requireNonNull(tags);
         this.index = index;
@@ -68,9 +66,9 @@ public class TagCommand extends Command {
         }
 
         Person personToTag = lastShownList.get(index.getZeroBased());
-        Set<Tag> updatedTags = new HashSet<>(personToTag.getTags());
-        updatedTags.addAll(tags);
-        checkTagLimits(updatedTags);
+        HashMap<TagType, Tag> updatedTags = new HashMap<>(personToTag.getTags());
+        updatedTags.putAll(tags);
+        //checkTagLimits(updatedTags);
 
         Person taggedPerson = new Person(
                 personToTag.getName(),
@@ -88,16 +86,16 @@ public class TagCommand extends Command {
         return new CommandResult(String.format(TAG_SUCCESS, taggedPerson));
     }
 
-    private void checkTagLimits(Set<Tag> updatedTags) throws CommandException {
-        for (TagType type : TagType.values()) {
-            long countOfTagsPerType = updatedTags.stream()
-                    .filter(tag -> tag.getTagType() == type)
-                    .count();
-            if (countOfTagsPerType > type.getMaxTagsPerType()) {
-                throw new CommandException(
-                        "Tag type " + type + " allows at most " + type.getMaxTagsPerType() + " tag(s) per person."
-                );
-            }
-        }
-    }
+//    private void checkTagLimits(HashMap<Tag, TagType> updatedTags) throws CommandException {
+//        for (TagType type : TagType.values()) {
+//            long countOfTagsPerType = updatedTags.stream()
+//                    .filter(tag -> tag.getTagType() == type)
+//                    .count();
+//            if (countOfTagsPerType > type.getMaxTagsPerType()) {
+//                throw new CommandException(
+//                        "Tag type " + type + " allows at most " + type.getMaxTagsPerType() + " tag(s) per person."
+//                );
+//            }
+//        }
+//    }
 }

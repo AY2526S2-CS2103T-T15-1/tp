@@ -2,11 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
@@ -27,13 +23,14 @@ public class Person {
     // Data fields
     private final RoomNumber roomNumber;
     private final EmergencyContact emergencyContact;
-    private final Set<Tag> tags = new HashSet<>();
+    private final Map<TagType, Tag> tags;
+    //private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, StudentId studentId, RoomNumber roomNumber,
-                  EmergencyContact emergencyContact, Set<Tag> tags) {
+                  EmergencyContact emergencyContact, Map<TagType, Tag> tags) {
         requireAllNonNull(name, phone, email, studentId, roomNumber, emergencyContact, tags);
         this.name = name;
         this.phone = phone;
@@ -41,7 +38,7 @@ public class Person {
         this.studentId = studentId;
         this.roomNumber = roomNumber;
         this.emergencyContact = emergencyContact;
-        this.tags.addAll(tags);
+        this.tags = tags;
     }
 
     public Name getName() {
@@ -71,41 +68,29 @@ public class Person {
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public Map<TagType, Tag> getTags() {
+        return Collections.unmodifiableMap(tags);
     }
 
     /**
      * @return the gender tag(s) of this person, if they exist
      */
-    public Set<Tag> getGender() {
-        Set<Tag> genderTags = tags.stream()
-                .filter(tag -> tag.getTagType() == TagType.GENDER)
-                .collect(Collectors.toSet());
-        assertTagLimit(genderTags, TagType.GENDER);
-        return genderTags;
+    public Tag getGender() {
+        return tags.get(TagType.GENDER);
     }
 
     /*
      * @return the year tags of this person
      */
-    public Set<Tag> getYear() {
-        Set<Tag> yearTags = tags.stream()
-                .filter(tag -> tag.getTagType() == TagType.YEAR)
-                .collect(Collectors.toSet());
-        assertTagLimit(yearTags, TagType.YEAR);
-        return yearTags;
+    public Tag getYear() {
+       return tags.get(TagType.YEAR);
     }
 
     /*
      * @return the year tags of this person, if they exist.
      */
-    public Set<Tag> getMajor() {
-        Set<Tag> majorTags = tags.stream()
-                .filter(tag -> tag.getTagType() == TagType.MAJOR)
-                .collect(Collectors.toSet());
-        assertTagLimit(majorTags, TagType.MAJOR);
-        return majorTags;
+    public Tag getMajor() {
+        return tags.get(TagType.MAJOR);
     }
 
     /**

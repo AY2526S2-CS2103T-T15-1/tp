@@ -1,9 +1,6 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,6 +15,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagType;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -63,7 +61,7 @@ class JsonAdaptedPerson {
         studentId = source.getStudentId().value;
         roomNumber = source.getRoomNumber() != null ? source.getRoomNumber().value : null;
         emergencyContact = source.getEmergencyContact() != null ? source.getEmergencyContact().value : null;
-        tags.addAll(source.getTags().stream()
+        tags.addAll(source.getTags().values().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
@@ -126,7 +124,10 @@ class JsonAdaptedPerson {
                                                      ? new EmergencyContact(emergencyContact)
                                                      : null;
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
+        final HashMap<TagType, Tag> modelTags = new HashMap<>();
+        for (Tag tag: personTags) {
+            modelTags.put(tag.getTagType(), tag);
+        }
         return new Person(modelName, modelPhone, modelEmail, modelStudentId, modelRoomNumber,
                 modelEmergencyContact, modelTags);
     }

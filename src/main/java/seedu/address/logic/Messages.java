@@ -50,7 +50,7 @@ public class Messages {
                 .append("; Emergency Contact: ")
                 .append(person.getEmergencyContact())
                 .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+        person.getTags().values().forEach(builder::append);
         return builder.toString();
     }
 

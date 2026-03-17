@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Stream;
 
@@ -51,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         EmergencyContact emergencyContact = ParserUtil.parseEmergencyContact(argMultimap
                 .getValue(PREFIX_EMERGENCY_CONTACT).get());
 
-        Person person = new Person(name, phone, email, studentId, roomNumber, emergencyContact, new HashSet<>());
+        Person person = new Person(name, phone, email, studentId, roomNumber, emergencyContact, new HashMap<>());
 
         return new AddCommand(person);
     }

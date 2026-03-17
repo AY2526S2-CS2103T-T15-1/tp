@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_USAGE;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -39,16 +41,16 @@ public class TagCommandParser implements Parser<TagCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE), e);
         }
 
-        Set<Tag> tags = new HashSet<>();
+        Map<TagType, Tag> tags = new HashMap<>();
 
         argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER)
-                .ifPresent(gender -> tags.add(new Tag(TagType.GENDER, gender)));
+                .ifPresent(gender -> tags.put(TagType.GENDER, new Tag(TagType.GENDER, gender)));
 
         argumentMultimap.getValue(CliSyntax.PREFIX_TAG_MAJOR)
-                .ifPresent(major -> tags.add(new Tag(TagType.MAJOR, major)));
+                .ifPresent(major -> tags.put(TagType.MAJOR, new Tag(TagType.MAJOR, major)));
 
         argumentMultimap.getValue(CliSyntax.PREFIX_TAG_YEAR)
-                .ifPresent(year -> tags.add(new Tag(TagType.YEAR, year)));
+                .ifPresent(year -> tags.put(TagType.YEAR, new Tag(TagType.YEAR, year)));
 
         if (tags.isEmpty()) {
             throw new ParseException(TagCommand.TAG_NOT_ADDED);

@@ -83,7 +83,7 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
         if (keywords.isEmpty()) {
             return false;
         }
-        return person.getTags().stream().anyMatch(tag -> {
+        return person.getTags().values().stream().anyMatch(tag -> {
             String lowerTag = tag.tagName.toLowerCase(Locale.ROOT);
             return keywords.stream()
                     .map(k -> k.toLowerCase(Locale.ROOT))
@@ -96,7 +96,7 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
         if (keywords.isEmpty()) {
             return false;
         }
-        return person.getTags().stream().anyMatch(tag ->
+        return person.getTags().values().stream().anyMatch(tag ->
                 keywords.stream().anyMatch(keyword -> tag.tagName.equalsIgnoreCase(keyword)));
     }
 
