@@ -68,7 +68,7 @@ public class StringUtil {
 
         return wordSet.stream()
                 .map(query -> query.toLowerCase().trim())
-                .anyMatch(query -> fuzzyMatchesIgnoresCase(preppedWord, query));
+                .anyMatch(query -> fuzzyMatchesIgnoresCase(query, preppedWord));
     }
 
     /**
