@@ -65,7 +65,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         // Preamble is empty, prefixes exist -> FindCommand by prefixes
         if (argMultimap.getPreamble().isEmpty() && !argMultimap.hasEmptyPrefixArguments()) {
             FilterDetails filterDetails = buildFilterDetails(argMultimap);
-            return new FindCommand(new PersonMatchesDetailsPredicate(buildFilterDetails(argMultimap)));
+            return new FindCommand(new PersonMatchesDetailsPredicate(filterDetails));
         }
 
         // Should not reach here because all cases are covered above
