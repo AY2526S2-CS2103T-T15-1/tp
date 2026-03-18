@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+         title="Address App" minWidth="1000.0" minHeight="700.0" onCloseRequest="#handleExit">
+  <icons>
+    <Image url="@/images/address_book_32.png" />
+  </icons>
+  <scene>
+    <Scene>
+      <stylesheets>
+        <URL value="@DarkTheme.css" />
+      </stylesheets>
+
+      <VBox maxHeight="1.7976931348623157E308" styleClass="stack-pane">
+        <!-- Menu Bar -->
+        <MenuBar fx:id="menuBar" minHeight="0.0" VBox.vgrow="NEVER">
+          <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+          </Menu>
+        </MenuBar>
+
+        <!-- Command Box -->
+        <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-without-border" VBox.vgrow="NEVER">
+          <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+          </padding>
+        </StackPane>
+
+        <SplitPane orientation="VERTICAL" VBox.vgrow="ALWAYS">
+            <!-- Result Display -->
+            <StackPane fx:id="resultDisplayPlaceholder" maxHeight="300" minHeight="100" prefHeight="100"
+                       styleClass="stack-pane">
+                <padding>
+                    <Insets bottom="5" left="10" right="10" top="5" />
+                </padding>
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </StackPane>
+
+            <!-- SplitPane with Tab section and Person list section -->
+            <SplitPane dividerPositions="0.65" VBox.vgrow="ALWAYS">
+                <items>
+                    <!-- Left side: tab / directory section placeholder -->
+                    <StackPane fx:id="tabSectionPlaceholder" VBox.vgrow="ALWAYS" minWidth ="400.0" />
+
+                    <!-- Right side: person list section -->
+                    <StackPane fx:id="listSectionPlaceholder" VBox.vgrow="ALWAYS" minWidth="400.0" />
+                </items>
+            </SplitPane>
+        </SplitPane>
+
+        <!-- Status bar -->
+        <StackPane fx:id="statusbarPlaceholder" styleClass="stack-pane" VBox.vgrow="NEVER">
+          <VBox.margin>
+            <Insets />
+          </VBox.margin>
+          <padding>
+            <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
+          </padding>
+        </StackPane>
+      </VBox>
+    </Scene>
+  </scene>
+</fx:root>
