@@ -14,15 +14,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.FilterDetails;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonMatchesDetailsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -47,29 +49,29 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         // Preamble and prefixes are both empty -> Output empty argument message
         if (argMultimap.getPreamble().isEmpty() && argMultimap.hasEmptyPrefixArguments()) {
-            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT + "\n" + FindCommand.MESSAGE_USAGE));
         }
 
         // Both preamble and prefixes exist -> Output invalid command format message
         if (!argMultimap.getPreamble().isEmpty() && !argMultimap.hasEmptyPrefixArguments()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT + "\n" + FindCommand.MESSAGE_USAGE));
         }
 
         // Preamble exists, prefixes are empty -> FindCommand search by name
         if (!argMultimap.getPreamble().isEmpty() && argMultimap.hasEmptyPrefixArguments()) {
-            List<String> nameKeywords = getNameKeywords(args);
-            return new FindCommand(new NameContainsKeywordsPredicate(nameKeywords));
+            Set<String> nameKeywordsSet = StringUtil.splitSentenceIntoWords(argMultimap.getPreamble());
+            List<String> nameKeywordsList = nameKeywordsSet.stream().toList();
+            return new FindCommand(new NameContainsKeywordsPredicate(nameKeywordsList));
         }
 
         // Preamble is empty, prefixes exist -> FindCommand by prefixes
         if (argMultimap.getPreamble().isEmpty() && !argMultimap.hasEmptyPrefixArguments()) {
             FilterDetails filterDetails = buildFilterDetails(argMultimap);
-            // TODO: once PersonMatchesDetailsPredicate is ready, plug it here instead of empty predicate
-            return new FindCommand(new NameContainsKeywordsPredicate(List.of()));
+            return new FindCommand(new PersonMatchesDetailsPredicate(filterDetails));
         }
 
         // Should not reach here because all cases are covered above
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT + "\n" + FindCommand.MESSAGE_USAGE));
     }
 
     /**
@@ -79,13 +81,12 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private FilterDetails buildFilterDetails(ArgumentMultimap argMultimap) {
         // Build all keyword sets from ArgumentMultimap
-        Set<String> nameKeywords = toSet(argMultimap.getAllValues(PREFIX_NAME));
+        Set<String> nameKeywords = getNameKeywords(argMultimap);
         Set<String> emailKeywords = toSet(argMultimap.getAllValues(PREFIX_EMAIL));
         Set<String> phoneNumberKeywords = toSet(argMultimap.getAllValues(PREFIX_PHONE));
         Set<String> roomNumberKeywords = toSet(argMultimap.getAllValues(PREFIX_ROOM_NUMBER));
         Set<String> studentIdKeywords = toSet(argMultimap.getAllValues(PREFIX_STUDENT_ID));
         Set<String> emergencyContactKeywords = toSet(argMultimap.getAllValues(PREFIX_EMERGENCY_CONTACT));
-        Set<String> tagKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG));
         Set<String> tagYearKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG_YEAR));
         Set<String> tagMajorKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG_MAJOR));
         Set<String> tagGenderKeywords = toSet(argMultimap.getAllValues(PREFIX_TAG_GENDER));
@@ -98,39 +99,43 @@ public class FindCommandParser implements Parser<FindCommand> {
         filterDetails.setRoomNumberKeywords(roomNumberKeywords);
         filterDetails.setStudentIdKeywords(studentIdKeywords);
         filterDetails.setEmergencyContactKeywords(emergencyContactKeywords);
-        filterDetails.setTagKeywords(tagKeywords);
         filterDetails.setTagYearKeywords(tagYearKeywords);
         filterDetails.setTagMajorKeywords(tagMajorKeywords);
         filterDetails.setTagGenderKeywords(tagGenderKeywords);
 
+        // System.out.println(filterDetails);
         return filterDetails;
+    }
+
+    /**
+     * Returns as set of name keywords from an ArgumentMultimap.
+     * <p>
+     *     Currently, the {@code ArgumentMultimap#getAllValues(PREFIX_NAME)} returns a list of name values.
+     *     <br>
+     *     For example, if the user input is "n=Alice Bob n=Charlie David", then the return list will contain
+     *     ["Alice Bob", "Charlie David"], where each name value may contain multiple words.
+     *     <br>
+     *     However, we want to extract a set of individual name keywords from these name values. In the above example,
+     *     we want to extract a {@code Set} of keywords: "Alice", "Bob", "Charlie", and "David" from the two name
+     *     values.
+     *     <br>
+     *     This ensures that it is compatible with the existing {@code FilterDetails} which accepts a set of
+     *     name keywords in individual words.
+     * </p>
+     *
+     * @param argMultimap the ArgumentMultimap containing the name values to be processed
+     * @return a set of individual name keywords extracted from the name values in the ArgumentMultimap
+     */
+    private static Set<String> getNameKeywords(ArgumentMultimap argMultimap) {
+        List<String> nameValues = argMultimap.getAllValues(PREFIX_NAME);
+        Set<String> nameKeywords = nameValues.stream()
+                .flatMap(nameValue -> StringUtil.splitSentenceIntoWords(nameValue).stream())
+                .collect(Collectors.toSet());
+        return nameKeywords;
     }
 
     private static Set<String> toSet(List<String> values) {
         return new HashSet<>(values);
     }
 
-    /**
-     * Extract name keywords from the preamble. Name keywords are separated by whitespaces.
-     *
-     * @param args the preamble
-     * @return a list of name keywords
-     * @throws ParseException if the preamble is empty or contains only whitespaces
-     */
-    private static List<String> getNameKeywords(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        List<String> nameKeywords = Arrays.asList(trimmedArgs.split("\\s+"))
-                .stream()
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .toList();
-
-        return nameKeywords;
-    }
 }

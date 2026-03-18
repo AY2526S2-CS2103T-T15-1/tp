@@ -20,12 +20,6 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
         this.filterDetails = Objects.requireNonNull(filterDetails);
     }
 
-    /**
-     * Returns true if the person matches all the details specified in the {@link FilterDetails}.
-     *
-     * @param person the person to be tested against the filter details
-     * @return true if the person matches all the details specified in the filterDetails, false otherwise
-     */
     @Override
     public boolean test(Person person) {
         return isNameMatch(person)
@@ -34,54 +28,48 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
                 & isExactMatch(person.getRoomNumber().value, filterDetails.getRoomNumberKeywords())
                 & isFuzzyMatch(person.getStudentId().value, filterDetails.getStudentIdKeywords())
                 & isExactMatch(person.getEmergencyContact().value, filterDetails.getEmergencyContactKeywords())
-                // TODO: Integrate proper person getters into the following lines
-                & matchesFuzzyTags(person, filterDetails.getTagKeywords())
                 & matchesExactTags(person, filterDetails.getTagYearKeywords())
-                & matchesFuzzyTags(person, filterDetails.getTagMajorKeywords())
+                & matchesExactTags(person, filterDetails.getTagMajorKeywords())
                 & matchesExactTags(person, filterDetails.getTagGenderKeywords());
     }
 
-    /**
-     * Name matching is done using {@link NameContainsKeywordsPredicate#test(Person)}
-     * */
     private boolean isNameMatch(Person person) {
+        if (filterDetails.getNameKeywords().isEmpty()) {
+            return true;
+        }
         NameContainsKeywordsPredicate predicate =
                 new NameContainsKeywordsPredicate(filterDetails.getNameKeywords().stream().toList());
         return predicate.test(person);
     }
 
-    // Exact string matching (not case-sensitive) for room and studentId
     private boolean isExactMatch(String fieldValue, Set<String> keywords) {
         assert keywords != null : "keywords set should be non-null";
         if (keywords.isEmpty()) {
+            return true;
+        }
+        if (fieldValue.isEmpty()) {
             return false;
         }
-        String lowerCaseFieldValue = fieldValue.toLowerCase();
-
-        Stream<String> lowerKeywordsStream = keywords.stream()
-                .map(String::toLowerCase);
-
-        return lowerKeywordsStream
-                .anyMatch(lowerCaseFieldValue::contains);
+        String lower = fieldValue.toLowerCase(Locale.ROOT);
+        return keywords.stream().map(k -> k.toLowerCase(Locale.ROOT)).anyMatch(lower::equals);
     }
 
-    // Fuzzy string matching (not case-sensitive)
-    // TODO: Implement fuzzy Match
     private boolean isFuzzyMatch(String fieldValue, Set<String> keywords) {
         assert keywords != null : "keywords set should be non-null";
-        return isExactMatch(fieldValue, keywords);
-    }
-
-    // Substring matching (not case-sensitive)
-    // TODO: Move this to StringUtil perhaps? Or implement a more robust substring matching algorithm
-    private boolean isSubstringMatch(String fieldValue, Set<String> keywords) {
-        return isExactMatch(fieldValue, keywords);
+        if (keywords.isEmpty()) {
+            return true;
+        }
+        if (fieldValue.isEmpty()) {
+            return false;
+        }
+        String lower = fieldValue.toLowerCase(Locale.ROOT);
+        return keywords.stream().map(k -> k.toLowerCase(Locale.ROOT)).anyMatch(lower::contains);
     }
 
     private boolean matchesFuzzyTags(Person person, Set<String> keywords) {
         assert keywords != null : "tag keyword set should be non-null";
         if (keywords.isEmpty()) {
-            return false;
+            return true;
         }
         return person.getTags().values().stream().anyMatch(tag -> {
             String lowerTag = tag.tagName.toLowerCase(Locale.ROOT);
@@ -94,10 +82,11 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
     private boolean matchesExactTags(Person person, Set<String> keywords) {
         assert keywords != null : "tag keyword set should be non-null";
         if (keywords.isEmpty()) {
-            return false;
+            return true;
         }
-        return person.getTags().values().stream().anyMatch(tag ->
-                keywords.stream().anyMatch(keyword -> tag.tagName.equalsIgnoreCase(keyword)));
+        return person.getTags().values().stream()
+                .anyMatch(tag -> keywords.stream()
+                        .anyMatch(keyword -> tag.tagName.equalsIgnoreCase(keyword)));
     }
 
     @Override
@@ -105,11 +94,9 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
         if (other == this) {
             return true;
         }
-
         if (!(other instanceof PersonMatchesDetailsPredicate)) {
             return false;
         }
-
         PersonMatchesDetailsPredicate otherPredicate = (PersonMatchesDetailsPredicate) other;
         return Objects.equals(this.filterDetails, otherPredicate.filterDetails);
     }

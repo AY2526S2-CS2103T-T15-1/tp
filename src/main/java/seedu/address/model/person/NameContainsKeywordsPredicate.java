@@ -46,7 +46,10 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (NameContainsKeywordsPredicate) other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
+        // Compare keywords as sets to ignore order and duplicates
+        Set<String> keywordsSet = Set.copyOf(keywords);
+        Set<String> otherKeywordsSet = Set.copyOf(otherNameContainsKeywordsPredicate.keywords);
+        return keywordsSet.equals(otherKeywordsSet);
     }
 
     @Override

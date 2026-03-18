@@ -12,7 +12,6 @@ public class FilterDetails {
     private Set<String> roomNumberKeywords;
     private Set<String> studentIdKeywords;
     private Set<String> emergencyContactKeywords;
-    private Set<String> tagKeywords;
     private Set<String> tagYearKeywords;
     private Set<String> tagMajorKeywords;
     private Set<String> tagGenderKeywords;
@@ -43,10 +42,6 @@ public class FilterDetails {
 
     public void setEmergencyContactKeywords(Set<String> emergencyContactKeywords) {
         this.emergencyContactKeywords = emergencyContactKeywords;
-    }
-
-    public void setTagKeywords(Set<String> tagKeywords) {
-        this.tagKeywords = tagKeywords;
     }
 
     public void setTagYearKeywords(Set<String> tagYearKeywords) {
@@ -86,10 +81,6 @@ public class FilterDetails {
         return emergencyContactKeywords;
     }
 
-    public Set<String> getTagKeywords() {
-        return tagKeywords;
-    }
-
     public Set<String> getTagYearKeywords() {
         return tagYearKeywords;
     }
@@ -100,5 +91,20 @@ public class FilterDetails {
 
     public Set<String> getTagGenderKeywords() {
         return tagGenderKeywords;
+    }
+
+    @Override
+    public String toString() {
+        return "{"
+                + "nameKeywords=" + nameKeywords
+                + ", emailKeywords=" + emailKeywords
+                + ", phoneNumberKeywords=" + phoneNumberKeywords
+                + ", roomNumberKeywords=" + roomNumberKeywords
+                + ", studentIdKeywords=" + studentIdKeywords
+                + ", emergencyContactKeywords=" + emergencyContactKeywords
+                + ", tagYearKeywords=" + tagYearKeywords
+                + ", tagMajorKeywords=" + tagMajorKeywords
+                + ", tagGenderKeywords=" + tagGenderKeywords
+                + '}';
     }
 }
