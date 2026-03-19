@@ -139,21 +139,20 @@ Examples:
 
 #### Method 2: Find by attributes
 
-Finds persons matching all specified attributes (**AND** search), while allowing multiple values for each attribute
-(**OR** search).
+Finds persons matching all specified attributes (AND search), while allowing multiple values for each attribute
+(OR search).
 
 Format: `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`
 
 * At least one attribute must be provided.
 * The search is case-insensitive.
-* **AND search:** Persons must match **all** the attribute types specified.
-    * e.g. `find n=Alice p=123` returns persons with name containing "Alice" **AND** phone containing "123".
-* **OR search:** Within a single attribute type, persons matching **any** of the keywords will be returned.
-    * e.g. `find y=2 y=3` returns persons in Year 2 **OR** Year 3.
-* **Fuzzy matching support:** Phone, Email, Student ID, Major.
-    * e.g. `p=9123` matches `91234567`.
-* **Exact matching support:** Room Number, Emergency Contact, Year, Gender.
-    * e.g. `r=123` matches `123`, but `r=12` does not match `123`.
+* AND search: Persons must match **all** the attribute types specified.
+    * e.g. `find n=Alice p=123` returns persons with name containing "Alice" AND phone containing "123".
+* OR search: Within a single attribute type, persons matching **any** of the keywords will be returned.
+    * e.g. `find y=2 y=3` returns persons in Year 2 OR Year 3.
+* Fuzzy search support for Name, Phone, Email, Student ID and Major.
+    * e.g. `p=9123` matches `+65 91234567`
+    * e.g: `n=Liz` matches `Lizah`, `Lisz`, `Elizabeth` etc.
 
 Examples:
 * `find n=Alice p=91234567 y=1` returns persons with name "Alice", phone containing "91234567", and Year "1".
