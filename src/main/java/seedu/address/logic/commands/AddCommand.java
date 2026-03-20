@@ -38,7 +38,9 @@ public class AddCommand extends Command {
             + PREFIX_EMERGENCY_CONTACT + "+65 98765432";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "A student with this student id already exists in "
+            + "the hall ledger";
+    public static final String MESSAGE_ROOM_OCCUPIED = "This room is already occupied!";
 
     private final Person toAdd;
 
@@ -56,6 +58,10 @@ public class AddCommand extends Command {
 
         if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        if (model.hasPersonWithSameRoom(toAdd)) {
+            throw new CommandException(MESSAGE_ROOM_OCCUPIED);
         }
 
         model.addPerson(toAdd);

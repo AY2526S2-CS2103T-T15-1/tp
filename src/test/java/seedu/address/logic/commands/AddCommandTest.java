@@ -54,6 +54,15 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_personWithExistingRoom_throwsCommandException() {
+        Person validPerson = new PersonBuilder().build();
+        AddCommand addCommand = new AddCommand(validPerson);
+        Person editedPerson = new PersonBuilder().withStudentId("A8765432X").build();
+        ModelStub modelStub = new ModelStubWithPerson(editedPerson);
+        assertThrows(CommandException.class, AddCommand.MESSAGE_ROOM_OCCUPIED, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -149,6 +158,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasPersonWithSameRoom(Person person) {
+            return false;
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -174,6 +188,12 @@ public class AddCommandTest {
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return this.person.isSamePerson(person);
+        }
+
+        @Override
+        public boolean hasPersonWithSameRoom(Person person) {
+            requireNonNull(person);
+            return this.person.hasSameRoom(person);
         }
     }
 
