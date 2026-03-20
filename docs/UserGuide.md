@@ -97,6 +97,23 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
+### Tagging a student: `tag`
+
+Adds **Major**, **Year** and **Gender** tags to an existing student.
+
+Format: `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`
+
+* Adds or edits tags for the student uniquely identified by *STUDENT_ID*.
+* *STUDENT_ID* must in valid format and exist in the Hall Ledger
+* At least one of the optional tag fields (m=, y=, g=) must be provided.
+* Existing tags are replaced **(not cumulative)**.
+* Each student can have **at most** **one** Year, **one** Major, and **one** Gender tag at any time.
+* Re-tagging a student will **overwrite** previously assigned tags with the new values provided.
+
+Examples:
+* `tag i=A0123456N y=Y3 m=Information Systems`: Assigns Year 3 and Information Systems as the student’s tags (any existing tags are replaced).
+* `tag i=A0101010X g=Female`: Updates the student’s Gender to Female and leaves other tags unchanged.
+
 ### Editing a person : `edit`
 
 Edits an existing person in the address book.
@@ -183,6 +200,9 @@ _Details coming soon ..._
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+
+**Q**: How do I go back to seeing the list of all students after running `find`?<br>
+**A**: Run the `list` command to see the full list of students again.
 
 --------------------------------------------------------------------------------------------------------------------
 
