@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_EMPTY_ARGUMENT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
@@ -37,8 +36,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                         PREFIX_EMAIL,
                         PREFIX_STUDENT_ID,
                         PREFIX_ROOM_NUMBER,
-                        PREFIX_EMERGENCY_CONTACT,
-                        PREFIX_TAG);
+                        PREFIX_EMERGENCY_CONTACT);
 
         validatePrefixes(argMultimap);
 
@@ -85,16 +83,21 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        // If no ID prefixes are present -> empty argument error
+        // If no ID prefixes are present -> missing required parameter
         List<String> studentIdValues = argMultimap.getAllValues(PREFIX_STUDENT_ID);
         if (studentIdValues.isEmpty()) {
-            throw new ParseException(MESSAGE_EMPTY_ARGUMENT + "\n" + EditCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        // If there are more than 2 student ID prefixes -> invalid command format
-        argMultimap.verifyNoMoreThanTwoPrefixesFor(PREFIX_STUDENT_ID);
+        // ArgumentTokenizer doesn't tokenize PREFIX_TAG, so it will be treated as preamble.
+        assert argMultimap.getAllValues(PREFIX_TAG).isEmpty() : "PREFIX_TAG should not be tokenized";
 
-        // Check for duplicated non-student ID prefixes
+        // Check for duplicate student ID prefixes (allow up to 2)
+        if (argMultimap.getAllValues(PREFIX_STUDENT_ID).size() > 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
+        // Check for duplicate prefixes in single-valued fields
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_ROOM_NUMBER, PREFIX_EMERGENCY_CONTACT);
     }

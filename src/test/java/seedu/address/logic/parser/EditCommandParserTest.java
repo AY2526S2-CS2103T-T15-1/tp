@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_EMPTY_ARGUMENT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
@@ -48,8 +47,6 @@ public class EditCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
-    private static final String EDIT_COMMAND_MESSAGE_EMPTY_PARAMETER =
-            MESSAGE_EMPTY_ARGUMENT + "\n" + EditCommand.MESSAGE_USAGE;
     private EditCommandParser parser = new EditCommandParser();
 
     @Test
@@ -64,10 +61,10 @@ public class EditCommandParserTest {
         assertParseFailure(parser, STUDENTID_DESC_AMY, EditCommand.MESSAGE_NOT_EDITED);
 
         // has no studentID but has other fields specified -> invalid format
-        assertParseFailure(parser, EMERGENCY_CONTACT_DESC_AMY, EDIT_COMMAND_MESSAGE_EMPTY_PARAMETER);
+        assertParseFailure(parser, EMERGENCY_CONTACT_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // no studentId and no field specified
-        assertParseFailure(parser, "", EDIT_COMMAND_MESSAGE_EMPTY_PARAMETER);
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
