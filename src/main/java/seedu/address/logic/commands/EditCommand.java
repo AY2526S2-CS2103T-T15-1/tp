@@ -55,8 +55,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited resident: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "The edit details cause duplicated resident details" +
-            "in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "The edit details cause duplicated resident details"
+            + "in the address book.";
 
     private final StudentId targetStudentId;
     private final EditPersonDescriptor editPersonDescriptor;

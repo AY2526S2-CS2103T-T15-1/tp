@@ -11,7 +11,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STUDENTID_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MAJOR;
 
 import org.junit.jupiter.api.Test;
 
@@ -73,7 +72,7 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getEmail().orElse(null) + ", studentId="
                 + editPersonDescriptor.getStudentId().orElse(null) + ", roomNumber="
                 + editPersonDescriptor.getRoomNumber().orElse(null) + ", emergencyContact="
-                + editPersonDescriptor.getEmergencyContact().orElse(null)+ "}";
+                + editPersonDescriptor.getEmergencyContact().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }
