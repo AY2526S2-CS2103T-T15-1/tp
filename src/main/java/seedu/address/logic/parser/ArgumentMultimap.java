@@ -77,6 +77,22 @@ public class ArgumentMultimap {
     }
 
     /**
+     * Throws a {@code ParseException} if any of the prefixes given in {@code prefixes} appeared more than
+     * twice among the arguments.
+     * @param prefixes the prefixes to check for duplicates
+     * @throws ParseException if any of the specified prefixes appeared more than twice among the arguments
+     */
+    public void verifyNoMoreThanTwoPrefixesFor(Prefix... prefixes) throws ParseException {
+        Prefix[] duplicatedPrefixes = Stream.of(prefixes).distinct()
+                .filter(prefix -> argMultimap.containsKey(prefix) && argMultimap.get(prefix).size() > 2)
+                .toArray(Prefix[]::new);
+
+        if (duplicatedPrefixes.length > 0) {
+            throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
+        }
+    }
+
+    /**
      * Returns a new ArgumentMultimap with all empty string values removed, and prefixes that only have empty string
      * values will also be removed.
      *
