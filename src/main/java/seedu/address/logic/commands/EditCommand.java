@@ -239,22 +239,6 @@ public class EditCommand extends Command {
 
         public Optional<Remark> getRemark() { return Optional.ofNullable(remark); }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(HashMap<TagType, Tag> tags) {
-            this.tags = (tags != null) ? new HashMap<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Map<TagType, Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableMap(tags)) : Optional.empty();
-        }
 
         @Override
         public boolean equals(Object other) {
@@ -287,7 +271,6 @@ public class EditCommand extends Command {
                     .add("studentId", studentId)
                     .add("roomNumber", roomNumber)
                     .add("emergencyContact", emergencyContact)
-                    .add("tags", tags)
                     .toString();
         }
     }
