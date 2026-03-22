@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -23,6 +25,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final ObjectProperty<FilterDetails> filterDetails = new SimpleObjectProperty<>(new FilterDetails());
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -133,6 +136,13 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Filter Details Accessors =============================================================
+
+    @Override
+    public ObjectProperty<FilterDetails> getFilterDetailsProperty() {
+        return filterDetails;
     }
 
     @Override
