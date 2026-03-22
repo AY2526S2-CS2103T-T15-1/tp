@@ -91,11 +91,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(MESSAGE_EMPTY_ARGUMENT + "\n" + EditCommand.MESSAGE_USAGE);
         }
 
-        // If there are more than 2 student ID prefixes -> invalid command format
-        argMultimap.verifyNoMoreThanTwoPrefixesFor(PREFIX_STUDENT_ID);
-
-        // Check for duplicate prefixes
+        // Check for duplicated non-student ID prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_ROOM_NUMBER, PREFIX_EMERGENCY_CONTACT);
+
+        // If there are more than 2 student ID prefixes -> invalid command format
+        argMultimap.verifyNoMoreThanTwoPrefixesFor(PREFIX_STUDENT_ID);
     }
 }
