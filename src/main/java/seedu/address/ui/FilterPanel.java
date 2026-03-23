@@ -69,6 +69,11 @@ public class FilterPanel extends UiPart<Region> {
     * Fills the inner parts of the FilterPanel, such as setting up event handlers for the filter fields and
     */
     private void fillInnerParts() {
+        // Keep name tags synchronized with the observable keyword set.
+        filterDetails.getNameKeywords().addListener(change -> renderNameKeywordTags(filterDetails));
+        renderNameKeywordTags(filterDetails);
+
+        // TODO: Remove UI mockup entirely once we're ready
         // Initialize dummy values for ComboBoxes for UI demonstration
         floorFilterComboBox.getItems().addAll("Any", "1", "2", "3", "4", "5");
         floorFilterComboBox.getSelectionModel().selectFirst();
@@ -86,6 +91,19 @@ public class FilterPanel extends UiPart<Region> {
         sortOrderComboBox.getItems().addAll("Ascending", "Descending");
         sortOrderComboBox.getSelectionModel().selectFirst();
     }
+
+
+    // TODO: Refactor this method to be more generic and reusable for other filter fields in the future.
+    // Currently, this method is specific to listening to changes from FilterDetails to render updated keyword tags.
+    private void renderNameKeywordTags(ReadOnlyFilterDetails details) {
+        nameTags.getChildren().clear();
+        if (details == null) {
+            return;
+        }
+        Set<String> nameKeywordTags = details.getNameKeywords();
+        nameKeywordTags.forEach(tag -> nameTags.getChildren().add(new Label(tag)));
+    }
+
     /*
     * Handles the event when the user presses 'Enter' in the name filter field.
     * Splits the input into individual keywords and displays them as tags in the UI.
