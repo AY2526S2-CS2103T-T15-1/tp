@@ -24,9 +24,6 @@ public class StudentDetailsTab extends UiPart<Region> {
     private StackPane profilePlaceholder;
 
     @FXML
-    private StackPane ccaRecordsPlaceholder;
-
-    @FXML
     private StackPane demeritRecordsPlaceholder;
 
     /**
@@ -38,5 +35,10 @@ public class StudentDetailsTab extends UiPart<Region> {
     }
 
     private void fillInnerParts() {
+        Profile profile = new Profile();
+        profilePlaceholder.getChildren().add(profile.getRoot());
+
+        DemeritRecords demeritRecords = new DemeritRecords();
+        demeritRecordsPlaceholder.getChildren().add(demeritRecords.getRoot());
     }
 }
