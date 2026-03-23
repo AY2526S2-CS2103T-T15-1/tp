@@ -51,6 +51,24 @@ public class FilterDetails {
     }
 
     // ==================== Setters ======================
+
+    /**
+     * Sets the details of this {@code FilterDetails} to be the same as the given {@code FilterDetails}.
+     *
+     * @param other the {@code FilterDetails} to copy the details from
+     */
+    public void set(FilterDetails other) {
+        this.nameKeywords = new HashSet<>(other.nameKeywords);
+        this.emailKeywords = new HashSet<>(other.emailKeywords);
+        this.phoneNumberKeywords = new HashSet<>(other.phoneNumberKeywords);
+        this.roomNumberKeywords = new HashSet<>(other.roomNumberKeywords);
+        this.studentIdKeywords = new HashSet<>(other.studentIdKeywords);
+        this.emergencyContactKeywords = new HashSet<>(other.emergencyContactKeywords);
+        this.tagYearKeywords = new HashSet<>(other.tagYearKeywords);
+        this.tagMajorKeywords = new HashSet<>(other.tagMajorKeywords);
+        this.tagGenderKeywords = new HashSet<>(other.tagGenderKeywords);
+    }
+
     public void setNameKeywords(Set<String> nameKeywords) {
         this.nameKeywords = nameKeywords;
     }
