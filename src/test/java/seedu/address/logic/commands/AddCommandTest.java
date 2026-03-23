@@ -180,7 +180,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObjectProperty<FilterDetails> getFilterDetailsProperty() {
+        public ObjectProperty<FilterDetails> getFilterDetails() {
             throw new AssertionError("This method should not be called.");
         }
     }

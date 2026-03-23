@@ -36,7 +36,7 @@ public class ListSection extends UiPart<Region> {
     }
 
     private void fillInnerParts() {
-        FilterPanel filterPanel = new FilterPanel(logic.getFilterDetailsProperty(), filterExecutor);
+        FilterPanel filterPanel = new FilterPanel(logic.getFilterDetails(), filterExecutor);
         filterPanelPlaceholder.getChildren().add(filterPanel.getRoot());
 
         PersonListPanel personListPanel = new PersonListPanel(logic.getFilteredPersonList());
