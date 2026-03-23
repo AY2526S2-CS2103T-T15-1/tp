@@ -173,8 +173,8 @@ public class Person {
                 .add("studentId", studentId)
                 .add("roomNumber", roomNumber)
                 .add("emergencyContact", emergencyContact)
-                .add("tags", tags)
                 .add("remark", remark)
+                .add("tags", tags)
                 .toString();
     }
 

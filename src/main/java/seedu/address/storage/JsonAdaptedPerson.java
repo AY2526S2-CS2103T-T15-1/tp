@@ -137,11 +137,13 @@ class JsonAdaptedPerson {
         }
         final EmergencyContact modelEmergencyContact = emergencyContact != null
                                                      ? new EmergencyContact(emergencyContact)
+
                                                      : null;
-        if (remark == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
+        Remark modelRemark = new Remark("");
+        if (remark != null) {
+            modelRemark = new Remark(remark);
         }
-        final Remark modelRemark = new Remark(remark);
+
         final HashMap<TagType, Tag> modelTags = new HashMap<>();
         for (Tag tag: personTags) {
             modelTags.put(tag.getTagType(), tag);

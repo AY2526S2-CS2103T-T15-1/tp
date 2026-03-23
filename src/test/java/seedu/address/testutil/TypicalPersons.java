@@ -35,6 +35,7 @@ public class TypicalPersons {
             .withStudentId("A1234567X").withEmail("alice@example.com")
             .withPhone("+65 94351253")
             .withRoomNumber("13E").withEmergencyContact("+65 91234567")
+            .withRemark("Allergic to peanuts")
             .withTags(new Object[]{TagType.GENDER, "Female"},
                     new Object[]{TagType.YEAR, "Y1"},
                     new Object[]{TagType.MAJOR, "CS"}).build();
