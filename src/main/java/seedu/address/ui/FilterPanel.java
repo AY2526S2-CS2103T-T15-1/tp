@@ -11,10 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilterDetails;
+import seedu.address.ui.executors.FilterExecutor;
 
 /**
  * Panel containing the list of filtering and sorting options.
@@ -109,17 +109,9 @@ public class FilterPanel extends UiPart<Region> {
         try {
             filterExecutor.execute(newFilterDetails);
         } catch (CommandException e) {
-            // No-op: MainWindow owns feedback rendering for filter execution failures.
+            // No-op: MainWindow#executeCommand will handle displaying the error message to the user.
         }
 
         nameFilterField.clear();
-    }
-
-    /**
-     * Represents a function that can apply filters and return a command-like result.
-     */
-    @FunctionalInterface
-    public interface FilterExecutor {
-        CommandResult execute(FilterDetails filterDetails) throws CommandException;
     }
 }

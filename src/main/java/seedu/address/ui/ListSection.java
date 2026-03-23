@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.logic.Logic;
+import seedu.address.ui.executors.FilterExecutor;
 
 /**
  * UI for the ListSection that is displayed on the right hand side of the main
@@ -14,7 +15,7 @@ public class ListSection extends UiPart<Region> {
     private static final String FXML = "ListSection.fxml";
 
     private final Logic logic;
-    private final FilterPanel.FilterExecutor filterExecutor;
+    private final FilterExecutor filterExecutor;
 
     @FXML
     private StackPane filterPanelPlaceholder;
@@ -27,7 +28,7 @@ public class ListSection extends UiPart<Region> {
      *
      * @param logic
      */
-    public ListSection(Logic logic, FilterPanel.FilterExecutor filterExecutor) {
+    public ListSection(Logic logic, FilterExecutor filterExecutor) {
         super(FXML);
         this.logic = logic;
         this.filterExecutor = filterExecutor;
