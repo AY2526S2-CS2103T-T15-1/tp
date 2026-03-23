@@ -105,7 +105,7 @@ Adds **Major**, **Year** and **Gender** tags to an existing student.
 Format: `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`
 
 * Adds or edits tags for the student uniquely identified by *STUDENT_ID*.
-* *STUDENT_ID* must in valid format and exist in the Hall Ledger
+* *STUDENT_ID* must be in a valid format and exist in the Hall Ledger
 * At least one of the optional tag fields (m=, y=, g=) must be provided.
 * Existing tags are replaced **(not cumulative)**.
 * Each student can have **at most** **one** Year, **one** Major, and **one** Gender tag at any time.
@@ -117,7 +117,7 @@ Examples:
 
 ### Editing a person : `edit`
 
-Edits an existing student in the _Hall Ledger_.y
+Edits an existing student in the _Hall Ledger_.
 
 Format: `edit STUDENT_ID [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]​`
 
