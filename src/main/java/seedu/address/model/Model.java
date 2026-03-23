@@ -94,7 +94,7 @@ public interface Model {
     void setFilterDetails(FilterDetails filterDetails);
 
     /**
-     * Returns the filter details property for dynamic updates.
+     * Returns the current read-only filter details.
      */
     ReadOnlyFilterDetails getFilterDetails();
 }

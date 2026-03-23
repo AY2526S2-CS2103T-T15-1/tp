@@ -62,7 +62,7 @@ public interface Logic {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns an unmodifiable filter details property.
+     * Returns the current read-only filter details.
      *
      * @see seedu.address.model.Model#getFilterDetails()
      */
