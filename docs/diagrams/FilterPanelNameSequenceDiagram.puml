@@ -1,0 +1,57 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+actor User
+
+box UI UI_COLOR_T1
+participant ":FilterPanel" as FilterPanel UI_COLOR
+participant ":MainWindow" as MainWindow UI_COLOR
+participant ":ResultDisplay" as ResultDisplay UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant "f:FindCommand" as FindCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+== User enters name filter ==
+User -> FilterPanel : handleNameFieldEntered()
+activate FilterPanel
+
+FilterPanel -> FilterPanel : split input into name keywords
+FilterPanel -> FilterPanel : copy current FilterDetails\n+and setNameKeywords(...)
+
+FilterPanel -> MainWindow : executeFilter(filterDetails)
+activate MainWindow
+MainWindow -> LogicManager : executeFilter(filterDetails)
+activate LogicManager
+
+LogicManager -> FindCommand : create from filter details
+activate FindCommand
+LogicManager -> FindCommand : execute(model)
+
+FindCommand -> Model : setFilterDetails(filterDetails)
+FindCommand -> Model : updateFilteredPersonList(predicate)
+Model --> FindCommand : done
+
+FindCommand --> LogicManager : CommandResult
+deactivate FindCommand
+LogicManager --> MainWindow : CommandResult
+deactivate LogicManager
+
+MainWindow -> ResultDisplay : setFeedbackToUser(...)
+MainWindow --> FilterPanel : CommandResult
+deactivate MainWindow
+
+== UI sync after model state update ==
+Model --> FilterPanel : nameKeywords changed (ObservableSet listener)
+FilterPanel -> FilterPanel : renderNameKeywordTags(filterDetails)
+
+deactivate FilterPanel
+@enduml
+
