@@ -30,7 +30,7 @@ public class DashboardTab extends UiPart<Region> {
      * @param logic
      */
     public DashboardTab(Logic logic) {
-        super(FXML, new Region());
+        super(FXML);
         this.logic = logic;
         refresh();
         logic.getFilteredPersonList().addListener((ListChangeListener<Object>) c -> refresh());
