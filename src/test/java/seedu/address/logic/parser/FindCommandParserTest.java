@@ -23,16 +23,33 @@ public class FindCommandParserTest {
     }
 
     @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "x=Alice", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgs_returnsFindCommand() {
         FilterDetails filterDetails = new FilterDetails();
-        filterDetails.setNameKeywords(Set.of("Alice", "Bob"));
+        filterDetails.setNameKeywords(Set.of("Alice", "Bob", "Swiss Cheese"));
+        filterDetails.setEmailKeywords(Set.of("alice@example.com"));
+        filterDetails.setPhoneNumberKeywords(Set.of("91234567"));
+        filterDetails.setRoomNumberKeywords(Set.of("A101"));
+        filterDetails.setStudentIdKeywords(Set.of("A1234567X"));
+        filterDetails.setEmergencyContactKeywords(Set.of("87654321"));
+        filterDetails.setTagYearKeywords(Set.of("Y1"));
+        filterDetails.setTagMajorKeywords(Set.of("CS", "Math"));
+        filterDetails.setTagGenderKeywords(Set.of("Female"));
+
         FindCommand expectedFindCommand = new FindCommand(filterDetails);
-        assertParseSuccess(parser, "n=Alice n=Bob n= Swiss Cheese", expectedFindCommand);
+        assertParseSuccess(parser,
+                "n=Alice n=Bob n=Swiss Cheese e=alice@example.com p=91234567 r=A101 i=A1234567X "
+                        + "ec=87654321 y=Y1 m=CS m=Math g=Female",
+                expectedFindCommand);
     }
 
     @Test
     public void parse_preamble_throwsParseException() {
-        assertParseFailure(parser, "Alice Bob", String.format(MESSAGE_INVALID_COMMAND_FORMAT + "\n"
-                + FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "Alice Bob",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 }

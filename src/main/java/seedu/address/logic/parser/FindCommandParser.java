@@ -85,7 +85,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         // Any preamble text is invalid for find because this command is prefix-only.
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT + "\n" + FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         // No non-empty prefix arguments.
