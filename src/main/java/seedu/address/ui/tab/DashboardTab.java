@@ -24,6 +24,11 @@ public class DashboardTab extends UiPart<Region> {
     @FXML private Label y3CountLabel;
     @FXML private Label y4CountLabel;
 
+    /**
+     * Creates a {@code DashboardTab} with the given {@code Logic}.
+     *
+     * @param logic
+     */
     public DashboardTab(Logic logic) {
         super(FXML, new Region());
         this.logic = logic;
@@ -38,9 +43,9 @@ public class DashboardTab extends UiPart<Region> {
         var list = logic.getFilteredPersonList();
 
         // ---Gender groups via tags---
-        long male   = countByTag(list, "male");
+        long male = countByTag(list, "male");
         long female = countByTag(list, "female");
-        long other  = list.size() - male - female;
+        long other = list.size() - male - female;
 
         maleCountLabel.setText(String.valueOf(male));
         femaleCountLabel.setText(String.valueOf(female));
@@ -54,11 +59,10 @@ public class DashboardTab extends UiPart<Region> {
     }
 
     /**
-     * Counts the number of people in the list that have a specific tag.
-     *
-     * @param list The list of people to search through.
-     * @param tagName The name of the tag to count.
-     * @return The number of people with the specified tag.
+     * Counts the number of students in the list that have a tag matching the given tag name (case-insensitive).
+     * @param list
+     * @param tagName
+     * @return
      */
     private long countByTag(javafx.collections.ObservableList<? extends Person> list, String tagName) {
         return list.stream()
