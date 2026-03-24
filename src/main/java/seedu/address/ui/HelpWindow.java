@@ -113,9 +113,11 @@ public class HelpWindow extends UiPart<Stage> {
     @FXML
     public void handleLinkClick(Event event) {
         try {
+            //Open link in browser
+            logger.fine("Opened link in browser");
             Desktop.getDesktop().browse(new URI((link.getText())));
         } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+            logger.info("The URL is not correct");
         }
     }
 }
