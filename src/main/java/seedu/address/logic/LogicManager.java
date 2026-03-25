@@ -78,10 +78,10 @@ public class LogicManager implements Logic {
 
     /**
      * Executes the filter command and returns the result. Calls on {@code FindCommand} to perform the filtering based
-     * on the filter details provided by the UI.
+     * on the {@link FilterDetails} called.
      *
-     * @param filterDetails The filter details from the UI.
-     * @return the result of executing the filter command.
+     * @param filterDetails The filter details.
+     * @return the result of executing the find command using the filter details.
      * @throws CommandException if an error occurs during command execution.
      */
     @Override
