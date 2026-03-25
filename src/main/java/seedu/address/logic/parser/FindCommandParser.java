@@ -17,7 +17,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -27,13 +26,6 @@ import seedu.address.model.FilterDetails;
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
-    /**
-     * The maximum number of values allowed for each prefix in a find command.
-     * This is to prevent potential performance issues from parsing and processing an excessively
-     * large number of keywords for a single prefix.
-     */
-    private static final int MAX_VALUES_PER_PREFIX = 20;
-
     private static Set<String> toSet(List<String> values) {
         return new HashSet<>(values);
     }
@@ -91,40 +83,17 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        validateNoOverLimitPrefixes(argMultimap);
-
         // No non-empty prefix arguments.
         if (argMultimap.hasEmptyPrefixArguments()) {
             throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT + "\n" + FindCommand.MESSAGE_USAGE));
         }
 
         FilterDetails filterDetails = buildFilterDetails(argMultimap);
+        try {
+            filterDetails.validateKeywordLimits();
+        } catch (IllegalArgumentException exception) {
+            throw new ParseException(exception.getMessage());
+        }
         return new FindCommand(filterDetails);
     }
-
-    /**
-     * Validates that no prefix in {@code argMultimap} has more than {@code MAX_VALUES_PER_PREFIX} non-empty values.
-     */
-    private void validateNoOverLimitPrefixes(ArgumentMultimap argMultimap) throws ParseException {
-        // @formatter:off
-        List<Prefix> supportedPrefixesList = List.of(PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER,
-            PREFIX_STUDENT_ID, PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER);
-        // @formatter:on
-        Prefix[] supportedPrefixes = supportedPrefixesList.toArray(new Prefix[0]);
-
-        List<Long> nonEmptyValuesCount = argMultimap.getNonEmptyValuesCount(supportedPrefixes);
-        List<Prefix> prefixesOverLimit = IntStream.range(0, supportedPrefixes.length)
-                .filter(index -> nonEmptyValuesCount.get(index) > MAX_VALUES_PER_PREFIX)
-                .mapToObj(index -> supportedPrefixes[index])
-                .toList();
-
-        if (!prefixesOverLimit.isEmpty()) {
-            String overLimitPrefixList = prefixesOverLimit.stream()
-                    .map(Prefix::getPrefix)
-                    .toList()
-                    .toString();
-            throw new ParseException(String.format(FindCommand.MESSAGE_TOO_MANY_PREFIX_VALUES, overLimitPrefixList));
-        }
-    }
-
 }

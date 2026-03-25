@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,21 +55,6 @@ public class ArgumentMultimap {
         return new ArrayList<>(argMultimap.get(prefix));
     }
 
-    /**
-     * Returns the number of non-empty values (after trimming) for each of the given prefixes.
-     * If a prefix does not exist or has no values, it will count as 0.
-     *
-     * @param prefixes Prefixes to count non-empty values for
-     * @return a list of counts corresponding to each prefix in the same order as the input array
-     */
-    public List<Long> getNonEmptyValuesCount(Prefix... prefixes) {
-        return Arrays.stream(prefixes)
-                .map(prefix -> getAllValues(prefix)
-                        .stream()
-                        .filter(s -> !s.trim().isEmpty())
-                        .count())
-                .toList();
-    }
 
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.

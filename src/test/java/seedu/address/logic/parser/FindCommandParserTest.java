@@ -60,7 +60,8 @@ public class FindCommandParserTest {
             userInput.append(" n=Name").append(index);
         }
 
-        String expectedMessage = String.format(FindCommand.MESSAGE_TOO_MANY_PREFIX_VALUES, "[n=]");
+        String expectedMessage = String.format(
+                FilterDetails.MESSAGE_TOO_MANY_PREFIX_VALUES, "[n=]", FilterDetails.MAX_VALUES_PER_PREFIX);
         assertParseFailure(parser, userInput.toString(), expectedMessage);
     }
 
