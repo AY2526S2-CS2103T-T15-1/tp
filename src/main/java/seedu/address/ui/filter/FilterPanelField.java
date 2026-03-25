@@ -70,7 +70,7 @@ public class FilterPanelField extends UiPart<Region> {
 	}
 
     @FunctionalInterface
-    public interface KeywordSubmittedHandler {
-        List<String> handle(String keyword);
+    public interface KeywordsChangedHandler {
+        void handle(List<String> keywords);
     }
 }
