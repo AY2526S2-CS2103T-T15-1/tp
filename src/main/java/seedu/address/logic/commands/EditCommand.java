@@ -9,10 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -113,8 +111,6 @@ public class EditCommand extends Command {
         EmergencyContact updatedEmergencyContact = editPersonDescriptor.getEmergencyContact()
                 .orElse(personToEdit.getEmergencyContact());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
-        Map<TagType, Tag> updatedTags = editPersonDescriptor.getTags()
-                .orElse(personToEdit.getTags());
 
         return new Person(
                 updatedName,
@@ -124,7 +120,7 @@ public class EditCommand extends Command {
                 updatedRoomNumber,
                 updatedEmergencyContact,
                 updatedRemark,
-                updatedTags,
+                personToEdit.getTags(), // Tags are not editable through EditCommand, so we keep the original tags
                 personToEdit.getDemeritIncidents()
         );
     }
@@ -181,7 +177,6 @@ public class EditCommand extends Command {
             setRoomNumber(toCopy.roomNumber);
             setEmergencyContact(toCopy.emergencyContact);
             setRemark(toCopy.remark);
-            setTags(toCopy.tags);
         }
 
         /**

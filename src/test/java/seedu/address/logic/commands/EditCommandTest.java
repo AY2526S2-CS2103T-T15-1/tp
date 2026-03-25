@@ -10,7 +10,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STUDENTID_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STUDENTID_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MAJOR;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -44,7 +43,7 @@ public class EditCommandTest {
         // retrieve the tags of the first person
         // make sure the tags are not modified by the EditCommand
         Person editedPerson = new PersonBuilder().withTags(firstPerson.getTags())
-                .withRemark("Allergic to peanuts").build().build();
+                .withRemark("Allergic to peanuts").build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(targetStudentId, descriptor);
