@@ -231,11 +231,17 @@ public class EditCommand extends Command {
             this.emergencyContact = emergencyContact;
         }
 
-        public Optional<EmergencyContact> getEmergencyContact() { return Optional.ofNullable(emergencyContact); }
+        public Optional<EmergencyContact> getEmergencyContact() {
+            return Optional.ofNullable(emergencyContact);
+        }
 
-        public void setRemark(Remark remark) { this.remark = remark; }
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
 
-        public Optional<Remark> getRemark() { return Optional.ofNullable(remark); }
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
 
 
         @Override
