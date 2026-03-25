@@ -1,5 +1,7 @@
 package seedu.address.ui.filter;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -13,18 +15,22 @@ public class FilterPanelTag extends UiPart<Region> {
     private static final String FXML = "FilterPanelTag.fxml";
 
     private final String tagLabel;
+    private final TagDeleteHandler onTagDelete;
 
     @FXML
     private Label label;
 
     /**
-     * Creates a {@code FilterPanelTag} with the given tag name.
+     * Creates a {@code FilterPanelTag} with the given tag name and delete callback.
      *
-     * @param tagLabel The name of the tag to be displayed on the filter panel.
+     * @param tagLabel    The label to display on this tag.
+     * @param onTagDelete The callback to execute when the delete button on this tag is clicked. The callback will be
+     *                    passed the tag label of this tag.
      */
-    public FilterPanelTag(String tagLabel) {
+    public FilterPanelTag(String tagLabel, TagDeleteHandler onTagDelete) {
         super(FXML);
-        this.tagLabel = tagLabel;
+        this.tagLabel = requireNonNull(tagLabel);
+        this.onTagDelete = requireNonNull(onTagDelete);
         setTagLabel(tagLabel);
     }
 
@@ -34,6 +40,11 @@ public class FilterPanelTag extends UiPart<Region> {
 
     @FXML
     private void handleDeleteTag(MouseEvent e) {
-        // TODO: wire up delete behaviour when available
+        onTagDelete.handle(tagLabel);
+    }
+
+    @FunctionalInterface
+    public interface TagDeleteHandler {
+        void handle(String tagToDelete);
     }
 }
