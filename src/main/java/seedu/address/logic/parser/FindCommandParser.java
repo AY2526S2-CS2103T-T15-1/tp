@@ -106,9 +106,10 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Validates that no prefix in {@code argMultimap} has more than {@code MAX_VALUES_PER_PREFIX} non-empty values.
      */
     private void validateNoOverLimitPrefixes(ArgumentMultimap argMultimap) throws ParseException {
+        // @formatter:off
         List<Prefix> supportedPrefixesList = List.of(PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER,
-                PREFIX_STUDENT_ID, PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER);
-
+            PREFIX_STUDENT_ID, PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER);
+        // @formatter:on
         Prefix[] supportedPrefixes = supportedPrefixesList.toArray(new Prefix[0]);
 
         List<Long> nonEmptyValuesCount = argMultimap.getNonEmptyValuesCount(supportedPrefixes);
