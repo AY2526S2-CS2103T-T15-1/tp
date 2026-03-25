@@ -3,7 +3,6 @@ package seedu.address.model;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
@@ -88,8 +87,14 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    // ================ Filter Details Accessors ========================================================
     /**
-     * Returns the filter details property for dynamic updates.
+     * Sets the current filter details used for filtering the person list.
      */
-    ObjectProperty<FilterDetails> getFilterDetailsProperty();
+    void setFilterDetails(FilterDetails filterDetails);
+
+    /**
+     * Returns the current read-only filter details.
+     */
+    ReadOnlyFilterDetails getFilterDetails();
 }
