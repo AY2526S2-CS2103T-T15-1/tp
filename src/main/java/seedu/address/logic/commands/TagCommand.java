@@ -71,10 +71,19 @@ public class TagCommand extends Command {
                     "ResidentNotFound: No resident found with student ID %s.", studentId));
         }
 
+        Person taggedPerson = createTaggedPerson(personToTag, tags);
+
+        model.setPerson(personToTag, taggedPerson);
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(String.format(TAG_SUCCESS, Messages.format(taggedPerson)));
+    }
+
+    public static Person createTaggedPerson(Person personToTag, Map<TagType, Tag> tags) {
         HashMap<TagType, Tag> updatedTags = new HashMap<>(personToTag.getTags());
         updatedTags.putAll(tags);
 
-        Person taggedPerson = new Person(
+        return new Person(
                 personToTag.getName(),
                 personToTag.getPhone(),
                 personToTag.getEmail(),
@@ -85,10 +94,5 @@ public class TagCommand extends Command {
                 updatedTags,
                 personToTag.getDemeritIncidents()
         );
-
-        model.setPerson(personToTag, taggedPerson);
-        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-
-        return new CommandResult(String.format(TAG_SUCCESS, Messages.format(taggedPerson)));
     }
 }
