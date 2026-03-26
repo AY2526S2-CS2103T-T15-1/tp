@@ -7,13 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -34,38 +31,40 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagType;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing resident in the address book.
  */
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the StudentID used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the resident identified "
+            + "by the StudentID used in the displayed resident list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: studentID "
+            + "Parameters: i=STUDENT_ID (must be a valid student ID) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID] "
             + "[" + PREFIX_ROOM_NUMBER + "ROOM] "
             + "[" + PREFIX_EMERGENCY_CONTACT + "EMERGENCY_CONTACT] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " i=A0123456X "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited resident: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_STUDENT_NOT_FOUND = "No person with Student ID %1$s found.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "The edit details cause duplicated resident details "
+            + "in the address book.";
+    public static final String DUPLICATE_STUDENT_ID_PREFIX = "Please ensure that there are at most two "
+            + PREFIX_STUDENT_ID + "prefixes, the first indicates the Student ID of the resident to edit, the "
+            + "second indicates the resident's edited student ID value.\n%s";
 
     private final StudentId targetStudentId;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param targetStudentId the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param targetStudentId student id of the resident in the filtered person list to edit
+     * @param editPersonDescriptor details to edit the resident with
      */
     public EditCommand(StudentId targetStudentId, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(targetStudentId);
@@ -84,7 +83,7 @@ public class EditCommand extends Command {
             .filter(person -> person.getStudentId().equals(targetStudentId))
             .findFirst()
             .orElseThrow(() -> new CommandException(
-                String.format(Messages.MESSAGE_STUDENT_NOT_FOUND, targetStudentId)));
+                String.format(Messages.MESSAGE_RESIDENT_NOT_FOUND, targetStudentId)));
 
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
@@ -110,13 +109,20 @@ public class EditCommand extends Command {
         StudentId updatedStudentId = editPersonDescriptor.getStudentId().orElse(personToEdit.getStudentId());
         RoomNumber updatedRoomNumber = editPersonDescriptor.getRoomNumber().orElse(personToEdit.getRoomNumber());
         EmergencyContact updatedEmergencyContact = editPersonDescriptor.getEmergencyContact()
-                        .orElse(personToEdit.getEmergencyContact());
-        Remark remark = personToEdit.getRemark();
-        Map<TagType, Tag> updatedTags = editPersonDescriptor.getTags()
-                .orElse(personToEdit.getTags());
+                .orElse(personToEdit.getEmergencyContact());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedStudentId, updatedRoomNumber,
-                updatedEmergencyContact, remark, updatedTags);
+        return new Person(
+                updatedName,
+                updatedPhone,
+                updatedEmail,
+                updatedStudentId,
+                updatedRoomNumber,
+                updatedEmergencyContact,
+                updatedRemark,
+                personToEdit.getTags(), // Tags are not editable through EditCommand, so we keep the original tags
+                personToEdit.getDemeritIncidents()
+        );
     }
 
     @Override
@@ -171,14 +177,14 @@ public class EditCommand extends Command {
             setRoomNumber(toCopy.roomNumber);
             setEmergencyContact(toCopy.emergencyContact);
             setRemark(toCopy.remark);
-            setTags(toCopy.tags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, studentId, roomNumber, emergencyContact, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, studentId, roomNumber,
+                    emergencyContact, remark, tags);
         }
 
         public void setName(Name name) {
@@ -229,26 +235,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(emergencyContact);
         }
 
-        public Optional<Remark> setRemark(Remark remark) {
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
             return Optional.ofNullable(remark);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(HashMap<TagType, Tag> tags) {
-            this.tags = (tags != null) ? new HashMap<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Map<TagType, Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableMap(tags)) : Optional.empty();
-        }
 
         @Override
         public boolean equals(Object other) {
@@ -281,8 +275,8 @@ public class EditCommand extends Command {
                     .add("studentId", studentId)
                     .add("roomNumber", roomNumber)
                     .add("emergencyContact", emergencyContact)
-                    .add("tags", tags)
                     .toString();
         }
     }
 }
+
