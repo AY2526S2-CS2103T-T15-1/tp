@@ -131,56 +131,31 @@ Examples:
 
 ### Locating persons: `find`
 
-Finds persons using one of two methods: 
-1. [Find by name](#method-1-find-by-name)
-2. [Find by attributes](#method-2-find-by-attributes)
-
-#### Method 1: Find by name
-
-Finds persons whose names contain any of the given keywords.
-
-Format: `find NAME_KEYWORD [MORE_NAME_KEYWORDS]`
-
-* The case and order of the name keywords do not matter.
-  * e.g. `find Hans Bo` will give the same search result as `hans bo`
-* When searching multiple names, the hall ledger will locate anyone whose name matches any of the provided keywords. 
-  * e.g. `find Hans Bo Anna` will return `Hans Gruber`, `Bo Yang`, `Anna Lee` etc.
-* Exact spelling is not always required, as substring and fuzzy matches are supported. 
-  * e.g. `find anna` will match `Ann`, `Anne`, 
-    `Annabelle` etc.
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-
-#### Method 2: Find by attributes
-
 Finds persons who match multiple attributes such as name, phone number, email or major.
 
 Format: `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`
 
-
-* The case and order of the attributes and their keywords do not matter. 
-  * e.g. `find n=Alice y=1` will give the same search 
-    result as `find y=1 n=ALICE`
-* Using different search parameters forces  the result to match all rules simultaneously. 
-  * e.g. `find n=Alice p=91234567 y=1` returns persons whose name is Alice, whose phone number is 91234567, and 
-    who are also in Year 1.
-* Conversely, searching multiple values under the same parameter returns results that can match any of those values.
-    * e.g. `find y=2 y=3` returns persons in Year 2 or Year 3.
-    * e.g: `find n=Hans Bo n=Anna` will return `Hans Gruber`, `Bo Yang`, `Anna Lee` etc.
-* Substring matching and fuzzy matching is supported for the Name, Phone, Email, and Student ID fields.
-    * e.g. `p=9123` matches `+65 91234567`
-    * e.g: `n=Liz` matches `Lizah`, `Lis`, `Elizabeth`, etc.
+* Prefix-only command: preamble text is not supported.
+    * e.g. `find Alice Bob` is invalid. Use `find n=Alice n=Bob`.
+* Case-insensitive and order-independent across prefixes.
+    * e.g. `find n=Alice y=Y1` gives the same result as `find y=Y1 n=ALICE`.
+* Different prefixes are combined with AND.
+    * e.g. `find n=Alice p=9123 y=Y1` returns residents that satisfy all 3 filters.
+* Repeating the same prefix is OR-based.
+    * e.g. `find y=Y2 y=Y3` returns Year 2 or Year 3 residents.
+    * e.g. `find n=Hans Bo n=Anna Lee` can return residents matching either `n=` value.
+* Each `n=` value is treated as one value as typed; it is not split by spaces.
+    * e.g. `find n=Hans Bo` keeps `Hans Bo` as one name filter value.
 
 Examples:
+
+* `find n=John Doe` returns residents whose names fuzzy-match `John Doe`.
+* `find n=Alex n=David` returns residents matching either name value.
 * `find m=CS m=Economics g=Male g=Others` returns persons majoring in CS or Economics, and whose gender is listed as 
   Male or Others.
-* `find ec=+84 e=gmail` returns persons whose phone number fuzzy-matches or contains `+84`, and whose email 
-  fuzzy-matches or contains 
-  `gmail`.
+* `find ec=+84 e=gmail` returns persons whose emergency contact contains `+84`, and whose email contains `gmail`.
 
-Read more about fuzzy matching here: [Fuzzy Matching](#not-implemented-yet).
+Read more about fuzzy matching here: [Fuzzy Matching Details](FuzzyMatching.md).
 
 ### Deleting a resident : `delete`
 
@@ -236,32 +211,8 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: Why does `delete` show a confirmation dialog instead of deleting immediately?<br>
-**A**: Deleting a resident is a destructive action. The confirmation dialog helps prevent accidental deletion of resident records, especially when the user is working quickly through multiple entries.
-
-**Q**: What happens if I click **Cancel** in the delete confirmation dialog?<br>
-**A**: The deletion is stopped, no resident is removed, and HallLedger displays the message `Deletion cancelled.`
-
-**Q**: How can I quickly see the available commands in HallLedger?<br>
-**A**: Enter `help` to open the Help window. The Help window displays a quick reference list of the supported commands and their usage formats, which is useful when you need to check a command while using the app.
-
-**Q**: Where can I find more detailed explanations beyond the Help window?<br>
-**A**: The Help window includes a reference to the HallLedger User Guide. The User Guide provides fuller explanations, examples, and notes about command behavior.
-
-**Q**: Why does HallLedger show an error instead of opening the delete confirmation dialog sometimes?<br>
-**A**: The confirmation dialog only appears after HallLedger recognises the command as a valid delete command. If the command format is invalid, such as missing a required value or using the wrong format, HallLedger will show an error message instead.
-
-**Q**: How do I identify the correct resident before editing or deleting a record?<br>
-**A**: Use identifying fields such as student ID, room number, and name to verify that you are acting on the correct resident. For deletion, HallLedger uses the student ID in the command format `delete i=STUDENT_ID`.
-
-**Q**: What is the fastest way to work with HallLedger?<br>
-**A**: HallLedger is designed for users who prefer typing commands. In general, the fastest workflow is to use the command box directly for tasks such as adding, finding, editing, tagging, deleting, listing, and opening help, instead of relying on repeated manual navigation.
-
-**Q**: If I make a mistake while entering a command, will HallLedger still change the data?<br>
-**A**: No. If the command format or values are invalid, HallLedger will show an error message and the data will remain unchanged.
-
-**Q**: How do I reset HallLedger for a new semester or a fresh start?<br>
-**A**: Use the `clear` command to remove all resident records from the current data file. As this affects all records, make sure you intend to reset the data before doing so.
+**Q**: How do I transfer my data to another Computer?
+**A** : Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
 
 **Q**: Can I edit the data file manually?<br>
 **A**: Yes. HallLedger stores data locally in a human-editable text file. However, manual edits should be done carefully, because invalid edits may prevent HallLedger from loading the data correctly.
@@ -290,3 +241,4 @@ Action     | Format, Examples
 **[Find](#locating-persons--find)**   | Method 1:<br> `find NAME_KEYWORDS [MORE_NAME_KEYWORDS]`<br> e.g., `find James Jake`<br><br>Method 2:<br> `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=Y1`
 **[List](#listing-all-persons--list)**   | `list`
 **[Help](#viewing-help--help)**   | `help`
+

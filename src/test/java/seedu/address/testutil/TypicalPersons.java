@@ -35,6 +35,7 @@ public class TypicalPersons {
             .withStudentId("A1234567X").withEmail("alice@example.com")
             .withPhone("+65 94351253")
             .withRoomNumber("13E").withEmergencyContact("+65 91234567")
+            .withRemark("Allergic to peanuts")
             .withTags(new Object[]{TagType.GENDER, "Female"},
                     new Object[]{TagType.YEAR, "Y1"},
                     new Object[]{TagType.MAJOR, "CS"}).build();
@@ -42,8 +43,8 @@ public class TypicalPersons {
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withStudentId("A8765432Y").withEmail("johnd@example.com").withPhone("+65 98765432")
             .withRoomNumber("10A").withEmergencyContact("+65 91234567")
-            .withTags(new Object[]{TagType.MAJOR, "CS"},
-                    new Object[]{TagType.MAJOR, "Maths"},
+            .withRemark("Allergic to peanuts")
+            .withTags(new Object[]{TagType.MAJOR, "CS Maths"},
                     new Object[]{TagType.YEAR, "Y2"},
                     new Object[]{TagType.GENDER, "Male"}).build();
 
@@ -66,8 +67,7 @@ public class TypicalPersons {
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("+65 9482427")
             .withEmail("lydia@example.com").withStudentId("A4444444X").withRoomNumber("14A")
             .withEmergencyContact("+65 91234567")
-            .withTags(new Object[]{TagType.MAJOR, "Economics"},
-                    new Object[]{TagType.MAJOR, "Statistics"},
+            .withTags(new Object[]{TagType.MAJOR, "Economics Statistics"},
                     new Object[]{TagType.GENDER, "Female"}).build();
 
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("+65 9482442")
