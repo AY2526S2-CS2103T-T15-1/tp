@@ -18,8 +18,8 @@ import seedu.address.ui.UiPart;
 public class FilterPanelField extends UiPart<Region> {
     private static final String FXML = "FilterPanelField.fxml";
 
-    private final List<String> keywords;
-    private final KeywordsChangedHandler onKeywordsChanged;
+    private final List<String> currentKeywords;
+    private final KeywordsUpdatedHandler onKeywordsUpdated;
 
     @FXML
     private Label titleLabel;
@@ -32,82 +32,90 @@ public class FilterPanelField extends UiPart<Region> {
 
     /**
      * Creates a reusable filter field section.
+     *
+     * @param title The title of this filter field, e.g. "Search by Name".
+     * @param promptText The prompt text to show in the keyword input field, e.g. "E.g: Alex".
+     * @param onKeywordsUpdated The callback to trigger when the keywords in this field are updated. The implementation
+     *                          of this callback is defined in {@code FilterPanel}.
      */
-    public FilterPanelField(String title, String promptText, KeywordsChangedHandler onKeywordsChanged) {
+    public FilterPanelField(String title, String promptText, KeywordsUpdatedHandler onKeywordsUpdated) {
         super(FXML);
         requireNonNull(title);
         requireNonNull(promptText);
-        this.onKeywordsChanged = requireNonNull(onKeywordsChanged);
-        this.keywords = new ArrayList<>();
+        requireNonNull(onKeywordsUpdated);
+
+        this.onKeywordsUpdated = onKeywordsUpdated;
+        this.currentKeywords = new ArrayList<>();
+
         titleLabel.setText(title);
         keywordInputField.setPromptText(promptText);
     }
 
     /**
      * Replaces the current list of keywords and redraws this field's FlowPane tags.
+     *
+     * @param updatedKeywords The new list of keywords to set for this field.
      */
     public void setKeywords(List<String> updatedKeywords) {
         requireNonNull(updatedKeywords);
-        keywords.clear();
-        updatedKeywords.stream()
-                .map(keyword -> keyword.trim())
-                .forEach(this::addKeywordIfAbsent);
-        renderKeywords(updatedKeywords);
+        applyValidatedKeywords(updatedKeywords);
     }
 
     /**
      * Handler for when the user presses the Enter key in the keyword input field.
      *
-     * It adds the keyword, re-render the FlowPane tags, trigger the
-     * {@code onKeywordsChanged} event handler, and finally clears the keyword input field.
+     * It adds the keyword, re-renders the FlowPane tags, triggers the
+     * {@code onKeywordsUpdated} callback, and finally clears the keyword input field.
      */
     @FXML
-    private void handleFieldEntered() {
-        String keyword = keywordInputField.getText();
-        String trimmedKeyword = keyword.trim();
-
-        if (trimmedKeyword == null || trimmedKeyword.isEmpty()) {
+    private void handleKeywordSubmitted() {
+        String trimmedKeyword = keywordInputField.getText().trim();
+        if (trimmedKeyword.isEmpty() || currentKeywords.contains(trimmedKeyword)) {
             return;
         }
-        // Propose the new keyword list with the added keyword
-        List<String> proposedNewKeywords = addKeywordIfAbsent(trimmedKeyword);
 
-        // Trigger the event handler to validate the proposed new keyword list
-        List<String> validatedNewKeywords = onKeywordsChanged.handle(List.copyOf(proposedNewKeywords));
+        // add user input to proposed keywords
+        List<String> proposedKeywords = new ArrayList<>(currentKeywords);
+        proposedKeywords.add(trimmedKeyword);
 
-        // Update the keyword list with the validated new keyword list
-        renderKeywords(validatedNewKeywords);
+        // validate user input with #onKeywordsUpdated
+        List<String> validatedKeywords = onKeywordsUpdated.onKeywordsUpdated(proposedKeywords);
+        applyValidatedKeywords(validatedKeywords);
+
         keywordInputField.clear();
     }
 
-    private List<String> addKeywordIfAbsent(String keyword) {
-        if (!keywords.contains(keyword)) {
-            keywords.add(keyword);
-        }
-        return keywords;
-    }
+    // Replaces the current keywords with the validated keywords, then redraws the FlowPane tags.
+    private void applyValidatedKeywords(List<String> validatedKeywords) {
+        currentKeywords.clear();
 
-    // Renders the proposed keywords as {@code FilterPanelTag} in the FlowPane
-    private void renderKeywords(List<String> proposedKeywords) {
+        validatedKeywords.stream()
+                .map(String::trim)
+                .filter(keyword -> !keyword.isEmpty()) // remove empty keywords
+                .filter(keyword -> !currentKeywords.contains(keyword)) // remove duplicated keywords
+                .forEach(keyword -> currentKeywords.add(keyword)); // add to currentKeywords
+
+        // update ui
         keywordsFlowPane.getChildren().clear();
-        proposedKeywords.forEach(keyword -> keywordsFlowPane.getChildren()
+        currentKeywords.forEach(keyword -> keywordsFlowPane.getChildren()
                 .add(new FilterPanelTag(keyword, this::handleDeleteTag).getRoot()));
     }
 
     // Remove tagToDelete from the keyword list
     private void handleDeleteTag(String tagToDelete) {
-        if (!keywords.remove(tagToDelete)) {
+        List<String> proposedKeywords = new ArrayList<>(currentKeywords);
+        if (!proposedKeywords.remove(tagToDelete)) {
             return;
         }
-        List<String> updatedKeywordList = onKeywordsChanged.handle(List.copyOf(keywords));
-        renderKeywords(updatedKeywordList);
+        List<String> validatedKeywords = onKeywordsUpdated.onKeywordsUpdated(List.copyOf(proposedKeywords));
+        applyValidatedKeywords(validatedKeywords);
     }
 
     /**
      * Handler for when the keywords in this field are edited.
      */
     @FunctionalInterface
-    public interface KeywordsChangedHandler {
-        List<String> handle(List<String> keywords);
+    public interface KeywordsUpdatedHandler {
+        List<String> onKeywordsUpdated(List<String> keywords);
     }
 }
