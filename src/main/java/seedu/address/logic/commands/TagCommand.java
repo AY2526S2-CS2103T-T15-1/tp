@@ -79,6 +79,9 @@ public class TagCommand extends Command {
         return new CommandResult(String.format(TAG_SUCCESS, Messages.format(taggedPerson)));
     }
 
+    /**
+     * Creates and returns a {@code Person} with the details of {@code tsggedPerson}
+     */
     public static Person createTaggedPerson(Person personToTag, Map<TagType, Tag> tags) {
         HashMap<TagType, Tag> updatedTags = new HashMap<>(personToTag.getTags());
         updatedTags.putAll(tags);

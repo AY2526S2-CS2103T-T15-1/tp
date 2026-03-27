@@ -66,6 +66,9 @@ public class RemarkCommand extends Command {
 
     }
 
+    /**
+     * Creates and returns a {@code Person} with the details of {@code remarkedPerson}
+     */
     public static Person createRemarkedPerson(Person personToRemark, Remark remark) {
         return new Person(
                 personToRemark.getName(),
