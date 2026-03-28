@@ -32,17 +32,17 @@ public record PersonMatchesDetailsPredicate(FilterDetails filterDetails) impleme
 
     @Override
     public boolean test(Person person) {
-        String personNameString = person.name().fullName;
-        String personEmailString = person.email().value;
-        String personPhoneString = person.phone().value;
-        String personRoomNumberString = person.roomNumber().value;
-        String personStudentIdString = person.studentId().value;
-        String personEmergencyContactString = person.emergencyContact().value;
+        String personNameString = person.getName().fullName;
+        String personEmailString = person.getEmail().value;
+        String personPhoneString = person.getPhone().value;
+        String personRoomNumberString = person.getRoomNumber().value;
+        String personStudentIdString = person.getStudentId().value;
+        String personEmergencyContactString = person.getStudentId().value;
 
         // Get the person's tag values as strings, or empty strings if the tags are not present
-        String personYearString = person.getYear().map(tag -> tag.getTagName()).orElseGet(() -> "");
-        String personMajorString = person.getMajor().map(tag -> tag.getTagName()).orElseGet(() -> "");
-        String personGenderString = person.getGender().map(tag -> tag.getTagName()).orElseGet(() -> "");
+        String personYearString = person.getYear().map(tag -> tag.getTagName()).orElse("");
+        String personMajorString = person.getMajor().map(tag -> tag.getTagName()).orElse("");
+        String personGenderString = person.getGender().map(tag -> tag.getTagName()).orElse("");
 
         return isFuzzyMatch(personNameString, filterDetails.getNameKeywords())
                 && isFuzzyMatch(personEmailString, filterDetails.getEmailKeywords())
