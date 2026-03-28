@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.demerit.DemeritIncident;
@@ -99,22 +100,22 @@ public class Person {
     /**
      * Returns the gender tag of this person, if it exists.
      */
-    public Tag getGender() {
-        return tags.get(TagType.GENDER);
+    public Optional<Tag> getGender() {
+        return Optional.ofNullable(tags.get(TagType.GENDER));
     }
 
     /**
      * Returns the year tag of this person, if it exists.
      */
-    public Tag getYear() {
-        return tags.get(TagType.YEAR);
+    public Optional<Tag> getYear() {
+        return Optional.ofNullable(tags.get(TagType.YEAR));
     }
 
     /**
      * Returns the major tag of this person, if it exists.
      */
-    public Tag getMajor() {
-        return tags.get(TagType.MAJOR);
+    public Optional<Tag> getMajor() {
+        return Optional.ofNullable(tags.get(TagType.MAJOR));
     }
 
     /**
