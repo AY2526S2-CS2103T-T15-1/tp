@@ -5,6 +5,7 @@ import java.util.Comparator;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
@@ -18,6 +19,9 @@ public class Profile extends UiPart<Region> {
 
     @FXML
     private FlowPane tags;
+
+    @FXML
+    private TextField phoneField;
 
     @FXML
     private TextField nameField;
@@ -35,7 +39,7 @@ public class Profile extends UiPart<Region> {
     private TextField emergencyContactField;
 
     @FXML
-    private TextField remarkField;
+    private TextArea remarkField;
 
     /**
      * UI for the Profile Tab that is displayed on the left hand side of the main
@@ -47,6 +51,7 @@ public class Profile extends UiPart<Region> {
             if (newValue == null) {
                 return;
             }
+            phoneField.setText(newValue.getPhone().toString());
             nameField.setText(newValue.getName().toString());
             studentIdField.setText(newValue.getStudentId().toString());
             roomField.setText(newValue.getRoomNumber().toString());
