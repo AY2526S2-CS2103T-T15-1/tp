@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -27,7 +28,7 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="name" text="$first" styleClass="cell_big_label" />
+                <TextField fx:id="name" editable="false" styleClass="cell_big_field" />
             </HBox>
 
             <FlowPane fx:id="tags">
@@ -43,22 +44,22 @@
                 </columnConstraints>
 
                 <Label text="Phone:" styleClass="cell_small_label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                <Label fx:id="phone" styleClass="cell_small_label" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                <TextField fx:id="phone" editable="false" styleClass="cell_small_field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
                 <Label text="Student ID:" styleClass="cell_small_label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                <Label fx:id="studentId" styleClass="cell_small_label" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                <TextField fx:id="studentId" editable="false" styleClass="cell_small_field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
                 <Label text="Email:" styleClass="cell_small_label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                <Label fx:id="email" styleClass="cell_small_label" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                <TextField fx:id="email" editable="false" styleClass="cell_small_field" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
                 <Label text="Room:" styleClass="cell_small_label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                <Label fx:id="roomNumber" styleClass="cell_small_label" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                <TextField fx:id="roomNumber" editable="false" styleClass="cell_small_field" GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
                 <Label text="Emergency Contact:" styleClass="cell_small_label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                <Label fx:id="emergencyContact" styleClass="cell_small_label" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+                <TextField fx:id="emergencyContact" editable="false" styleClass="cell_small_field" GridPane.rowIndex="4" GridPane.columnIndex="1" />
 
                 <Label text="Demerit Points:" styleClass="cell_small_label" GridPane.rowIndex="5" GridPane.columnIndex="0" />
-                <Label fx:id="demeritPoints" styleClass="cell_small_label" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+                <TextField fx:id="demeritPoints" editable="false" styleClass="cell_small_field" GridPane.rowIndex="5" GridPane.columnIndex="1" />
             </GridPane>
         </VBox>
     </GridPane>

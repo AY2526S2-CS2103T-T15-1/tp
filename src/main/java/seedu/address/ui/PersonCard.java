@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -21,21 +22,21 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private TextField name;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private TextField phone;
     @FXML
-    private Label studentId;
+    private TextField studentId;
     @FXML
-    private Label email;
+    private TextField email;
     @FXML
-    private Label roomNumber;
+    private TextField roomNumber;
     @FXML
-    private Label emergencyContact;
+    private TextField emergencyContact;
     @FXML
-    private Label demeritPoints;
+    private TextField demeritPoints;
     @FXML
     private FlowPane tags;
 
