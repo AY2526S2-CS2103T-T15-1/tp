@@ -34,12 +34,12 @@ public class DashboardTabTest {
     @Test
     public void countByTag_matchingGenderTag_returnsCorrectCount() {
         ObservableList<Person> list = FXCollections.observableArrayList(
-                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "she"}).build()
+                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he/him"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he/him"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "she/her"}).build()
         );
-        assertEquals(2, DashboardTab.countByTag(list, "he"));
-        assertEquals(1, DashboardTab.countByTag(list, "she"));
+        assertEquals(2, DashboardTab.countByTag(list, "he/him"));
+        assertEquals(1, DashboardTab.countByTag(list, "she/her"));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class DashboardTabTest {
     @Test
     public void countByTag_noMatchingTag_returnsZero() {
         ObservableList<Person> list = FXCollections.observableArrayList(
-                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he"}).build()
+                new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he/him"}).build()
         );
         assertEquals(0, DashboardTab.countByTag(list, "1"));
     }
