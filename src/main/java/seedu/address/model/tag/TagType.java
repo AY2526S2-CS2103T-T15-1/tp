@@ -6,7 +6,7 @@ package seedu.address.model.tag;
  */
 public enum TagType {
 
-    YEAR(1, "[\\p{Alnum} ]*[\\p{Alnum}]+[\\p{Alnum} ]*"),
+    YEAR(1, "^[1-6]$"),
     MAJOR(1, "[\\p{Alnum} ]*[\\p{Alnum}]+[\\p{Alnum} ]*"),
     GENDER(1, "[\\p{Alnum}/][\\p{Alnum}/ ]*");
 

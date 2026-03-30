@@ -12,7 +12,7 @@
       "tagName" : "CS"
     }, {
       "tagType" : "YEAR",
-      "tagName" : "Y1"
+      "tagName" : "1"
     }, {
       "tagType" : "GENDER",
       "tagName" : "Female"
@@ -31,7 +31,7 @@
     },
       {
         "tagType" : "YEAR",
-        "tagName" : "Y2"
+        "tagName" : "2"
       },
       {
         "tagType" : "GENDER",
@@ -54,7 +54,7 @@
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
       "tagType" : "YEAR",
-      "tagName" : "Y3"
+      "tagName" : "3"
     }, {
       "tagType" : "MAJOR",
       "tagName" : "Business"
@@ -68,7 +68,7 @@
     "emergencyContact" : "+65 91234567",
     "tags" : [ {
       "tagType" : "YEAR",
-      "tagName" : "Y1"
+      "tagName" : "1"
     }, {
       "tagType" : "GENDER",
       "tagName" : "Female"
@@ -100,7 +100,7 @@
       "tagName" : "NB"
     }, {
       "tagType" : "YEAR",
-      "tagName" : "Y4"
+      "tagName" : "4"
     } ]
   }
   ]

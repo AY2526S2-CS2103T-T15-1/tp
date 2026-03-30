@@ -8,6 +8,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagType;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -15,6 +17,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String YEAR_PREFIX = "Y";
 
     public final Person person;
 
@@ -56,6 +59,14 @@ public class PersonCard extends UiPart<Region> {
 
         person.getTags().values().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> tags.getChildren().add(createTagLabel(tag)));
+    }
+
+    private Label createTagLabel(Tag tag) {
+        Label tagLabel = new Label(tag.tagName);
+        if (tag.tagType == TagType.YEAR) {
+            tagLabel.setText(YEAR_PREFIX + tag.tagName);
+        }
+        return tagLabel;
     }
 }

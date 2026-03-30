@@ -18,17 +18,17 @@ public class DashboardTabTest {
     @Test
     public void countByTag_emptyList_returnsZero() {
         ObservableList<Person> list = FXCollections.observableArrayList();
-        assertEquals(0, DashboardTab.countByTag(list, "Y1"));
+        assertEquals(0, DashboardTab.countByTag(list, "1"));
     }
 
     @Test
     public void countByTag_matchingYearTag_returnsCorrectCount() {
         ObservableList<Person> list = FXCollections.observableArrayList(
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y1"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y1"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y2"}).build()
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "1"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "1"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "2"}).build()
         );
-        assertEquals(2, DashboardTab.countByTag(list, "Y1"));
+        assertEquals(2, DashboardTab.countByTag(list, "1"));
     }
 
     @Test
@@ -45,10 +45,10 @@ public class DashboardTabTest {
     @Test
     public void countByTag_caseInsensitive_returnsCorrectCount() {
         ObservableList<Person> list = FXCollections.observableArrayList(
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "y1"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y1"}).build()
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "1"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "1"}).build()
         );
-        assertEquals(2, DashboardTab.countByTag(list, "Y1"));
+        assertEquals(2, DashboardTab.countByTag(list, "1"));
     }
 
     @Test
@@ -56,20 +56,20 @@ public class DashboardTabTest {
         ObservableList<Person> list = FXCollections.observableArrayList(
                 new PersonBuilder().withTags(new Object[]{TagType.GENDER, "he"}).build()
         );
-        assertEquals(0, DashboardTab.countByTag(list, "Y1"));
+        assertEquals(0, DashboardTab.countByTag(list, "1"));
     }
 
     @Test
     public void countByTag_allYearGroups_returnsCorrectCounts() {
         ObservableList<Person> list = FXCollections.observableArrayList(
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y1"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y2"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y3"}).build(),
-                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "Y4"}).build()
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "1"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "2"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "3"}).build(),
+                new PersonBuilder().withTags(new Object[]{TagType.YEAR, "4"}).build()
         );
-        assertEquals(1, DashboardTab.countByTag(list, "Y1"));
-        assertEquals(1, DashboardTab.countByTag(list, "Y2"));
-        assertEquals(1, DashboardTab.countByTag(list, "Y3"));
-        assertEquals(1, DashboardTab.countByTag(list, "Y4"));
+        assertEquals(1, DashboardTab.countByTag(list, "1"));
+        assertEquals(1, DashboardTab.countByTag(list, "2"));
+        assertEquals(1, DashboardTab.countByTag(list, "3"));
+        assertEquals(1, DashboardTab.countByTag(list, "4"));
     }
 }
