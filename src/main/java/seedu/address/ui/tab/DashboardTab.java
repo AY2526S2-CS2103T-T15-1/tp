@@ -25,6 +25,8 @@ public class DashboardTab extends UiPart<Region> {
     @FXML private Label y2CountLabel;
     @FXML private Label y3CountLabel;
     @FXML private Label y4CountLabel;
+    @FXML private Label y5CountLabel;
+    @FXML private Label y6CountLabel;
 
     /**
      * Creates a {@code DashboardTab} with the given {@code Logic}.
@@ -46,9 +48,9 @@ public class DashboardTab extends UiPart<Region> {
         long totalCount = list.size();
 
         // ---Gender groups via tags---
-        long male = countByTag(list, "he");
-        long female = countByTag(list, "she");
-        long other = list.size() - male - female;
+        long male = countByTag(list, "he") + countByTag(list, "him");
+        long female = countByTag(list, "she") + countByTag(list, "her");
+        long other = countByTag(list, "they") + countByTag(list, "them");
 
         totalCountLabel.setText(String.valueOf(totalCount));
         maleCountLabel.setText(String.valueOf(male));
@@ -56,10 +58,12 @@ public class DashboardTab extends UiPart<Region> {
         otherCountLabel.setText(String.valueOf(other));
 
         // --- Year groups via tags ---
-        y1CountLabel.setText(String.valueOf(countByTag(list, "Y1")));
-        y2CountLabel.setText(String.valueOf(countByTag(list, "Y2")));
-        y3CountLabel.setText(String.valueOf(countByTag(list, "Y3")));
-        y4CountLabel.setText(String.valueOf(countByTag(list, "Y4")));
+        y1CountLabel.setText(String.valueOf(countByTag(list, "1")));
+        y2CountLabel.setText(String.valueOf(countByTag(list, "2")));
+        y3CountLabel.setText(String.valueOf(countByTag(list, "3")));
+        y4CountLabel.setText(String.valueOf(countByTag(list, "4")));
+        y5CountLabel.setText(String.valueOf(countByTag(list, "5")));
+        y6CountLabel.setText(String.valueOf(countByTag(list, "6")));
     }
 
     /**
