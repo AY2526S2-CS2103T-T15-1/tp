@@ -41,7 +41,8 @@ public class Tag {
     }
 
     public static String getNormalisedTagName(String test, TagType type) {
-        return type == TagType.GENDER ? test.trim().toLowerCase() : test;
+        // check for gender as it is the only case-insensitive tag type
+        return type == TagType.GENDER ? test.toLowerCase() : test;
     }
 
     /**

@@ -23,6 +23,8 @@ public enum TagType {
      * @param tagName the tag name to validate, or null if no tag is present.
      * @return true if {@code tagName} is null or matches the validation regex, false otherwise.
      */
+
+    
     public boolean isValidTagName(String tagName) {
         if (tagName == null) {
             return true;
