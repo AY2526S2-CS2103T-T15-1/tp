@@ -110,7 +110,7 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        showAllPersons();
     }
 
     @Override
@@ -151,6 +151,11 @@ public class ModelManager implements Model {
                 .findFirst();
     }
 
+    @Override
+    public void showAllPersons() {
+        setFilterDetails(new FilterDetails());
+        filteredPersons.setPredicate(person -> true);
+    }
     //=========== Filter Details Accessors =============================================================
 
     @Override

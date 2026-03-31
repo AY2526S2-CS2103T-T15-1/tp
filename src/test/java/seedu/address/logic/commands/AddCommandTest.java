@@ -200,6 +200,11 @@ public class AddCommandTest {
         public void setSelectedPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void showAllPersons() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

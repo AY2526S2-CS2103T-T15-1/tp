@@ -91,6 +91,11 @@ public interface Model {
 
     Optional<Person> getPersonByStudentId(StudentId studentId);
 
+    /**
+     * Clears all stored filter details and shows all persons.
+     */
+    void showAllPersons();
+
     // ================ Filter Details Accessors ========================================================
     /**
      * Sets the current filter details used for filtering the person list.
