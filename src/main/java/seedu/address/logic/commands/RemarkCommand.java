@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_PERSON_NOT_FOUND;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -81,5 +82,13 @@ public class RemarkCommand extends Command {
 
         return studentId.equals(otherRemarkCommand.studentId)
                 && remark.equals(otherRemarkCommand.remark);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("studentId", studentId)
+                .add("remark", remark)
+                .toString();
     }
 }
