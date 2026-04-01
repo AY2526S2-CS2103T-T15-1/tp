@@ -104,7 +104,8 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         // Check for duplicate student ID prefixes (allow up to 2)
         if (argMultimap.getAllValues(PREFIX_STUDENT_ID).size() > 2) {
-            throw new ParseException(String.format(EditCommand.MESSAGE_DUPLICATE_STUDENT_ID_PREFIX, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(EditCommand.MESSAGE_DUPLICATE_STUDENT_ID_PREFIX,
+                    EditCommand.MESSAGE_USAGE));
         }
 
         // Check for duplicate prefixes in single-valued fields
@@ -119,7 +120,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         // Collect all known prefix strings e.g. "n/", "i="
         Set<String> knownPrefixStrings = KNOWN_PREFIXES.stream()
-                .map(Prefix::getPrefix)  // e.g. "n/", "i="
+                .map(Prefix::getPrefix) // e.g. "n/", "i="
                 .collect(Collectors.toSet());
 
         while (matcher.find()) {
