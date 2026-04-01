@@ -26,13 +26,16 @@ public class RemarkCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Added Remark to Resident: %1$s";
 
     private final StudentId studentId;
-    private final String remark;
+    private final Remark remark;
 
     /**
-     * @param studentId of the person in the filtered person list to edit
-     * @param remark remark to add to the person
+     * @param studentId of the person to edit
+     * @param remark to add to the person
      */
-    public RemarkCommand(StudentId studentId, String remark) {
+        public RemarkCommand(StudentId studentId, Remark remark) {
+        requireNonNull(studentId);
+        requireNonNull(remark);
+
         this.studentId = studentId;
         this.remark = remark;
     }
@@ -43,9 +46,7 @@ public class RemarkCommand extends Command {
         Person personToRemark = model.getPersonByStudentId(studentId)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, studentId)));
 
-        Remark newRemark = new Remark(remark);
-
-        Person remarkedPerson = createEditedPerson(personToRemark, newRemark);
+        Person remarkedPerson = createEditedPerson(personToRemark, remark);
 
         model.setPerson(personToRemark, remarkedPerson);
 
@@ -53,9 +54,9 @@ public class RemarkCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code remarkedPerson}
+     * Creates and returns a {@code Person} with the details of {@code personToRemark} edited with {@code remark}.
      */
-    public static Person createEditedPerson(Person personToRemark, Remark remark) {
+    private static Person createEditedPerson(Person personToRemark, Remark remark) {
         return new Person(
                 personToRemark.getName(),
                 personToRemark.getPhone(),
