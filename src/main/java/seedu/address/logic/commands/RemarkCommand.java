@@ -11,9 +11,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.StudentId;
 
 /**
- * Adds a remark to a resident in the hall ledger.
- * The resident is identified using unique StudentId.
- * Existing remarks will be overwritten by the newly provided remark.
+ * Adds a remark to a resident identified using unique StudentId.
  */
 public class RemarkCommand extends Command {
 
@@ -47,7 +45,7 @@ public class RemarkCommand extends Command {
 
         Remark newRemark = new Remark(remark);
 
-        Person remarkedPerson = createRemarkedPerson(personToRemark, newRemark);
+        Person remarkedPerson = createEditedPerson(personToRemark, newRemark);
 
         model.setPerson(personToRemark, remarkedPerson);
 
@@ -57,7 +55,7 @@ public class RemarkCommand extends Command {
     /**
      * Creates and returns a {@code Person} with the details of {@code remarkedPerson}
      */
-    public static Person createRemarkedPerson(Person personToRemark, Remark remark) {
+    public static Person createEditedPerson(Person personToRemark, Remark remark) {
         return new Person(
                 personToRemark.getName(),
                 personToRemark.getPhone(),
