@@ -47,11 +47,11 @@ public class RemarkCommand extends Command {
         Person personToRemark = model.getPersonByStudentId(studentId)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, studentId)));
 
-        Person remarkedPerson = createEditedPerson(personToRemark, remark);
+        Person editedPerson = createEditedPerson(personToRemark, remark);
 
-        model.setPerson(personToRemark, remarkedPerson);
+        model.setPerson(personToRemark, editedPerson);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(remarkedPerson)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(editedPerson)));
     }
 
     /**
