@@ -8,7 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -36,14 +37,15 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "+65 22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_STUDENTID_AMY = "A1234567X";
+    public static final String VALID_STUDENTID_AMY = "A1234567Y";
     public static final String VALID_STUDENTID_BOB = "A8765432Y";
     public static final String VALID_ROOM_NUMBER_AMY = "1A";
     public static final String VALID_ROOM_NUMBER_BOB = "4M";
     public static final String VALID_EMERGENCY_CONTACT_AMY = "+65 91234567";
     public static final String VALID_EMERGENCY_CONTACT_BOB = "+65 98765432";
     public static final Object[] VALID_TAG_MAJOR = {TagType.MAJOR, "CS"};
-    public static final Object[] VALID_TAG_YEAR = {TagType.YEAR, "Y1"};
+    public static final Object[] VALID_TAG_YEAR = {TagType.YEAR, "1"};
+    public static final String VALID_REMARK = "Allergic to peanuts";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -59,8 +61,8 @@ public class CommandTestUtil {
             + VALID_EMERGENCY_CONTACT_AMY;
     public static final String EMERGENCY_CONTACT_DESC_BOB = " " + PREFIX_EMERGENCY_CONTACT
             + VALID_EMERGENCY_CONTACT_BOB;
-    public static final String TAG_DESC_YEAR = " " + PREFIX_TAG + VALID_TAG_YEAR;
-    public static final String TAG_DESC_MAJOR = " " + PREFIX_TAG + VALID_TAG_MAJOR[1];
+    public static final String TAG_DESC_YEAR = " " + PREFIX_TAG_YEAR + VALID_TAG_YEAR;
+    public static final String TAG_DESC_MAJOR = " " + PREFIX_TAG_MAJOR + VALID_TAG_MAJOR[1];
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

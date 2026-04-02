@@ -16,6 +16,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -110,7 +111,7 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        showAllPersons();
     }
 
     @Override
@@ -151,6 +152,19 @@ public class ModelManager implements Model {
                 .findFirst();
     }
 
+    @Override
+    public Optional<Person> getPersonByRoomNumber(RoomNumber roomNumber) {
+        requireNonNull(roomNumber);
+        return addressBook.getPersonList().stream()
+                .filter(p -> p.getRoomNumber().equals(roomNumber))
+                .findFirst();
+    }
+
+    @Override
+    public void showAllPersons() {
+        setFilterDetails(new FilterDetails());
+        filteredPersons.setPredicate(person -> true);
+    }
     //=========== Filter Details Accessors =============================================================
 
     @Override

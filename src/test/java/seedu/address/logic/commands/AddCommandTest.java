@@ -26,6 +26,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyFilterDetails;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.testutil.PersonBuilder;
 
@@ -182,6 +183,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public Optional<Person> getPersonByRoomNumber(RoomNumber roomNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyFilterDetails getFilterDetails() {
             throw new AssertionError("This method should not be called.");
         }
@@ -198,6 +204,11 @@ public class AddCommandTest {
 
         @Override
         public void setSelectedPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void showAllPersons() {
             throw new AssertionError("This method should not be called.");
         }
     }

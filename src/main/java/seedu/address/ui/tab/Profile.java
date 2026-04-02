@@ -5,11 +5,13 @@ import java.util.Comparator;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
 import seedu.address.ui.UiPart;
+import seedu.address.ui.util.TagFormatter;
 
 /** Student profile component of the Student Details Tab. */
 public class Profile extends UiPart<Region> {
@@ -18,6 +20,9 @@ public class Profile extends UiPart<Region> {
 
     @FXML
     private FlowPane tags;
+
+    @FXML
+    private TextField phoneField;
 
     @FXML
     private TextField nameField;
@@ -35,7 +40,7 @@ public class Profile extends UiPart<Region> {
     private TextField emergencyContactField;
 
     @FXML
-    private TextField remarkField;
+    private TextArea remarkField;
 
     /**
      * UI for the Profile Tab that is displayed on the left hand side of the main
@@ -47,6 +52,7 @@ public class Profile extends UiPart<Region> {
             if (newValue == null) {
                 return;
             }
+            phoneField.setText(newValue.getPhone().toString());
             nameField.setText(newValue.getName().toString());
             studentIdField.setText(newValue.getStudentId().toString());
             roomField.setText(newValue.getRoomNumber().toString());
@@ -56,7 +62,8 @@ public class Profile extends UiPart<Region> {
             tags.getChildren().clear();
             newValue.getTags().values().stream()
                     .sorted(Comparator.comparing(tag -> tag.tagName))
-                    .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                    .forEach(tag -> tags.getChildren().add(
+                            new Label(TagFormatter.formatTagValue(tag))));
 
         });
     }

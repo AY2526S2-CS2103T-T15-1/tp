@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.stage.Stage?>
 
+<?import javafx.scene.control.TextArea?>
 <fx:root resizable="false" title="Help" type="javafx.stage.Stage"
          xmlns="http://javafx.com/javafx/17"
          xmlns:fx="http://javafx.com/fxml/1">
@@ -20,6 +21,7 @@
     <Scene>
       <stylesheets>
         <URL value="@HelpWindow.css" />
+        <URL value="@DarkTheme.css" />
       </stylesheets>
 
       <VBox fx:id="helpWindowContainer" spacing="12">
@@ -30,12 +32,12 @@
         <children>
           <Label fx:id="titleLabel" text="Help" />
 
-          <ScrollPane fitToWidth="true" prefHeight="360.0" prefWidth="540.0"
+          <ScrollPane fitToWidth="true" fitToHeight="true" prefHeight="360.0" prefWidth="540.0"
                       hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
             <content>
-              <VBox spacing="10">
+              <VBox spacing="10" VBox.vgrow="ALWAYS">
                 <children>
-                  <Label fx:id="helpContent" wrapText="true" />
+                  <TextArea fx:id="helpContent" VBox.vgrow="ALWAYS" wrapText="true"/>
                 </children>
                 <padding>
                   <Insets top="10" right="10" bottom="10" left="10" />

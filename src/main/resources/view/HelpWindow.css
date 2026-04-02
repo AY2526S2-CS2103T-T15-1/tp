@@ -23,25 +23,29 @@
     -fx-background-color: #4a4a4a;
 }
 
+#helpContent .content {
+ -fx-background-color : #4a4a4a;
+ }
+
+
 #helpContent {
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-line-spacing: 2px;
 }
 
-#guideText {
+#guideText, #link {
     -fx-text-fill: #d9d9d9;
     -fx-font-size: 11px;
 }
 
 #link {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-padding: 0px 0 0px 0;
-    -fx-underline: true;
+    -fx-padding: 0px;
     -fx-cursor: hand;
 }
 
-#link:hover {
-    -fx-underline: true;
+#link:hover { /* Default: no border or transparent */
+    -fx-border-width: 0 0 1px 0;
+    -fx-text-fill: secondary-blue;
 }

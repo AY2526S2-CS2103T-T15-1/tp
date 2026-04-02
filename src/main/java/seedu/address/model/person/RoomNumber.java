@@ -8,14 +8,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidRoomNumber(String)}
  */
 public class RoomNumber {
-    public static final String MESSAGE_CONSTRAINTS = "Room numbers should only contain alphanumeric characters,"
-            + "and the digit should be before the alphabet.";
+    public static final String MESSAGE_CONSTRAINTS = "Room numbers should only contain alphanumeric characters, "
+            + "with one or two digits followed by a single alphabet (no space). \n Example: 15R";
 
     /*
      * The first character of the room number must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^\\d{1,2}[A-Z]";
+    public static final String VALIDATION_REGEX = "^\\d{1,2}[A-Za-z]";
 
     public final String value;
 
@@ -27,7 +27,11 @@ public class RoomNumber {
     public RoomNumber(String roomNumber) {
         requireNonNull(roomNumber);
         checkArgument(isValidRoomNumber(roomNumber), MESSAGE_CONSTRAINTS);
-        value = roomNumber;
+
+        //Remove leading 0s if any by converting the digits to an integer before concatenating back with the alphabet
+        int floor = Integer.parseInt(roomNumber.substring(0, roomNumber.length() - 1));
+        String alphabet = roomNumber.substring(roomNumber.length() - 1);
+        value = floor + alphabet.toUpperCase();
     }
 
     /**
