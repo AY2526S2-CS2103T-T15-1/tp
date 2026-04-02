@@ -194,10 +194,8 @@ public class EditCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // multiple valid non-student-ID fields repeated
-        userInput = STUDENTID_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + STUDENTID_DESC_BOB + EMAIL_DESC_BOB + EMERGENCY_CONTACT_DESC_AMY;
-        System.out.println(userInput);
+        userInput = STUDENTID_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + PHONE_DESC_AMY
+                + PHONE_DESC_BOB + STUDENTID_DESC_BOB + EMAIL_DESC_BOB + EMERGENCY_CONTACT_DESC_AMY;
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL));
 

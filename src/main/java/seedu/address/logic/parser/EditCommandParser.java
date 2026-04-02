@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROOM_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 import java.util.Set;
@@ -38,8 +37,8 @@ public class EditCommandParser implements Parser<EditCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditCommand parse(String args) throws ParseException {
-        validateNoUnknownPrefixes(args);
         requireNonNull(args);
+        checkForUnknownPrefixes(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
                         PREFIX_NAME,
@@ -99,9 +98,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        // ArgumentTokenizer doesn't tokenize PREFIX_TAG, so it will be treated as preamble.
-        assert argMultimap.getAllValues(PREFIX_TAG).isEmpty() : "PREFIX_TAG should not be tokenized";
-
         // Check for duplicate student ID prefixes (allow up to 2)
         if (argMultimap.getAllValues(PREFIX_STUDENT_ID).size() > 2) {
             throw new ParseException(String.format(EditCommand.MESSAGE_DUPLICATE_STUDENT_ID_PREFIX,
@@ -113,23 +109,17 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_ROOM_NUMBER, PREFIX_EMERGENCY_CONTACT);
     }
 
-    private static void validateNoUnknownPrefixes(String args) throws ParseException {
-        // Matches any token that looks like a prefix e.g. "ne/", "xx=", "abc/"
-        Pattern prefixPattern = Pattern.compile("\\b(\\w+[=/])");
-        Matcher matcher = prefixPattern.matcher(args);
+    private void checkForUnknownPrefixes(String args) throws ParseException {
+        String unknownPrefix = ArgumentTokenizer.checkForUnknownPrefixes(args, PREFIX_NAME,
+                PREFIX_PHONE,
+                PREFIX_EMAIL,
+                PREFIX_STUDENT_ID,
+                PREFIX_ROOM_NUMBER,
+                PREFIX_EMERGENCY_CONTACT);
 
-        // Collect all known prefix strings e.g. "n/", "i="
-        Set<String> knownPrefixStrings = KNOWN_PREFIXES.stream()
-                .map(Prefix::getPrefix) // e.g. "n/", "i="
-                .collect(Collectors.toSet());
-
-        while (matcher.find()) {
-            String found = matcher.group(1);
-            if (!knownPrefixStrings.contains(found)) {
-                throw new ParseException(String.format(MESSAGE_UNKNOWN_PREFIX,
-                        EditCommand.MESSAGE_USAGE));
-            }
+        if (!unknownPrefix.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_PREFIX, unknownPrefix)
+                    + "\n" + EditCommand.MESSAGE_USAGE);
         }
     }
-
 }

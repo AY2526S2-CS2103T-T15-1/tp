@@ -95,6 +95,10 @@ Examples:
 * `add n=John Doe p=+6598765432 e=johnd@example.com i=A101010X r=1A ec=+91 2345 9876`
 * `add n=Betsy Crowe i=A202020Y e=betsycrowe@example.com p=+65 1234567 r=14L ec=+6512345678`
 
+> ___NOTE___
+> 
+> A newly added person will not have any tags
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.

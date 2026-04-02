@@ -10,12 +10,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class StudentId {
 
     public static final String MESSAGE_CONSTRAINTS = "The student ID should only contain alphanumeric characters,"
-            + " and it should be in the form of AXXXXXXXX";
+            + " and it should be in the form of A followed by 6 to 8 digits and an uppercase letter at the end. "
+            + "For example, A1234567X.";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "A\\d{6,8}[A-Z]";
+    public static final String VALIDATION_REGEX = "[A,a]\\d{6,8}[A-Za-z]";
 
     public final String value;
 
@@ -27,7 +28,7 @@ public class StudentId {
     public StudentId(String studentId) {
         requireNonNull(studentId);
         checkArgument(isValidStudentId(studentId), MESSAGE_CONSTRAINTS);
-        value = studentId;
+        value = studentId.toUpperCase();
     }
 
     /**
