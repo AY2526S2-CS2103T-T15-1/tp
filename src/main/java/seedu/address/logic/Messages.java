@@ -15,7 +15,7 @@ public class Messages {
 
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command. Type 'help' to see available commands.";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
-    public static final String MESSAGE_EMPTY_ARGUMENT = "Command has empty input(s)!";
+    public static final String MESSAGE_EMPTY_ARGUMENT = "Command has empty inputs(s)!\n%1$s";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d residents listed!";
     public static final String MESSAGE_RESIDENT_NOT_FOUND = "No resident with Student ID %1$s found.";
     public static final String MESSAGE_DUPLICATE_FIELDS =

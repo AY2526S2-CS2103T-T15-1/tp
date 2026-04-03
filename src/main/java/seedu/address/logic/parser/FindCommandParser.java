@@ -88,7 +88,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         // No non-empty prefix arguments.
         if (argMultimap.hasEmptyPrefixArguments()) {
-            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT + "\n" + FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT, FindCommand.MESSAGE_USAGE));
         }
 
         FilterDetails filterDetails = buildFilterDetails(argMultimap);
