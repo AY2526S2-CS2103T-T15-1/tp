@@ -31,8 +31,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 
     /**
      * Builds a {@link FilterDetails} instance from the values in {@code argMultimap}.
-     * All values for a given prefix are collected with {@code getAllValues} and converted
-     * into {@link java.util.Set}s to remove duplicates.
+     * All values for a given prefix are collected from {@link ArgumentMultimap#getAllValues} and converted
+     * into {@code Set} to remove duplicates.
      */
     private FilterDetails buildFilterDetails(ArgumentMultimap argMultimap) {
         // Build all keyword sets from ArgumentMultimap
@@ -86,7 +86,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        // No non-empty prefix arguments.
+        // If there is no non-empty arguments, then the command is also invalid
         if (argMultimap.hasEmptyPrefixArguments()) {
             throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT, FindCommand.MESSAGE_USAGE));
         }
