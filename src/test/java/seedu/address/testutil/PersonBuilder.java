@@ -1,7 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.model.util.TagUtil.getTagSet;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +13,6 @@ import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagType;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.util.TagUtil;
 
 /**
