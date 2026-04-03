@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_PREFIX;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_USAGE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +35,9 @@ public class TagCommandParser implements Parser<TagCommand> {
                         CliSyntax.PREFIX_TAG_GENDER,
                         CliSyntax.PREFIX_TAG_MAJOR,
                         CliSyntax.PREFIX_TAG_YEAR);
+
+        argumentMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID,
+                PREFIX_TAG_GENDER, PREFIX_TAG_MAJOR, PREFIX_TAG_YEAR);
 
         if (argumentMultimap.getValue(PREFIX_STUDENT_ID).isEmpty() || !argumentMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
