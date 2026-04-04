@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,8 +23,12 @@ import seedu.address.ui.UiPart;
 public class DemeritRecords extends UiPart<Region> {
 
     private static final String FXML = "DemeritRecords.fxml";
+    private static final String TOTAL_POINTS_LABEL_PREFIX = "Total Demerit Points: ";
 
     private final ObservableValue<Person> selectedPerson;
+
+    @FXML
+    private Label totalPointsLabel;
 
     @FXML
     private TableView<DemeritRecordRow> demeritTableView;
@@ -48,7 +53,7 @@ public class DemeritRecords extends UiPart<Region> {
         this.selectedPerson = selectedPerson;
         initialiseColumns();
         bindSelectionListener();
-        updateTable(selectedPerson.getValue());
+        updateView(selectedPerson.getValue());
     }
 
     /**
@@ -128,10 +133,26 @@ public class DemeritRecords extends UiPart<Region> {
     }
 
     /**
-     * Updates the table whenever the selected person changes.
+     * Updates the view whenever the selected person changes.
      */
     private void bindSelectionListener() {
-        selectedPerson.addListener((observable, oldValue, newValue) -> updateTable(newValue));
+        selectedPerson.addListener((observable, oldValue, newValue) -> updateView(newValue));
+    }
+
+    /**
+     * Updates both the total points summary and the incident table.
+     */
+    private void updateView(Person person) {
+        updateTotalPointsLabel(person);
+        updateTable(person);
+    }
+
+    /**
+     * Updates the total demerit points label for the selected person.
+     */
+    private void updateTotalPointsLabel(Person person) {
+        int totalPoints = person == null ? 0 : person.getTotalDemeritPoints();
+        totalPointsLabel.setText(TOTAL_POINTS_LABEL_PREFIX + totalPoints);
     }
 
     /**

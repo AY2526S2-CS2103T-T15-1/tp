@@ -12,3 +12,10 @@
 .demerit-record-wrapped-text {
     -fx-fill: white;
 }
+
+.demerit-total-points-label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 4px 0 2px 0;
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
@@ -9,6 +10,8 @@
       spacing="10"
       styleClass="panel-container"
       stylesheets="@DarkTheme.css,@DemeritRecords.css">
+
+    <Label fx:id="totalPointsLabel" styleClass="demerit-total-points-label" />
 
     <TableView fx:id="demeritTableView" styleClass="custom-table" VBox.vgrow="ALWAYS">
         <columns>
