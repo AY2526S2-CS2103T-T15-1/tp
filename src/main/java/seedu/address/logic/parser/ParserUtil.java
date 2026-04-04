@@ -178,22 +178,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String major} into a normalized major tag value. If the input is empty, it returns null.
-     *
-     * @param major the input major string to parse
-     * @return the parsed major string, or null if the input is empty
-     * @throws ParseException if the given {@code major} is invalid.
-     */
-    public static String parseMajor(String major) throws ParseException {
-        requireNonNull(major);
-        String trimmedMajor = major.trim();
-        if (trimmedMajor.isEmpty()) {
-            return null; // Allow empty input to be treated as null
-        }
-        return trimmedMajor;
-    }
-
-    /**
      * Parses a {@code String input} into a positive integer.
      *
      * @throws ParseException if the given {@code input} is not a positive integer.
