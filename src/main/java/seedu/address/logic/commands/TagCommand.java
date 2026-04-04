@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_RESIDENT_NOT_FOUND;
+import static seedu.address.logic.commands.util.ModelUtil.getPersonByStudentIdOrThrow;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
@@ -42,7 +42,7 @@ public class TagCommand extends Command {
     public static final String MESSAGE_TAG_NOT_ADDED =
             "At least one tag must be provided.";
 
-    private final StudentId studentId;
+    private final StudentId targetStudentId;
     private final Map<TagType, Tag> tags;
 
     /**
@@ -56,7 +56,7 @@ public class TagCommand extends Command {
             throw new IllegalArgumentException(MESSAGE_TAG_NOT_ADDED);
         }
 
-        this.studentId = studentId;
+        this.targetStudentId = studentId;
         this.tags = tags;
     }
 
@@ -64,8 +64,7 @@ public class TagCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person personToTag = model.getPersonByStudentId(studentId)
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_RESIDENT_NOT_FOUND, studentId)));
+        Person personToTag = getPersonByStudentIdOrThrow(model, targetStudentId);
 
         Person taggedPerson = createTaggedPerson(personToTag, tags);
 
@@ -107,14 +106,14 @@ public class TagCommand extends Command {
             return false;
         }
 
-        return studentId.equals(otherTagCommand.studentId)
+        return targetStudentId.equals(otherTagCommand.targetStudentId)
                 && tags.equals(otherTagCommand.tags);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("studentId", studentId)
+                .add("studentId", targetStudentId)
                 .add("tags", tags)
                 .toString();
     }

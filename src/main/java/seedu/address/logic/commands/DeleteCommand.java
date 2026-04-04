@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_RESIDENT_NOT_FOUND;
+import static seedu.address.logic.commands.util.ModelUtil.getPersonByStudentIdOrThrow;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -47,9 +47,7 @@ public class DeleteCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person personToDelete = model.getPersonByStudentId(targetStudentId)
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_RESIDENT_NOT_FOUND, targetStudentId)));
-
+        Person personToDelete = getPersonByStudentIdOrThrow(model, targetStudentId);
         model.deletePerson(personToDelete);
         model.showAllPersons();
 
