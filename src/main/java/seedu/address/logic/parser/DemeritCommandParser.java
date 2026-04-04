@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEMERIT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
@@ -9,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.StudentId;
 
 /**
- * Parses input arguments and creates a new DemeritCommand object.
+ * Parses input arguments and creates a new {@code DemeritCommand} object.
  */
 public class DemeritCommandParser implements Parser<DemeritCommand> {
 
@@ -20,22 +21,17 @@ public class DemeritCommandParser implements Parser<DemeritCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DemeritCommand parse(String args) throws ParseException {
-        ParserUtil.checkForUnknownPrefixes(args, DemeritCommand.MESSAGE_USAGE, PREFIX_STUDENT_ID,
-                PREFIX_DEMERIT_INDEX, PREFIX_REMARK);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STUDENT_ID, PREFIX_DEMERIT_INDEX, PREFIX_REMARK);
 
-        if (!argMultimap.arePrefixesPresent(PREFIX_STUDENT_ID, PREFIX_DEMERIT_INDEX)
+        if (!argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()
+                || !argMultimap.getValue(PREFIX_DEMERIT_INDEX).isPresent()
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(DemeritCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DemeritCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_DEMERIT_INDEX, PREFIX_REMARK);
-
-        StudentId studentId = ParserUtil.parseStudentId(
-                argMultimap.getValue(PREFIX_STUDENT_ID).get());
-        int ruleIndex = ParserUtil.parsePositiveInt(
-                argMultimap.getValue(PREFIX_DEMERIT_INDEX).get());
+        StudentId studentId = ParserUtil.parseStudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
+        int ruleIndex = ParserUtil.parseDemeritIndex(argMultimap.getValue(PREFIX_DEMERIT_INDEX).get());
         String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
 
         return new DemeritCommand(studentId, ruleIndex, remark);
