@@ -88,8 +88,8 @@ public class FindCommandParserTest {
         // Partition: Invalid gender and year values are ignored with warning while valid values are kept
         FilterDetails filterDetails = new FilterDetails();
         filterDetails.setNameKeywords(Set.of("Alice"));
-        filterDetails.setTagGenderKeywords(Set.of("she/her"));
-        filterDetails.setTagYearKeywords(Set.of("2"));
+        filterDetails.setTagGenderKeywords(Set.of("she/her", "female"));
+        filterDetails.setTagYearKeywords(Set.of("2", "Y7"));
 
         String warning = "Warning: Ignored invalid g= value(s): [female]. Please use he/him, she/her, or they/them.\n"
                 + "Warning: Ignored invalid y= value(s): [Y7]. Please use year values from 1 to 6.";
