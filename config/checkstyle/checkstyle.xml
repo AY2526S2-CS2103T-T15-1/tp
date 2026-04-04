@@ -44,9 +44,16 @@
       <property name="checkFormat" value="$1"/>
     </module>
 
-    <!--
-    IMPORT CHECKS
-    -->
+      <!-- Allows indented case/default only for lambda-style switch rules (case X -> ...). -->
+      <module name="SuppressionXpathSingleFilter">
+          <property name="checks" value="Indentation"/>
+          <property name="query"
+                    value="//LITERAL_CASE[parent::SWITCH_RULE] | //LITERAL_DEFAULT[parent::SWITCH_RULE]"/>
+      </module>
+
+      <!--
+      IMPORT CHECKS
+      -->
 
     <!-- Checks the ordering of import statements follow the rules that the default Eclipse formatter uses.
     The order rule "STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE" consists of:
