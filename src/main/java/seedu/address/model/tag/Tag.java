@@ -28,7 +28,7 @@ public class Tag {
 
         checkArgument(isValidTagName(tagName, tagType), MESSAGE_CONSTRAINTS);
 
-        this.tagName = tagName;
+        this.tagName = getNormalisedTagName(tagName, tagType);
         this.tagType = tagType;
     }
 
@@ -37,7 +37,12 @@ public class Tag {
      */
     public static boolean isValidTagName(String test, TagType type) {
         requireNonNull(type);
-        return type.isValidTagName(test);
+        return type.isValidTagName(getNormalisedTagName(test, type));
+    }
+
+    public static String getNormalisedTagName(String test, TagType type) {
+        // check for gender as it is the only case-insensitive tag type
+        return type == TagType.GENDER ? test.toLowerCase() : test;
     }
 
     /**
