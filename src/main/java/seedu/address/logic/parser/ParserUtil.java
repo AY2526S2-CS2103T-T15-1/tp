@@ -168,7 +168,7 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code input} is not a positive integer.
      */
-    public static int parsePositiveInt(String input) throws ParseException {
+    public static int parseDemeritIndex(String input) throws ParseException {
         requireNonNull(input);
         String trimmedInput = input.trim();
         try {
