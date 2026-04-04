@@ -14,7 +14,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagType;
 
 /**
@@ -39,8 +38,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String name} into a {@code Name}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
@@ -54,8 +52,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String phone} into a {@code Phone}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code phone} is invalid.
      */
@@ -69,8 +66,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String address} into an {@code Address}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code address} is invalid.
      */
@@ -84,8 +80,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String email} into an {@code Email}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code email} is invalid.
      */
@@ -99,8 +94,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String roomNumber} into a {@code RoomNumber}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String roomNumber} into a {@code RoomNumber}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code roomNumber} is invalid.
      */
@@ -114,8 +108,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String emergencyContact} into an {@code EmergencyContact}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String emergencyContact} into an {@code EmergencyContact}. Leading and trailing whitespaces will
+     * be trimmed.
      *
      * @throws ParseException if the given {@code emergencyContact} is invalid.
      */
@@ -126,27 +120,6 @@ public class ParserUtil {
             throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
         }
         return new EmergencyContact(trimmedEmergencyContact);
-    }
-
-    /**
-     * Parses a {@code String gender} into a normalized gender tag value. Accepts formats like {@code he}, {@code him},
-     * {@code he/him} and returns {@code he/him}. If the input is empty, it returns null.
-     *
-     * @param gender the input gender
-     * @return the parsed gender, or null if the input is empty
-     * @throws ParseException if the given {@code gender} is invalid.
-     */
-    public static String normalizeGender(String gender) throws ParseException {
-        requireNonNull(gender);
-        String trimmedGender = gender.trim().toLowerCase();
-
-        return switch (trimmedGender) {
-            case "he", "him", "he/him" -> "he/him";
-            case "she", "her", "she/her" -> "she/her";
-            case "they", "them", "they/them" -> "they/them";
-            case "" -> null; // Allow empty input to be treated as null
-            default -> throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
-        };
     }
 
     /**

@@ -59,7 +59,7 @@ public class TagCommandParser implements Parser<TagCommand> {
         try {
             if (argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER).isPresent()) {
                 String genderInput = argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER).get();
-                String gender = ParserUtil.normalizeGender(genderInput);
+                String gender = ParserUtil.tryNormalizeGender(genderInput).orElse(genderInput);
                 tags.put(TagType.GENDER, new Tag(TagType.GENDER, gender));
             }
             argumentMultimap.getValue(CliSyntax.PREFIX_TAG_MAJOR)
