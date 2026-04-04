@@ -103,10 +103,10 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
+     *  Validates that each filter prefix has at most {@code MAX_VALUES_PER_PREFIX} values as defined in {@code
+     *  FilterDetails}.
      *
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the filter details violate the keyword limits for any prefix
      */
     private void validateFilterKeywordLimits(FilterDetails filterDetails) throws ParseException {
         try {
