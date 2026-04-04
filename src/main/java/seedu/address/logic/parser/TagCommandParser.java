@@ -57,8 +57,11 @@ public class TagCommandParser implements Parser<TagCommand> {
     private Map<TagType, Tag> parseTags(ArgumentMultimap argumentMultimap) throws ParseException {
         Map<TagType, Tag> tags = new HashMap<>();
         try {
-            argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER)
-                    .ifPresent(gender -> tags.put(TagType.GENDER, new Tag(TagType.GENDER, gender)));
+            if (argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER).isPresent()) {
+                String genderInput = argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER).get();
+                String gender = ParserUtil.tryNormalizeGender(genderInput).orElse(genderInput);
+                tags.put(TagType.GENDER, new Tag(TagType.GENDER, gender));
+            }
             argumentMultimap.getValue(CliSyntax.PREFIX_TAG_MAJOR)
                     .ifPresent(major -> tags.put(TagType.MAJOR, new Tag(TagType.MAJOR, major)));
             argumentMultimap.getValue(CliSyntax.PREFIX_TAG_YEAR)

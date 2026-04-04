@@ -15,7 +15,7 @@
       "tagName" : "1"
     }, {
       "tagType" : "GENDER",
-      "tagName" : "SHE/her"
+      "tagName": "she/her"
     } ]
   }, {
     "name" : "Benson Meier",
@@ -35,7 +35,7 @@
       },
       {
         "tagType" : "GENDER",
-        "tagName" : "HE/HIM"
+        "tagName": "he/him"
       } ]
   }, {
     "name" : "Carl Kurz",

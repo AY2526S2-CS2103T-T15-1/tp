@@ -3,9 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_PREFIX;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -16,7 +14,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagType;
 
 /**
@@ -41,8 +38,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String name} into a {@code Name}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
@@ -56,8 +52,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String phone} into a {@code Phone}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code phone} is invalid.
      */
@@ -71,8 +66,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String address} into an {@code Address}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code address} is invalid.
      */
@@ -86,8 +80,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String email} into an {@code Email}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code email} is invalid.
      */
@@ -101,8 +94,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String roomNumber} into a {@code RoomNumber}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String roomNumber} into a {@code RoomNumber}. Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code roomNumber} is invalid.
      */
@@ -116,8 +108,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String emergencyContact} into an {@code EmergencyContact}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String emergencyContact} into an {@code EmergencyContact}. Leading and trailing whitespaces will
+     * be trimmed.
      *
      * @throws ParseException if the given {@code emergencyContact} is invalid.
      */
@@ -131,36 +123,35 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Attempts to normalize a {@code String gender} into a canonical gender tag value. Returns an empty Optional when
+     * the input is invalid or empty.
      *
-     * @throws ParseException if the given {@code tag} is invalid.
+     * It is necessary to wrap the result in Optional, as it would be used to determine whether the input is
+     * normalizable.
      */
-    public static Tag parseTag(TagType type, String tag) throws ParseException {
-        requireNonNull(tag);
-        requireNonNull(type);
-        String trimmedTag = tag.trim();
+    public static Optional<String> tryNormalizeGender(String gender) {
+        requireNonNull(gender);
+        String trimmedGender = gender.trim().toLowerCase();
 
-        if (!Tag.isValidTagName(trimmedTag, type)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
-        }
-
-        return new Tag(type, trimmedTag); // uses the simple constructor
+        return switch (trimmedGender) {
+            case "he", "him", "he/him" -> Optional.of("he/him");
+            case "she", "her", "she/her" -> Optional.of("she/her");
+            case "they", "them", "they/them" -> Optional.of("they/them");
+            default -> Optional.empty();
+        };
     }
 
     /**
-     * Parses a {@code Collection<String> tags and TagType } into a {@code Set<Tag>}.
-     * This method needs to be updated in the next milestone to accommodate the new TagType parameter.
+     * Attempts to normalize a {@code String year} into a canonical year tag value. Returns an empty Optional when the
+     * input is invalid.
      */
-    public static Set<Tag> parseTags(Collection<String> tags, TagType type) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-
-        for (String tagName : tags) {
-            tagSet.add(parseTag(type, tagName));
+    public static Optional<String> tryNormalizeYear(String year) {
+        requireNonNull(year);
+        String trimmedYear = year.trim();
+        if (!TagType.YEAR.isValidTagName(trimmedYear)) {
+            return Optional.empty();
         }
-
-        return tagSet;
+        return Optional.of(trimmedYear);
     }
 
     /**
