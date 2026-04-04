@@ -97,10 +97,4 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand = new FindCommand(filterDetails, warning);
         assertParseSuccess(parser, " n=Alice g=she g=female y=2 y=Y7", expectedFindCommand);
     }
-
-    private FilterDetails createNameOnlyFilterDetails() {
-        FilterDetails filterDetails = new FilterDetails();
-        filterDetails.setNameKeywords(Set.of("Alice"));
-        return filterDetails;
-    }
 }
