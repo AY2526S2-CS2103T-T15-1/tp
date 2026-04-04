@@ -30,8 +30,8 @@ public class RemarkCommand extends Command {
     private final Remark remark;
 
     /**
-     * @param studentId of the person to add remark to
-     * @param remark to add to the person
+     * Creates a {@code RemarkCommand} to add the specified {@code Remark}
+     * to the resident identified by the given {@code StudentId}.
      */
     public RemarkCommand(StudentId studentId, Remark remark) {
         requireNonNull(studentId);
@@ -58,7 +58,12 @@ public class RemarkCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToRemark} edited with {@code remark}.
+     * Creates and returns a new {@code Person} with the specified remark.
+     * All other fields remain unchanged.
+     *
+     * @param personToRemark the original resident whose details are to be copied.
+     * @param remark the new remark to assign to the resident.
+     * @return a new {@code Person} instance with the updated remark.
      */
     private static Person createEditedPerson(Person personToRemark, Remark remark) {
         return new Person(
@@ -68,7 +73,7 @@ public class RemarkCommand extends Command {
                 personToRemark.getStudentId(),
                 personToRemark.getRoomNumber(),
                 personToRemark.getEmergencyContact(),
-                remark, // add the new remark or overwrite the existing remark
+                remark, // Replace the remark field with the new remark
                 personToRemark.getTags()
         );
     }

@@ -90,6 +90,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Returns an {@link Optional} containing the {@link Person} with the specified
+     * {@link StudentId} from the address book, or an empty {@link Optional} if no such person exists.
+     */
     Optional<Person> getPersonByStudentId(StudentId studentId);
 
     /**
