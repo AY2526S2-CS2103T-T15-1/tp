@@ -59,14 +59,14 @@ public class TagCommandParser implements Parser<TagCommand> {
         try {
             if (argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER).isPresent()) {
                 String genderInput = argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER).get();
-                String gender = ParserUtil.parseGender(genderInput);
+                String gender = ParserUtil.normalizeGender(genderInput);
                 tags.put(TagType.GENDER, new Tag(TagType.GENDER, gender));
             }
             argumentMultimap.getValue(CliSyntax.PREFIX_TAG_MAJOR)
                     .ifPresent(major -> tags.put(TagType.MAJOR, new Tag(TagType.MAJOR, major)));
             argumentMultimap.getValue(CliSyntax.PREFIX_TAG_YEAR)
                     .ifPresent(year -> tags.put(TagType.YEAR, new Tag(TagType.YEAR, year)));
-        } catch (ParseException e) {
+        } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
         }
 
