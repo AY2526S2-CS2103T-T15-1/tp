@@ -13,7 +13,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.RoomNumber;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.TagType;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -127,36 +126,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String year} into a normalized year tag value. Accepts formats like {@code 1}, {@code Y1},
-     * {@code year 1} and returns {@code 1}. If the input is empty, it returns null.
-     *
-     * @param year the input year string to parse
-     * @return the parsed year string, or null if the input is empty
-     * @throws ParseException if the given {@code year} is invalid.
-     */
-    public static String parseYear(String year) throws ParseException {
-        requireNonNull(year);
-        String trimmedYear = year.trim().toUpperCase();
-
-        String normalizedYear = null;
-        if (trimmedYear.startsWith("Y")) {
-            normalizedYear = trimmedYear.substring(1).trim();
-        }
-        if (trimmedYear.startsWith("Year")) {
-            normalizedYear = trimmedYear.substring(4).trim();
-        }
-        if (trimmedYear.isEmpty()) {
-            normalizedYear = null; // Allow empty input to be treated as null
-        }
-
-        if (!TagType.YEAR.isValidTagName(normalizedYear)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
-        }
-
-        return normalizedYear;
-    }
-
-    /**
      * Parses a {@code String gender} into a normalized gender tag value. Accepts formats like {@code he}, {@code him},
      * {@code he/him} and returns {@code he/him}. If the input is empty, it returns null.
      *
@@ -164,7 +133,7 @@ public class ParserUtil {
      * @return the parsed gender, or null if the input is empty
      * @throws ParseException if the given {@code gender} is invalid.
      */
-    public static String parseGender(String gender) throws ParseException {
+    public static String normalizeGender(String gender) throws ParseException {
         requireNonNull(gender);
         String trimmedGender = gender.trim().toLowerCase();
 
