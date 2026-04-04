@@ -125,6 +125,9 @@ public class ParserUtil {
     /**
      * Attempts to normalize a {@code String gender} into a canonical gender tag value. Returns an empty Optional when
      * the input is invalid or empty.
+     *
+     * It is necessary to wrap the result in Optional, as it would be used to determine whether the input is
+     * normalizable.
      */
     public static Optional<String> tryNormalizeGender(String gender) {
         requireNonNull(gender);
