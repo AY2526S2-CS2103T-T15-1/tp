@@ -47,6 +47,10 @@ public class FindCommandTest {
         FindCommand findFirstCommandCopy = new FindCommand(firstFilterDetails);
         assertEquals(findFirstCommand, findFirstCommandCopy);
 
+        // different warning message -> returns false
+        FindCommand findFirstCommandWithWarning = new FindCommand(firstFilterDetails, "warning");
+        assertNotEquals(findFirstCommand, findFirstCommandWithWarning);
+
         // different types -> returns false
         assertNotEquals(1, findFirstCommand);
 
