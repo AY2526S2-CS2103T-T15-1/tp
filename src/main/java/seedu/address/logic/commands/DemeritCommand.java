@@ -55,27 +55,63 @@ public class DemeritCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person personToUpdate = getPersonByStudentIdOrThrow(model, targetStudentId);
+        Person personToUpdate = getPersonToUpdate(model);
+        DemeritRule rule = getRule();
+        DemeritIncident newIncident = createNewIncident(personToUpdate, rule);
+        Person updatedPerson = createUpdatedPerson(personToUpdate, newIncident);
 
-        DemeritRule rule = DemeritRuleCatalogue.findByIndex(ruleIndex)
+        updateModel(model, personToUpdate, updatedPerson);
+
+        return createSuccessResult(updatedPerson, rule, newIncident);
+    }
+
+    /**
+     * Returns the resident to update.
+     */
+    private Person getPersonToUpdate(Model model) throws CommandException {
+        return getPersonByStudentIdOrThrow(model, targetStudentId);
+    }
+
+    /**
+     * Returns the demerit rule to apply.
+     */
+    private DemeritRule getRule() throws CommandException {
+        return DemeritRuleCatalogue.findByIndex(ruleIndex)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_RULE_NOT_FOUND, ruleIndex)));
+    }
 
-        int priorOccurrences = personToUpdate.getOccurrenceCountForRule(ruleIndex);
-        int offenceNumber = priorOccurrences + 1;
+    /**
+     * Creates a new demerit incident for the given resident and rule.
+     */
+    private DemeritIncident createNewIncident(Person personToUpdate, DemeritRule rule) {
+        int offenceNumber = getOffenceNumber(personToUpdate);
         int pointsApplied = rule.getPointsForOccurrence(offenceNumber);
 
-        DemeritIncident newIncident = new DemeritIncident(
+        return new DemeritIncident(
                 rule.getIndex(),
                 rule.getTitle(),
                 offenceNumber,
                 pointsApplied,
                 remark
         );
+    }
 
+    /**
+     * Returns the offence number for this resident for the target rule.
+     */
+    private int getOffenceNumber(Person personToUpdate) {
+        int priorOccurrences = personToUpdate.getOccurrenceCountForRule(ruleIndex);
+        return priorOccurrences + 1;
+    }
+
+    /**
+     * Returns a new {@code Person} with the new incident added.
+     */
+    private Person createUpdatedPerson(Person personToUpdate, DemeritIncident newIncident) {
         List<DemeritIncident> updatedIncidents = new ArrayList<>(personToUpdate.getDemeritIncidents());
         updatedIncidents.add(newIncident);
 
-        Person updatedPerson = new Person(
+        return new Person(
                 personToUpdate.getName(),
                 personToUpdate.getPhone(),
                 personToUpdate.getEmail(),
@@ -86,18 +122,27 @@ public class DemeritCommand extends Command {
                 personToUpdate.getTags(),
                 updatedIncidents
         );
+    }
 
-
+    /**
+     * Applies the resident update to the model and refreshes the UI state.
+     */
+    private void updateModel(Model model, Person personToUpdate, Person updatedPerson) {
         model.setPerson(personToUpdate, updatedPerson);
         model.showAllPersons();
         model.setSelectedPerson(updatedPerson);
+    }
 
+    /**
+     * Returns the success result after applying the demerit.
+     */
+    private CommandResult createSuccessResult(Person updatedPerson, DemeritRule rule, DemeritIncident newIncident) {
         return new CommandResult(String.format(
                 MESSAGE_ADD_DEMERIT_SUCCESS,
                 Messages.format(updatedPerson),
                 rule.getIndex(),
                 rule.getTitle(),
-                pointsApplied,
+                newIncident.getPointsApplied(),
                 updatedPerson.getTotalDemeritPoints()
         ));
     }
