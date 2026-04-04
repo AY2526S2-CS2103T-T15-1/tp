@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_EMPTY_ARGUMENT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_PREFIX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -13,6 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,25 +27,37 @@ import seedu.address.model.FilterDetails;
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
+    private static final String MESSAGE_INVALID_GENDER_VALUES_IGNORED =
+            "Warning: Ignored invalid g= value(s): %1$s. Please use he/him, she/her, or they/them.";
+    private static final String MESSAGE_INVALID_YEAR_VALUES_IGNORED =
+            "Warning: Ignored invalid y= value(s): %1$s. Please use year values from 1 to 6.";
 
     private static final Prefix[] PREFIXES_TO_CHECK = new Prefix[]{
-        PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER, PREFIX_STUDENT_ID,
-        PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER
+            PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER, PREFIX_STUDENT_ID,
+            PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER
     };
 
-
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindCommand and returns a FindCommand object
+     * for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        checkForUnknownPrefixes(args);
 
-        ParserUtil.checkForUnknownPrefixes(args, FindCommand.MESSAGE_USAGE, PREFIXES_TO_CHECK);
+        ArgumentMultimap argMultimap = tokenizeAndValidateArguments(args);
+        FilterDetails filterDetails = buildFilterDetails(argMultimap);
+        validateFilterKeywordLimits(filterDetails);
 
-        // Tokenize the arguments
+        String warningMessage = buildWarningMessage(
+                collectInvalidGenderKeywords(argMultimap.getAllValues(PREFIX_TAG_GENDER)),
+                collectInvalidYearKeywords(argMultimap.getAllValues(PREFIX_TAG_YEAR)));
+        return new FindCommand(filterDetails, warningMessage);
+    }
+
+    private ArgumentMultimap tokenizeAndValidateArguments(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIXES_TO_CHECK)
                 .removeEmptyValuesAndPrefixes();
 
@@ -52,24 +66,17 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        // No non-empty prefix arguments.
+        // If all prefix arguments are empty, this command is also invalid.
         if (argMultimap.hasEmptyPrefixArguments()) {
-            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT + "\n" + FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT, FindCommand.MESSAGE_USAGE));
         }
-
-        FilterDetails filterDetails = buildFilterDetails(argMultimap);
-        try {
-            filterDetails.validateKeywordLimits();
-        } catch (IllegalArgumentException exception) {
-            throw new ParseException(exception.getMessage());
-        }
-        return new FindCommand(filterDetails);
+        return argMultimap;
     }
 
     /**
      * Builds a {@link FilterDetails} instance from the values in {@code argMultimap}.
-     * All values for a given prefix are collected with {@code getAllValues} and converted
-     * into sets to remove duplicates.
+     * All values for a given prefix are collected from {@link ArgumentMultimap#getAllValues} and converted
+     * into {@code Set} to remove duplicates.
      */
     private FilterDetails buildFilterDetails(ArgumentMultimap argMultimap) {
         // Build all keyword sets from ArgumentMultimap
@@ -95,11 +102,87 @@ public class FindCommandParser implements Parser<FindCommand> {
         filterDetails.setTagMajorKeywords(tagMajorKeywords);
         filterDetails.setTagGenderKeywords(tagGenderKeywords);
 
-        // System.out.println(filterDetails);
         return filterDetails;
     }
 
-    private static Set<String> toSet(List<String> values) {
-        return new HashSet<>(values);
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * and returns a FindCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    private void validateFilterKeywordLimits(FilterDetails filterDetails) throws ParseException {
+        try {
+            filterDetails.validateKeywordLimits();
+        } catch (IllegalArgumentException exception) {
+            throw new ParseException(exception.getMessage());
+        }
+    }
+
+    private String buildWarningMessage(List<String> invalidGenders, List<String> invalidYears) {
+        List<String> warnings = new ArrayList<>();
+
+        if (!invalidGenders.isEmpty()) {
+            warnings.add(String.format(MESSAGE_INVALID_GENDER_VALUES_IGNORED, invalidGenders));
+        }
+        if (!invalidYears.isEmpty()) {
+            warnings.add(String.format(MESSAGE_INVALID_YEAR_VALUES_IGNORED, invalidYears));
+        }
+
+        return String.join("\n", warnings);
+    }
+
+    private List<String> collectInvalidGenderKeywords(List<String> rawKeywords) {
+        List<String> invalidValues = new ArrayList<>();
+        for (String value : rawKeywords) {
+            String trimmedValue = value.trim();
+            if (ParserUtil.tryNormalizeGender(trimmedValue).isEmpty()) {
+                invalidValues.add(trimmedValue);
+            }
+        }
+        return invalidValues;
+    }
+
+    private List<String> collectInvalidYearKeywords(List<String> rawKeywords) {
+        List<String> invalidValues = new ArrayList<>();
+        for (String value : rawKeywords) {
+            String trimmedValue = value.trim();
+            if (ParserUtil.tryNormalizeYear(trimmedValue).isEmpty()) {
+                invalidValues.add(trimmedValue);
+            }
+        }
+        return invalidValues;
+    }
+
+    private static Set<String> toSet(List<String> rawKeywords) {
+        return new HashSet<>(rawKeywords);
+    }
+
+    private Set<String> collectValidYearKeywords(List<String> rawKeywords) {
+        Set<String> validKeywords = new HashSet<>();
+        for (String value : rawKeywords) {
+            String trimmedValue = value.trim();
+            ParserUtil.tryNormalizeYear(trimmedValue).ifPresent(validKeywords::add);
+        }
+        return validKeywords;
+    }
+
+    private Set<String> collectValidGenderKeywords(List<String> rawKeywords) {
+        Set<String> normalizedKeywords = new HashSet<>();
+        for (String value : rawKeywords) {
+            String trimmedValue = value.trim();
+            ParserUtil.tryNormalizeGender(trimmedValue)
+                    .ifPresent(normalizedKeywords::add);
+        }
+        return normalizedKeywords;
+    }
+
+    private void checkForUnknownPrefixes(String args) throws ParseException {
+        String unknownPrefix = ArgumentTokenizer.checkForUnknownPrefixes(args, PREFIXES_TO_CHECK);
+
+        if (!unknownPrefix.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_PREFIX, unknownPrefix)
+                    + "\n" + FindCommand.MESSAGE_USAGE);
+        }
     }
 }
