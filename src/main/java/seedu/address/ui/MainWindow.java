@@ -20,9 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.FilterDetails;
 
@@ -67,13 +65,10 @@ public class MainWindow extends UiPart<Stage> {
     public MainWindow(Stage primaryStage, Logic logic) {
         super(FXML, primaryStage);
 
-        // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
 
-        // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
-
         setAccelerators();
 
         helpWindow = new HelpWindow(primaryStage);
@@ -83,8 +78,6 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
-        // If the saved window coordinates are not visible, move the window to the primary screen
-        // This can happen when the screen resolution is changed or when the app is opened on a different monitor
         if (hasVisibleWindowCoordinates(guiSettings)) {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
@@ -121,21 +114,6 @@ public class MainWindow extends UiPart<Stage> {
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
         menuItem.setAccelerator(keyCombination);
 
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
@@ -197,15 +175,11 @@ public class MainWindow extends UiPart<Stage> {
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
-            Optional<DeleteCommand> deleteCommand = parseDeleteCommand(commandText);
-
-            if (deleteCommand.isPresent() && deleteTargetExists(deleteCommand.get())) {
-                if (!showDeleteConfirmationDialog()) {
-                    CommandResult cancelResult = new CommandResult(MESSAGE_DELETE_CANCELLED);
-                    logger.info("Result: " + cancelResult.getFeedbackToUser());
-                    resultDisplay.setFeedbackToUser(cancelResult.getFeedbackToUser());
-                    return cancelResult;
-                }
+            if (logic.requiresDeleteConfirmation(commandText) && !showDeleteConfirmationDialog()) {
+                CommandResult cancelResult = new CommandResult(MESSAGE_DELETE_CANCELLED);
+                logger.info("Result: " + cancelResult.getFeedbackToUser());
+                resultDisplay.setFeedbackToUser(cancelResult.getFeedbackToUser());
+                return cancelResult;
             }
 
             CommandResult commandResult = logic.execute(commandText);
@@ -226,29 +200,6 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
-    }
-
-    /**
-     * Returns the parsed {@code DeleteCommand} if the command text is a valid delete command.
-     * Returns {@code Optional.empty()} otherwise.
-     */
-    private Optional<DeleteCommand> parseDeleteCommand(String commandText) {
-        try {
-            if (new AddressBookParser().parseCommand(commandText) instanceof DeleteCommand deleteCommand) {
-                return Optional.of(deleteCommand);
-            }
-            return Optional.empty();
-        } catch (ParseException e) {
-            return Optional.empty();
-        }
-    }
-
-    /**
-     * Returns true if the delete command targets an existing resident.
-     */
-    private boolean deleteTargetExists(DeleteCommand deleteCommand) {
-        return logic.getAddressBook().getPersonList().stream()
-                .anyMatch(person -> person.getStudentId().equals(deleteCommand.getTargetStudentId()));
     }
 
     /**
@@ -280,8 +231,6 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.focus();
         }
     }
-
-    // =============================== Executing Commands  ================================
 
     /**
      * Closes the application.
