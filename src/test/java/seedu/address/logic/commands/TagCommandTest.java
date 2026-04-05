@@ -18,7 +18,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagType;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.util.PersonBuilder;
 
 public class TagCommandTest {
 
@@ -139,6 +139,6 @@ public class TagCommandTest {
         tags.put(TagType.YEAR, new Tag(TagType.YEAR, "2"));
         CommandResult result = new TagCommand(VALID_STUDENT_ID, tags).execute(model);
 
-        assertTrue(result.getFeedbackToUser().startsWith("Added Tag to Resident"));
+        assertTrue(result.getFeedbackToUser().startsWith("Updated Tag for Resident"));
     }
 }

@@ -47,6 +47,10 @@ public class FindCommandTest {
         FindCommand findFirstCommandCopy = new FindCommand(firstFilterDetails);
         assertEquals(findFirstCommand, findFirstCommandCopy);
 
+        // different warning message -> returns false
+        FindCommand findFirstCommandWithWarning = new FindCommand(firstFilterDetails, "warning");
+        assertNotEquals(findFirstCommand, findFirstCommandWithWarning);
+
         // different types -> returns false
         assertNotEquals(1, findFirstCommand);
 
@@ -125,11 +129,27 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_withWarning_warningAppendedToFeedback() {
+        String warning = "Warning: Ignored invalid g= value(s): [female]. Please use he/him, she/her, or they/them.";
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1) + "\n" + warning;
+
+        FilterDetails filterDetails = createEmptyFilterDetails();
+        filterDetails.setNameKeywords(Set.of("Alice"));
+        PersonMatchesDetailsPredicate predicate = new PersonMatchesDetailsPredicate(filterDetails);
+        FindCommand command = new FindCommand(filterDetails, warning);
+
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(ALICE), model.getFilteredPersonList());
+    }
+
+    @Test
     public void toStringMethod() {
         FilterDetails filterDetails = createEmptyFilterDetails();
         FindCommand findDetailsCommand = new FindCommand(filterDetails);
         PersonMatchesDetailsPredicate detailsPredicate = new PersonMatchesDetailsPredicate(filterDetails);
-        String expectedDetails = FindCommand.class.getCanonicalName() + "{predicate=" + detailsPredicate + "}";
+        String expectedDetails = FindCommand.class.getCanonicalName()
+                + "{predicate=" + detailsPredicate + ", warningMessage=}";
         assertEquals(expectedDetails, findDetailsCommand.toString());
     }
 

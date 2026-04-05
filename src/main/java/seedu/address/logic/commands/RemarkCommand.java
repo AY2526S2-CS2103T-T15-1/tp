@@ -24,14 +24,14 @@ public class RemarkCommand extends Command {
             + "Example: " + COMMAND_WORD
             + " i=A1234567Z rm=Is vegetarian";
 
-    public static final String MESSAGE_SUCCESS = "Added Remark to Resident: %1$s";
+    public static final String MESSAGE_SUCCESS = "Updated Remark for Resident: %1$s";
 
     private final StudentId targetStudentId;
     private final Remark remark;
 
     /**
-     * @param studentId of the person to add remark to
-     * @param remark to add to the person
+     * Creates a {@code RemarkCommand} to add the specified {@code Remark}
+     * to the resident identified by the given {@code StudentId}.
      */
     public RemarkCommand(StudentId studentId, Remark remark) {
         requireNonNull(studentId);
@@ -49,7 +49,6 @@ public class RemarkCommand extends Command {
 
         Person editedPerson = createEditedPerson(personToRemark, remark);
 
-
         model.setPerson(personToRemark, editedPerson);
         model.showAllPersons();
         model.setSelectedPerson(editedPerson); // Select the edited person in the UI
@@ -58,10 +57,15 @@ public class RemarkCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToRemark} edited with {@code remark}.
+     * Creates and returns a new {@code Person} with the specified remark.
+     * All other fields remain unchanged.
+     *
+     * @param personToRemark the original resident whose details are to be copied.
+     * @param remark the new remark to assign to the resident.
+     * @return a new {@code Person} instance with the updated remark.
      */
     private static Person createEditedPerson(Person personToRemark, Remark remark) {
-        return new Person(
+        Person newPerson = new Person(
                 personToRemark.getName(),
                 personToRemark.getPhone(),
                 personToRemark.getEmail(),
@@ -69,8 +73,11 @@ public class RemarkCommand extends Command {
                 personToRemark.getRoomNumber(),
                 personToRemark.getEmergencyContact(),
                 remark, // add the new remark or overwrite the existing remark
-                personToRemark.getTags()
+                personToRemark.getTags(),
+                personToRemark.getDemeritIncidents()
         );
+        assert newPerson.getRemark().equals(remark) : "New person remark should be the same as the input remark";
+        return newPerson;
     }
 
     @Override
