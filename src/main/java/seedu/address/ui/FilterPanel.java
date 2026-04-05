@@ -115,6 +115,7 @@ public class FilterPanel extends UiPart<Region> {
                         sourceKeywords,
                         new LinkedHashSet<>(keywords)));
 
+        // Initialize the field with the current keywords from the source
         field.setKeywords(List.copyOf(sourceKeywords));
         placeholder.getChildren().setAll(field.getRoot());
 
@@ -140,14 +141,17 @@ public class FilterPanel extends UiPart<Region> {
                 title,
                 promptText,
                 options,
+                // When the field updates, apply the change and execute filtering with the new keywords
                 keywords -> applyKeywordsAndExecuteFilter(
                         keywordSetter,
                         sourceKeywords,
                         new LinkedHashSet<>(keywords)));
 
+        // Initialize the field with the current keywords from the source
         field.setKeywords(List.copyOf(sourceKeywords));
         placeholder.getChildren().setAll(field.getRoot());
 
+        // Listen for changes in the source keyword set and update the field UI accordingly
         sourceKeywords.addListener((SetChangeListener<? super String>) ignoredChange ->
                 field.setKeywords(List.copyOf(sourceKeywords)));
     }
