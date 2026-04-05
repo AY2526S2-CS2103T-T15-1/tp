@@ -25,14 +25,51 @@ import seedu.address.model.FilterDetails;
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
-    private static Set<String> toSet(List<String> values) {
-        return new HashSet<>(values);
+
+    private static final Prefix[] PREFIXES_TO_CHECK = new Prefix[]{
+        PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER, PREFIX_STUDENT_ID,
+        PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER
+    };
+
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * and returns a FindCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        ParserUtil.checkForUnknownPrefixes(args, FindCommand.MESSAGE_USAGE, PREFIXES_TO_CHECK);
+
+        // Tokenize the arguments
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIXES_TO_CHECK)
+                .removeEmptyValuesAndPrefixes();
+
+        // Any preamble text is invalid for find because this command is prefix-only.
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        // No non-empty prefix arguments.
+        if (argMultimap.hasEmptyPrefixArguments()) {
+            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT + "\n" + FindCommand.MESSAGE_USAGE));
+        }
+
+        FilterDetails filterDetails = buildFilterDetails(argMultimap);
+        try {
+            filterDetails.validateKeywordLimits();
+        } catch (IllegalArgumentException exception) {
+            throw new ParseException(exception.getMessage());
+        }
+        return new FindCommand(filterDetails);
     }
 
     /**
      * Builds a {@link FilterDetails} instance from the values in {@code argMultimap}.
      * All values for a given prefix are collected with {@code getAllValues} and converted
-     * into {@link java.util.Set}s to remove duplicates.
+     * into sets to remove duplicates.
      */
     private FilterDetails buildFilterDetails(ArgumentMultimap argMultimap) {
         // Build all keyword sets from ArgumentMultimap
@@ -62,41 +99,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         return filterDetails;
     }
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public FindCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-
-        ParserUtil.checkForUnknownPrefixes(args, FindCommand.MESSAGE_USAGE, PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE,
-                PREFIX_ROOM_NUMBER, PREFIX_STUDENT_ID, PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR,
-                PREFIX_TAG_GENDER);
-
-        // Tokenize the arguments
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                        PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ROOM_NUMBER, PREFIX_STUDENT_ID,
-                        PREFIX_EMERGENCY_CONTACT, PREFIX_TAG_YEAR, PREFIX_TAG_MAJOR, PREFIX_TAG_GENDER)
-                .removeEmptyValuesAndPrefixes();
-
-        // Any preamble text is invalid for find because this command is prefix-only.
-        if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        // No non-empty prefix arguments.
-        if (argMultimap.hasEmptyPrefixArguments()) {
-            throw new ParseException(String.format(MESSAGE_EMPTY_ARGUMENT + "\n" + FindCommand.MESSAGE_USAGE));
-        }
-
-        FilterDetails filterDetails = buildFilterDetails(argMultimap);
-        try {
-            filterDetails.validateKeywordLimits();
-        } catch (IllegalArgumentException exception) {
-            throw new ParseException(exception.getMessage());
-        }
-        return new FindCommand(filterDetails);
+    private static Set<String> toSet(List<String> values) {
+        return new HashSet<>(values);
     }
 }
