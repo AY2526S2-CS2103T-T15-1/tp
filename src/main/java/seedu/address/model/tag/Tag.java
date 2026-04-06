@@ -35,7 +35,7 @@ public class Tag {
 
         checkArgument(isValidTagContent(tagContent, tagType), MESSAGE_CONSTRAINTS);
 
-        this.tagName = getNormalisedTagContent(tagContent, tagType);
+        this.tagName = tagContent;
         this.tagType = tagType;
     }
 
@@ -50,15 +50,7 @@ public class Tag {
      */
     public static boolean isValidTagContent(String test, TagType type) {
         requireNonNull(type);
-        return type.isValidTagContent(getNormalisedTagContent(test, type));
-    }
-
-    /**
-     * Returns the normalised form of the given {@link String} for the specified {@link TagType}.
-     */
-    public static String getNormalisedTagContent(String test, TagType type) {
-        // check for gender as it is the only case-insensitive tag type
-        return type == TagType.GENDER ? test.toLowerCase() : test;
+        return type.isValidTagContent(test);
     }
 
     public String getTagName() {
