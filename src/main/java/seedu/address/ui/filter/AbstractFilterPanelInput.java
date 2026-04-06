@@ -101,7 +101,6 @@ public abstract class AbstractFilterPanelInput extends UiPart<Region> {
         // Push proposedKeywords through validation callback and apply the validated result
         List<String> validatedKeywords = onKeywordsChanged.handle(List.copyOf(proposedKeywords));
         applyValidatedKeywords(validatedKeywords);
-        clearInputControl();
     }
 
     /**
