@@ -7,11 +7,62 @@
 # Hall Ledger User Guide
 
 **Hall Ledger (HL)** is a desktop application that helps **Resident Assistants (RAs) efficiently manage residents in NUS halls**. It is optimised for users who prefer typing commands, while still offering an intuitive visual interface for viewing resident data at a glance.
-
 <!-- * Table of Contents -->
-<page-nav-print />
+---
+## **Table of Contents**
 
---------------------------------------------------------------------------------------------------------------------
+1. [Quick Start](#1-quick-start)  
+   1.1. [Installation Guide](#11-installation-guide)  
+   1.2. [Introduction to the Interface](#12-introduction-to-the-interface)  
+   1.3. [Brief Walkthrough](#13-brief-walkthrough)
+
+2. [General Command Format](#2-general-command-format)
+
+3. [Adding a Resident](#3-adding-a-resident)
+
+4. [Editing a Resident](#4-editing-a-resident)
+
+5. [Viewing and Retrieving Residents](#5-viewing-and-retrieving-data)  
+   5.1. [Listing All Residents](#51-listing-all-residents)  
+   5.2. [Searching Residents](#52-searching-residents)  
+   &nbsp;&nbsp;&nbsp;&nbsp;5.2.1. [Using the Command Line](#521-using-the-command-line)  
+   &nbsp;&nbsp;&nbsp;&nbsp;5.2.2. [Using the User Interface](#522-using-the-user-interface)
+
+6. [Tagging a Resident](#6-tagging-a-resident)  
+   6.1. [Adding or Editing Tags](#61-adding-or-editing-tags)  
+   6.2. [Clearing Tags](#62-clearing-tags)
+
+7. [Adding a Remark to a Resident](#7-adding-a-remark-to-a-resident)  
+   7.1. [Adding or Editing a Remark](#71-adding-or-editing-a-remark)  
+   7.2. [Clearing a Remark](#72-clearing-a-remark)
+
+8. [Adding a Demerit Record to a Resident](#8-adding-a-demerit-record-to-a-resident)  
+   8.1. [Listing Demerit Rules](#81-listing-demerit-rules)  
+   8.2. [Adding a Demerit Record](#82-adding-a-demerit-record)
+
+9. [Deleting a Resident](#9-deleting-a-resident)
+
+10. [Clearing All Entries](#10-clearing-all-entries)
+
+11. [Viewing Help](#11-viewing-help)
+
+12. [Exiting the Program](#12-exiting-the-program)
+
+13. [Saving the Data](#13-saving-the-data)
+
+14. [Editing the Data File](#14-editing-the-data-file)
+
+15. [Prefix Table](#15-prefix-table)
+
+16. [Format Errors](#16-format-errors)
+
+17. [FAQ](#17-faq)
+
+18. [Known Issues](#18-known-issues)
+
+19. [Command Summary](#19-command-summary)
+
+---
 
 ## Quick start
 
