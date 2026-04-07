@@ -18,7 +18,8 @@ public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric. "
             + "\nGender tags can be: she/her, he/him or they/them"
-            + "\nYear tags should be a positive integer between 1 and 6 inclusive.";
+            + "\nYear tags should be a positive integer between 1 and 6 inclusive."
+            + "\n Major tags should be less than 100 characters long.";
 
     public final String tagContent;
     public final TagType tagType;

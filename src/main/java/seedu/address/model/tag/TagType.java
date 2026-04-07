@@ -24,7 +24,7 @@ public enum TagType {
      * Valid content is an alphanumeric string; internal spaces between words are permitted,
      * but leading and trailing spaces are not.
      */
-    MAJOR(null, "[A-Za-z0-9&]+( [A-Za-z0-9&]+)*"),
+    MAJOR(null, "[A-Za-z&]+( [A-Za-z&]+)*"),
 
     /**
      * Tag representing the resident's gender pronouns.
@@ -55,6 +55,10 @@ public enum TagType {
         // Case 1: Use allowed values (closed set)
         if (allowedValues != null) {
             return allowedValues.contains(tagContent);
+        }
+
+        if (this == MAJOR && tagContent.length() > 100) {
+            return false; // reject majors longer than 60 chars
         }
 
         // Case 2: Use regex (open set)
