@@ -17,7 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 
 /**
- * Applies a demerit rule to a resident identified by StudentId.
+ * Applies a demerit rule to a resident identified by student ID.
  */
 public class DemeritCommand extends Command {
 
@@ -40,7 +40,11 @@ public class DemeritCommand extends Command {
     private final String remark;
 
     /**
-     * Creates a demerit command.
+     * Creates a command that applies the specified demerit rule to the target resident.
+     *
+     * @param targetStudentId student ID of the resident receiving the demerit
+     * @param ruleIndex index of the demerit rule to apply
+     * @param remark optional remark recorded together with the incident
      */
     public DemeritCommand(StudentId targetStudentId, int ruleIndex, String remark) {
         requireNonNull(targetStudentId);
@@ -51,6 +55,13 @@ public class DemeritCommand extends Command {
         this.remark = remark;
     }
 
+    /**
+     * Applies the specified demerit rule to the target resident and updates the model.
+     *
+     * @param model the model used to retrieve and update resident data
+     * @return the result message after the demerit has been applied
+     * @throws CommandException if the target resident or demerit rule cannot be found
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -86,7 +97,6 @@ public class DemeritCommand extends Command {
                 personToUpdate.getTags(),
                 updatedIncidents
         );
-
 
         model.setPerson(personToUpdate, updatedPerson);
         model.showAllPersons();
