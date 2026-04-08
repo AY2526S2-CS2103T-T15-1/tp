@@ -33,7 +33,8 @@ import seedu.address.ui.filter.KeywordSetter;
  *   <li>The input calls back into this panel with the new keyword list.</li>
  *   <li>We build a new {@link FilterDetails} (a copy of the current one), update the relevant field,
  *       then ask {@link FilterExecutor} to apply the filter.</li>
- *   <li>If applying the filter fails (throws {@link CommandException}), we keep showing the last accepted keywords.</li>
+ *   <li>If applying the filter fails (throws {@link CommandException}), we keep showing the last accepted
+ *   keywords.</li>
  * </ol>
  *
  * <p><b>What happens when filters change elsewhere </b> If filters are updated by non-GUI
@@ -67,7 +68,7 @@ public class FilterPanel extends UiPart<Region> {
     /**
      * Creates a {@code FilterPanel} with the given {@code ReadOnlyFilterDetails}.
      *
-     * @param filterDetails source-of-truth keyword sets to display
+     * @param filterDetails  source-of-truth keyword sets to display
      * @param filterExecutor callback used to apply filtering when the user edits keywords in the GUI
      */
     public FilterPanel(ReadOnlyFilterDetails filterDetails, FilterExecutor filterExecutor) {
@@ -82,7 +83,8 @@ public class FilterPanel extends UiPart<Region> {
      *
      * <p>This sets up each filter field and connects it to:
      * <ul>
-     *   <li>an {@link ObservableSet} in {@link ReadOnlyFilterDetails} (so the UI can refresh when filters change), and</li>
+     *   <li>an {@link ObservableSet} in {@link ReadOnlyFilterDetails} (so the UI can refresh when filters change),
+     *   and</li>
      *   <li>a {@link KeywordSetter} (so we can call this function to write the edited keywords into a new
      *   {@link FilterDetails} snapshot).</li>
      * </ul>
@@ -165,16 +167,17 @@ public class FilterPanel extends UiPart<Region> {
     /**
      * Binds a combo-box based filter field to the keywords it is supposed to display.
      *
-     * <p>This is the combo-box version of {@link #bindTextField(StackPane, String, String, ObservableSet, KeywordSetter)}.
+     * <p>This is the combo-box version of
+     * {@link #bindTextField(StackPane, String, String, ObservableSet, KeywordSetter)}.
      * The idea is the same: the user picks values, we attempt to apply them, and the UI stays in sync with
      * {@code sourceKeywords}.
      *
-     * @param placeholder target UI container to populate with the field
-     * @param title section label
-     * @param promptText placeholder text displayed in the input control
-     * @param options allowed options shown in the combo-box dropdown
+     * @param placeholder    target UI container to populate with the field
+     * @param title          section label
+     * @param promptText     placeholder text displayed in the input control
+     * @param options        allowed options shown in the combo-box dropdown
      * @param sourceKeywords observable keyword set from {@link ReadOnlyFilterDetails} for this field
-     * @param keywordSetter setter for writing updated keywords into a {@link FilterDetails} snapshot
+     * @param keywordSetter  setter for writing updated keywords into a {@link FilterDetails} snapshot
      */
     private void bindComboBoxField(StackPane placeholder,
                                    String title,
@@ -216,8 +219,8 @@ public class FilterPanel extends UiPart<Region> {
      *   <li>If execution fails, return {@code sourceKeywords} (the last accepted keywords) so the UI can revert.</li>
      * </ol>
      *
-     * @param keywordSetter method that sets the specified keyword field within a {@link FilterDetails}
-     * @param sourceKeywords the last accepted keywords
+     * @param keywordSetter   method that sets the specified keyword field within a {@link FilterDetails}
+     * @param sourceKeywords  the last accepted keywords
      * @param updatedKeywords updated keywords proposed by the UI for this field
      * @return the keywords that should be displayed by the UI after validation/execution
      */
