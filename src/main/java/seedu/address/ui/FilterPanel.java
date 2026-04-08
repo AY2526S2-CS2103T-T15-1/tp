@@ -172,7 +172,7 @@ public class FilterPanel extends UiPart<Region> {
         keywordSetter.set(newFilterDetails, updatedKeywords);
 
         try {
-            filterExecutor.execute(newFilterDetails);
+            filterExecutor.executeFilter(newFilterDetails);
         } catch (CommandException e) {
             // Rebuild UI from last accepted values.
             return List.copyOf(sourceKeywords);
