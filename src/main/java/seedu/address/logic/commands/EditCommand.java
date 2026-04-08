@@ -36,6 +36,8 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited resident: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the resident identified "
             + "by the StudentID used in the displayed resident list. "
             + "Existing values will be overwritten by the input values.\n"
@@ -50,8 +52,6 @@ public class EditCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited resident: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "The edit details cause duplicated resident details "
             + "in the address book.";
     public static final String MESSAGE_ROOM_OCCUPIED = "This room is already occupied!";
