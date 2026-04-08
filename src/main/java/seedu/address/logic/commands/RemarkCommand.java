@@ -46,7 +46,6 @@ public class RemarkCommand extends Command {
         requireNonNull(model);
 
         Person personToRemark = getPersonByStudentIdOrThrow(model, targetStudentId);
-
         Person editedPerson = createEditedPerson(personToRemark, remark);
 
         model.setPerson(personToRemark, editedPerson);

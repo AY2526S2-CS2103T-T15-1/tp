@@ -61,7 +61,7 @@ public class Profile extends UiPart<Region> {
             remarkField.setText(newValue.getRemark().toString());
             tags.getChildren().clear();
             newValue.getTags().values().stream()
-                    .sorted(Comparator.comparing(tag -> tag.tagContent))
+                    .sorted(Comparator.comparing(tag -> tag.getTagContent()))
                     .forEach(tag -> tags.getChildren().add(
                             new Label(TagFormatter.formatTagValue(tag))));
 

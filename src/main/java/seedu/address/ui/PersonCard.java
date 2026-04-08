@@ -38,8 +38,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private TextField emergencyContact;
     @FXML
-    private TextField demeritPoints;
-    @FXML
     private FlowPane tags;
 
     /**
@@ -55,12 +53,11 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         roomNumber.setText(person.getRoomNumber().value);
         emergencyContact.setText(person.getEmergencyContact().value);
-        demeritPoints.setText(String.valueOf(person.getTotalDemeritPoints()));
 
         handleClickOnTextField();
 
         person.getTags().values().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagContent))
+                .sorted(Comparator.comparing(tag -> tag.getTagType()))
                 .forEach(tag -> tags.getChildren().add(
                         new Label(TagFormatter.formatTagValue(tag))
                 ));
@@ -79,8 +76,6 @@ public class PersonCard extends UiPart<Region> {
         roomNumber.addEventFilter(MouseEvent.MOUSE_PRESSED,
                 event -> cardPane.fireEvent(event.copyFor(cardPane, cardPane)));
         emergencyContact.addEventFilter(MouseEvent.MOUSE_PRESSED,
-                event -> cardPane.fireEvent(event.copyFor(cardPane, cardPane)));
-        demeritPoints.addEventFilter(MouseEvent.MOUSE_PRESSED,
                 event -> cardPane.fireEvent(event.copyFor(cardPane, cardPane)));
     }
 }

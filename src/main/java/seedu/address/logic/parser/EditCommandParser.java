@@ -21,7 +21,7 @@ import seedu.address.model.person.StudentId;
  */
 public class EditCommandParser implements Parser<EditCommand> {
 
-    private Prefix[] knownPrefixes = {PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+    private final Prefix[] knownPrefixes = {PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
         PREFIX_STUDENT_ID, PREFIX_ROOM_NUMBER, PREFIX_EMERGENCY_CONTACT};
 
     /**

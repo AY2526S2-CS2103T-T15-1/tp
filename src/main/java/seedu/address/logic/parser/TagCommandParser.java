@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.TagCommand.MESSAGE_USAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_GENDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_MAJOR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_YEAR;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,21 +21,17 @@ import seedu.address.model.tag.TagType;
 /**
  * Parses input arguments and creates a {@link TagCommand} object.
  *
- * <p>Expects a student ID prefix and at least one tag prefix. Recognised prefixes are:
- * <ul>
- *   <li>{@code PREFIX_STUDENT_ID} — identifies the target resident</li>
- *   <li>{@code PREFIX_TAG_GENDER} — gender pronouns tag</li>
- *   <li>{@code PREFIX_TAG_MAJOR} — academic major tag</li>
- *   <li>{@code PREFIX_TAG_YEAR} — year of study tag</li>
- * </ul>
+ * <p>Requires {@code PREFIX_STUDENT_ID} and at least one tag prefix.
+ * Recognised tag prefixes: {@code PREFIX_TAG_GENDER}, {@code PREFIX_TAG_MAJOR},
+ * {@code PREFIX_TAG_YEAR}.
  */
 public class TagCommandParser implements Parser<TagCommand> {
 
     private static final Prefix[] ALL_PREFIXES = {
-        CliSyntax.PREFIX_STUDENT_ID,
-        CliSyntax.PREFIX_TAG_GENDER,
-        CliSyntax.PREFIX_TAG_MAJOR,
-        CliSyntax.PREFIX_TAG_YEAR
+        PREFIX_STUDENT_ID,
+        PREFIX_TAG_GENDER,
+        PREFIX_TAG_MAJOR,
+        PREFIX_TAG_YEAR
     };
 
     /**
@@ -44,6 +43,7 @@ public class TagCommandParser implements Parser<TagCommand> {
      */
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
+
         ParserUtil.checkForUnknownPrefixes(args, MESSAGE_USAGE, ALL_PREFIXES);
 
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, ALL_PREFIXES);
@@ -71,9 +71,9 @@ public class TagCommandParser implements Parser<TagCommand> {
         Map<TagType, Tag> tags = new HashMap<>();
 
         try {
-            putTagIfPresent(tags, argumentMultimap.getValue(CliSyntax.PREFIX_TAG_GENDER), TagType.GENDER);
-            putTagIfPresent(tags, argumentMultimap.getValue(CliSyntax.PREFIX_TAG_MAJOR), TagType.MAJOR);
-            putTagIfPresent(tags, argumentMultimap.getValue(CliSyntax.PREFIX_TAG_YEAR), TagType.YEAR);
+            putTagIfPresent(tags, argumentMultimap.getValue(PREFIX_TAG_GENDER), TagType.GENDER);
+            putTagIfPresent(tags, argumentMultimap.getValue(PREFIX_TAG_MAJOR), TagType.MAJOR);
+            putTagIfPresent(tags, argumentMultimap.getValue(PREFIX_TAG_YEAR), TagType.YEAR);
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
         }
@@ -85,6 +85,14 @@ public class TagCommandParser implements Parser<TagCommand> {
         return tags;
     }
 
+    /**
+     * Helper method to put a tag into the tags map if the value is present.
+     * If the value is an empty string, it will put a null value to indicate tag removal.
+     *
+     * @param tags the map of tags to update
+     * @param value the optional value of the tag to add or remove
+     * @param type the type of the tag
+     */
     private void putTagIfPresent(Map<TagType, Tag> tags, Optional<String> value, TagType type) {
         value.ifPresent(v ->
                 tags.put(type, v.isEmpty()
@@ -92,6 +100,13 @@ public class TagCommandParser implements Parser<TagCommand> {
                         : new Tag(type, tryNormalizeTagContent(v, type))));
     }
 
+    /**
+     * Tries to normalize the tag content based on the tag type using ParserUtil.
+     *
+     * @param content the original tag content provided by the user
+     * @param type the type of the tag (GENDER, MAJOR, YEAR)
+     * @return the normalized tag content if normalization is successful; otherwise, the original content
+     */
     private String tryNormalizeTagContent(String content, TagType type) {
         if (type == TagType.GENDER) {
             return ParserUtil.tryNormalizeGender(content).orElse(content);

@@ -48,6 +48,7 @@ public class DeleteCommand extends Command {
         requireNonNull(model);
 
         Person personToDelete = getPersonByStudentIdOrThrow(model, targetStudentId);
+
         model.deletePerson(personToDelete);
         model.showAllPersons();
 

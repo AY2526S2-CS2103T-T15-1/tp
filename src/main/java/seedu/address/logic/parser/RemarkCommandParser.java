@@ -11,34 +11,41 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.StudentId;
 
+
+
 /**
- * Parses input arguments and creates a {@link RemarkCommand} object.
+ * Parses input arguments and creates a {@link seedu.address.logic.commands.RemarkCommand} object.
+ *
+ * <p>Requires {@code PREFIX_STUDENT_ID} and {@code PREFIX_REMARK}.
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
+
+    private static final Prefix[] ALL_PREFIXES = {
+        PREFIX_STUDENT_ID,
+        PREFIX_REMARK
+    };
 
     /**
      * Parses the given {@code args} and returns a {@link RemarkCommand} for execution.
      *
-     * @param args the raw argument string; must not be {@code null}
+     * @param args the raw argument string;
      * @throws ParseException if the input is missing a student ID or contains unknown
      *                        or duplicate prefixes
      */
     public RemarkCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ParserUtil.checkForUnknownPrefixes(args, MESSAGE_USAGE, PREFIX_STUDENT_ID, PREFIX_REMARK);
-        ArgumentMultimap argumentMultimap =
-                ArgumentTokenizer.tokenize(args,
-                        CliSyntax.PREFIX_STUDENT_ID,
-                        CliSyntax.PREFIX_REMARK);
+        ParserUtil.checkForUnknownPrefixes(args, MESSAGE_USAGE, ALL_PREFIXES);
+
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, ALL_PREFIXES);
 
         if (argumentMultimap.getValue(PREFIX_STUDENT_ID).isEmpty() || !argumentMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
 
-        argumentMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_REMARK);
+        argumentMultimap.verifyNoDuplicatePrefixesFor(ALL_PREFIXES);
 
         StudentId studentId = ParserUtil.parseStudentId(argumentMultimap.getValue(PREFIX_STUDENT_ID).get());
-        Remark remark = new Remark(argumentMultimap.getValue(CliSyntax.PREFIX_REMARK).orElse(""));
+        Remark remark = new Remark(argumentMultimap.getValue(PREFIX_REMARK).orElse(""));
 
         return new RemarkCommand(studentId, remark);
     }

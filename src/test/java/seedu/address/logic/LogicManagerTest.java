@@ -128,6 +128,18 @@ public class LogicManagerTest {
         assertThrows(CommandException.class, expectedMessage, () -> logic.executeFilter(filterDetails));
     }
 
+    @Test
+    public void selectedPersonProperty_noSelectedPerson_returnsNull() {
+        assertEquals(null, logic.selectedPersonProperty().getValue());
+    }
+
+    @Test
+    public void setSelectedPerson_validPerson_success() {
+        model.addPerson(ALICE);
+        logic.setSelectedPerson(ALICE);
+        assertEquals(ALICE, logic.selectedPersonProperty().getValue());
+    }
+
     /**
      * Executes the command and confirms that
      * - no exceptions are thrown <br>

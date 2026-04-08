@@ -38,8 +38,8 @@ class JsonAdaptedTag {
      */
     public JsonAdaptedTag(Tag source) {
 
-        this.tagType = source.tagType.name();
-        tagContent = source.tagContent;
+        this.tagType = source.getTagType().name();
+        tagContent = source.getTagContent();
     }
 
 

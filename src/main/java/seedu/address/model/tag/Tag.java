@@ -3,6 +3,8 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Objects;
+
 /**
  * Represents a Tag in the hall ledger.
  *
@@ -18,10 +20,11 @@ public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric. "
             + "\nGender tags can be: she/her, he/him or they/them"
-            + "\nYear tags should be a positive integer between 1 and 6 inclusive.";
+            + "\nYear tags should be a positive integer between 1 and 6 inclusive."
+            + "\nMajor tags should be less than 100 characters long.";
 
-    public final String tagContent;
-    public final TagType tagType;
+    private final String tagContent;
+    private final TagType tagType;
 
     /**
      * Constructs a {@code Tag}.
@@ -74,7 +77,7 @@ public class Tag {
 
     @Override
     public int hashCode() {
-        return tagContent.hashCode();
+        return Objects.hash(tagType, tagContent);
     }
 
     @Override

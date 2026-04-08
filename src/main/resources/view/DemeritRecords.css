@@ -1,3 +1,5 @@
+.
+
 .demerit-record-body-cell {
     -fx-background-color: #2b2b2b;
     -fx-border-color: #555555;
@@ -14,8 +16,25 @@
 }
 
 .demerit-total-points-label {
-    -fx-text-fill: white;
+    -fx-text-fill: primary-yellow;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-padding: 4px 0 2px 0;
+}
+
+/* Hide filler rows when the table has fewer items than visible space. */
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Keep empty cells from showing visible grid lines. */
+.table-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
