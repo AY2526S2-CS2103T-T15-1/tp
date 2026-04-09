@@ -52,7 +52,7 @@
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-T15-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your HallLedger.
+1. Copy the file to the folder you want to use as the _home folder_ for your Hall Ledger.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar hall-ledger.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -63,9 +63,10 @@
 
    * `list` : Lists all residents.
 
-   * `add n=John Doe p=+6598765432 e=johnd@example.com i=A1234567X r=1A ec=+65 12345678` : Adds a resident named `John Doe` to HallLedger.
+   * `add n=John Doe p=+6598765432 e=johnd@example.com i=A1234567X r=1A ec=+65 12345678` : Adds a resident named
+     `John Doe` to Hall Ledger.
 
-   * `demeritlist` : Shows the indexed demerit rules available in HallLedger.
+   * `demeritlist` : Shows the indexed demerit rules available in Hall Ledger.
 
    * `demerit i=A1234567X di=18 rm=Visitor during quiet hours` : Adds a demerit record to the resident with student ID `A1234567X`.
 
@@ -316,7 +317,7 @@ Example usage:
 
 #### 9.1 Listing Demerit Rules
 
-Shows the indexed demerit rules available in HallLedger.
+Shows the indexed demerit rules available in Hall Ledger.
 
 **Command:** `demeritlist`
 
@@ -333,9 +334,10 @@ Adds a demerit record to an existing resident.
 **Usage:** `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`
 
 * Applies the demerit rule identified by `RULE_INDEX` to the resident identified by `STUDENT_ID`.
-* `STUDENT_ID` must refer to an existing resident in HallLedger.
+* `STUDENT_ID` must refer to an existing resident in Hall Ledger.
 * `RULE_INDEX` must match one of the indexed rules shown by `demeritlist`.
-* If the same resident receives the same rule again, HallLedger automatically applies the next offence tier for that rule.
+* If the same resident receives the same rule again, Hall Ledger automatically applies the next offence tier for that
+  rule.
 * `rm=` is optional and can be used to store a short context note for that incident.
 * The resident’s displayed total demerit points will update after the command succeeds.
 
@@ -347,26 +349,28 @@ Examples:
 *** 
 ### 10. Deleting a Resident
 
-Deletes the resident identified by student ID from HallLedger.
+Deletes the resident identified by student ID from Hall Ledger.
 
 Format: `delete i=STUDENT_ID`
 
 Example:
 * `delete i=A0312075X`
 
-After a valid delete command is entered, HallLedger shows a confirmation dialog before the resident is actually removed.
+After a valid delete command is entered, Hall Ledger shows a confirmation dialog before the resident is actually
+removed.
 
 * Click **Confirm** to proceed with the deletion.
-* Click **Cancel** to stop the deletion. HallLedger will display the message `Deletion cancelled.` and no resident will be removed.
+* Click **Cancel** to stop the deletion. Hall Ledger will display the message `Deletion cancelled.` and no resident will
+  be removed.
 
-If the command format is invalid, HallLedger will show an error message instead of opening the confirmation dialog.
+If the command format is invalid, Hall Ledger will show an error message instead of opening the confirmation dialog.
 
 ![Delete confirmation dialog](images/deleteConfirmation.png)
 
 ***
 ### 11. Clearing all Residents
 
-Clears all residents from HallLedger all at once.
+Clears all residents from Hall Ledger all at once.
 
 Command: `clear`
 
@@ -380,7 +384,7 @@ This action **permanently deletes all resident data**. We recommend creating a b
 
 ### 12. Viewing Help
 
-Opens the HallLedger Help window, which displays the available commands and their usage formats.
+Opens the Hall Ledger Help window, which displays the available commands and their usage formats.
 
 Command: `help`
 <div align="center">
@@ -400,13 +404,15 @@ Command: `exit`
 
 ### 14. Saving the Data
 
-HallLedger automatically saves your data on your device whenever you make changes. There is no need to manually save your work.
+Hall Ledger automatically saves your data on your device whenever you make changes. There is no need to manually save
+your work.
 
 When you exit the program and open it again later, all your data will still be available.
 ***
 ### 15. Editing the Data File
 
-HallLedger data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+Hall Ledger data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are
+welcome to update data directly by editing that data file.
 
 ***
 
@@ -417,8 +423,10 @@ HallLedger data are saved automatically as a JSON file `[JAR file location]/data
 ### 17. Format Errors
 
 **Caution:**
-If your changes to the data file make its format invalid, HallLedger will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause HallLedger to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file make its format invalid, Hall Ledger will discard all data and start with an empty data
+file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause Hall Ledger to behave in unexpected ways (e.g., if a value entered is outside the
+acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
 
 
@@ -429,10 +437,12 @@ For more details on editing the JSON file, please refer to our [Developer Guide]
 ### 18. FAQ
 
 **Q**: How do I transfer my data to another Computer?  
-**A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HallLedger home folder.
+**A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains
+the data of your previous Hall Ledger home folder.
 
 **Q**: Can I edit the data file manually?  
-**A**: Yes. HallLedger stores data locally in a human-editable text file. However, manual edits should be done carefully, because invalid edits may prevent HallLedger from loading the data correctly.
+**A**: Yes. Hall Ledger stores data locally in a human-editable text file. However, manual edits should be done
+carefully, because invalid edits may prevent Hall Ledger from loading the data correctly.
 
 **Q**: How do I go back to seeing the list of all residents after running `find`?  
 **A**: Run the `list` command to see the full list of residents again.

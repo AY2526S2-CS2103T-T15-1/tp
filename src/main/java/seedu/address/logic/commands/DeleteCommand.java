@@ -11,14 +11,14 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.StudentId;
 
 /**
- * Deletes a resident identified by StudentId from HallLedger.
+ * Deletes a resident identified by StudentId from Hall Ledger.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the resident identified by student ID from HallLedger.\n"
+            + ": Deletes the resident identified by student ID from Hall Ledger.\n"
             + "Format: " + COMMAND_WORD + " i=STUDENT_ID\n"
             + "Example: " + COMMAND_WORD + " i=A1234567X";
 

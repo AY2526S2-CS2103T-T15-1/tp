@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
 /**
- * Controller for the HallLedger help window.
+ * Controller for the Hall Ledger help window.
  */
 public class HelpWindow extends UiPart<Stage> {
 
@@ -65,7 +65,7 @@ public class HelpWindow extends UiPart<Stage> {
 
         helpContent.setText(HELP_CONTENT);
         helpContent.setEditable(false);
-        guideText.setText("Refer to the HallLedger User Guide for more details:\n");
+        guideText.setText("Refer to the Hall Ledger User Guide for more details:\n");
 
         link.setText(USERGUIDE_URL);
         link.setEditable(false);
@@ -85,7 +85,7 @@ public class HelpWindow extends UiPart<Stage> {
      * Shows the help window and centres it on screen.
      */
     public void show() {
-        logger.fine("Showing HallLedger help window.");
+        logger.fine("Showing Hall Ledger help window.");
         getRoot().show();
         getRoot().centerOnScreen();
     }

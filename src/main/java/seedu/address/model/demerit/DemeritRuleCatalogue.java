@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Static catalogue of demerit rules used by HallLedger.
+ * Static catalogue of demerit rules used by Hall Ledger.
  *
  * <p>The rules and point tiers are adapted from the Demerit Point Structure
  * (DPS) for Breach of Housing Agreement issued by the Office of Student
