@@ -372,3 +372,5 @@ If you manually edit the data file, make a backup first.
 | **Add demerit** | `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]` |
 | **Clear** | `clear` |
 | **Exit** | `exit` |
+
+
