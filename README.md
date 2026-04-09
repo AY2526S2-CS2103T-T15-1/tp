@@ -11,8 +11,8 @@
 
 ### Key features
 * Add, edit, delete, and list student records.
-* Search and filter by name, hall, CCA points, room, and tags.
-* Track CCA points and administrative records.
+* Search and filter by name, student id, tags, email, and more
+* Track Demerit points and administrative records.
 * Basic undo/redo support via a versioned model.
 * JavaFX GUI with FXML views.
 *Simple charts and reports for data visualization.
