@@ -179,7 +179,7 @@ interfaces without knowing about `Logic` internals. For example, `CommandBox` on
 call when the user submits a command, and 'FilterPanel' only knows it has a `FilterExecutor` to call when the user
 updates filter criteria.
 
-<puml src="diagrams/find/UIExecutor.puml" width="700" />
+<puml src="diagrams/find/UiExecutor.puml" width="700" />
 
 `MainWindow` wires dependencies and defines the execution logic, then passes them into child UI constructors as
 callbacks:
