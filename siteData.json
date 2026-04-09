@@ -143,7 +143,7 @@
         "17-format-errors": "17. Format Errors",
         "18-faq": "18. FAQ",
         "19-known-issues": "19. Known issues",
-        "20-command-summary": "20. Command summary"
+        "command-summary": "Command summary"
       },
       "headingKeywords": {}
     },
