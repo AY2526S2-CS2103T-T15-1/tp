@@ -138,7 +138,10 @@
         "12-viewing-help": "12. Viewing Help",
         "13-exiting-the-program": "13. Exiting the program",
         "14-saving-the-data": "14. Saving the Data",
-        "15-editing-the-data-file": "15. Editing the Data File"
+        "15-editing-the-data-file": "15. Editing the Data File",
+        "16-faq": "16. FAQ",
+        "17-known-issues": "17. Known issues",
+        "18-command-summary": "18. Command summary"
       },
       "headingKeywords": {}
     },
