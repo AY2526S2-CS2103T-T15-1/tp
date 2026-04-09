@@ -125,7 +125,6 @@
         "hall-ledger-user-guide": "Hall Ledger User Guide",
         "table-of-contents": "Table of Contents",
         "1-quick-start": "1. Quick start",
-        "features": "Features",
         "2-general-command-format": "2. General Command Format",
         "3-adding-a-resident": "3. Adding a Resident",
         "4-editing-a-resident": "4. Editing a Resident",
@@ -139,10 +138,7 @@
         "12-viewing-help": "12. Viewing Help",
         "13-exiting-the-program": "13. Exiting the program",
         "14-saving-the-data": "14. Saving the Data",
-        "15-editing-the-data-file": "15. Editing the Data File",
-        "16-faq": "16. FAQ",
-        "17-known-issues": "17. Known issues",
-        "18-command-summary": "18. Command summary"
+        "15-editing-the-data-file": "15. Editing the Data File"
       },
       "headingKeywords": {}
     },
