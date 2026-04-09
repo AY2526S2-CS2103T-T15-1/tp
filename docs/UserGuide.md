@@ -21,12 +21,12 @@
 5. [Tagging a Resident](#6-tagging-a-resident)  
 5.1. [Adding or Editing Tags](#61-adding-or-editing-tags)  
 5.2 [Clearing Tags](#62-clearing-tags)
-6. [Viewing and Finding Residents](#5-viewing-residents)  
-6.1. [Listing All Residents](#51-listing-all-residents-list)    
-6.2. [Finding Residents](#52-finding-residents-find)      
-   &nbsp; 6.2.1. [Using the Command Line](#521-using-the-command-line)  
-   &nbsp;  6.2.2. [Using the User Interface](#522-using-the-user-interface)
-7. [Managing Resident Remarks](#7-managing-resident-remarks)  
+6. [Viewing and Finding Residents](#6-viewing-and-finding-residents)  
+6.1. [Viewing All Residents](#61-listing-all-residents)    
+6.2. [Finding Residents](#62-finding-residents)      
+   &nbsp; 6.2.1. [Using the Command Line](#621-using-typed-commands)  
+   &nbsp;  6.2.2. [Using the User Interface](#622-using-the-filter-panel)
+7. [Managing Resident Remarks](#7-managing-resident-remarks-)  
    7.1. [Adding or Editing a Remark](#71-adding-or-editing-a-remark)  
    7.2. [Clearing a Remark](#72-clearing-a-remark)  
 8. [Adding a Demerit Record to a Resident](#8-adding-a-demerit-record-to-a-resident)  
@@ -155,7 +155,7 @@ Examples:
 ***
 ### 6. Viewing and Finding Residents
 
-#### 6.1 Listing all residents
+#### 6.1 Viewing all residents
 
 Displays all residents the resident list panel on the right.
 
