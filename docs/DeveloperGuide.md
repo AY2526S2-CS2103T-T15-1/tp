@@ -453,7 +453,8 @@ Use case ends.
 4. Hall Ledger should store data locally in a human-editable file.
 5. Hall Ledger should work without requiring internet access during normal usage.
 6. Hall Ledger should remain a single-user application.
-
+7. Hall Ledger should be able to comfortably perform with 200 residents, which is a typical hall population size.
+8. Hall Ledger should be able to provide feedback in less than 3 seconds.
 ---
 
 ### Glossary
