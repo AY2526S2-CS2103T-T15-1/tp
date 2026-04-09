@@ -350,17 +350,11 @@ Use case ends.
 **MSS**
 
 1. RA requests to list all residents.
-2. Hall Ledger shows a list of residents.
+2. Hall Ledger shows the list of all residents.
 3. RA identifies a specific resident from the list.
-4. Hall Ledger displays the resident's basic information and current demerit total in the UI.
+4. Hall Ledger displays the resident's basic information and demerit records in the UI.
 
 Use case ends.
-
-**Extensions**
-
-* 2a. The resident list is empty.
-    * 2a1. Hall Ledger indicates that the resident list is empty.
-    Use case ends.
 
 **Use case: UC03 - Edit a resident's info**
 
@@ -382,27 +376,27 @@ Use case ends.
     * 1b1. Hall Ledger shows an error message indicating the correct format.
     Use case resumes from step 1.
 
-* 1c. RA provides details that are exactly the same as the existing ones, resulting in no changes.
-  Use case resumes from step 1.
-
-**Use case: UC04 - Delete or Clear resident records**
+**Use case: UC04 - Delete a resident's record**
 
 **MSS**
 
-1. RA requests to delete a specific resident or clear all current resident records.
-2. Hall Ledger deletes the specified resident or clears all data.
+1. RA requests to delete a specific resident record.
+2. Hall Ledger opens a confirmation dialog to confirm the deletion.
+3. User confirms the action.
+4. Hall Ledger deletes the specified resident record.
 3. Hall Ledger displays a success message reflecting the changes.
 
 Use case ends.
 
 **Extensions**
 
-* 1a. The resident list is already empty.
-  Use case ends.
+* 1a. The given student ID of the resident is invalid.
+    * 1a1. Hall Ledger shows an error message indicating that the resident was not found.
+      Use case ends.
 
-* 1b. If deleting, the given resident ID is invalid.
-    * 1b1. Hall Ledger shows an error message.
-    Use case resumes from step 1.
+* 3a. User cancels the deletion.
+    * 2a1. Hall Ledger aborts deletion and shows a cancellation message.
+    * Use case ends.
 
 **Use case: UC05 - Search and filter residents**
 
@@ -420,42 +414,33 @@ Use case ends.
     * 1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
     Use case ends.
 
-#### UC7: Add a demerit incident
+* 1b. RA provides invalid keywords for a field that only accepts a set of valid values (year, gender).
+    * 1a1. Hall Ledger shows a warning that invalid keywords in these fields would be ignored. Use case resumes from
+      step 1.
+
+* 1c. RA provides more than 10 filter keywords per field.
+    * 1a1. Hall Ledger shows an error message indicating that the RA has exceeded the maximum number of keywords for
+      that field.
+
+**Use case: UC06 - Add a demerit incident**
 
 **MSS**
-1. User enters a valid `demerit` command with a resident ID and rule index.
-2. Hall Ledger determines the offence number for that resident and rule.
-3. Hall Ledger computes the points applied for that occurrence.
-4. Hall Ledger records the incident.
-5. Hall Ledger shows a success message and updates the resident’s demerit records.
+
+1. User requests to add a demerit incident to a resident with a remark.
+2. Hall Ledger determines the offence number for that resident and rule based on number of past offences.
+3. Hall Ledger updates the resident’s demerit records.
+4. Hall Ledger shows a success message.
 
 Use case ends.
 
 **Extensions**
-* 1a. The resident does not exist.
+
+* 1a. The resident enters an invalid student ID.
   * 1a1. Hall Ledger shows an error message.
   * Use case ends.
-* 1b. The demerit rule index does not exist.
+
+* 1b. The resident enters an invalid demerit rule index.
   * 1b1. Hall Ledger shows an error message.
-  * Use case ends.
-
-#### UC8: Delete a resident
-
-**MSS**
-1. User enters a valid `delete` command.
-2. Hall Ledger opens a confirmation dialog.
-3. User confirms the deletion.
-4. Hall Ledger deletes the resident.
-5. Hall Ledger shows a success message.
-
-Use case ends.
-
-**Extensions**
-* 2a. User cancels the deletion.
-  * 2a1. Hall Ledger aborts deletion and shows a cancellation message.
-  * Use case ends.
-* 1a. The command format is invalid.
-  * 1a1. Hall Ledger shows an error message instead of opening the dialog.
   * Use case ends.
 
 ---
