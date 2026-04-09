@@ -46,60 +46,553 @@ commonalities between classes that represent parts of the visible GUI.</p> <p>Th
 that are in the <code class="hljs inline no-lang">src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java"><code class="hljs inline no-lang">MainWindow</code></a>
 is specified in
 <a href="https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/resources/view/MainWindow.fxml"><code class="hljs inline no-lang">MainWindow.fxml</code></a></p> <p>The <code class="hljs inline no-lang">UI</code> component,</p> <ul><li>executes user commands using the <code class="hljs inline no-lang">Logic</code> component.</li> <li>listens for changes to <code class="hljs inline no-lang">Model</code> data so that the UI can be updated with the modified data.</li> <li>keeps a reference to the <code class="hljs inline no-lang">Logic</code> component, because the <code class="hljs inline no-lang">UI</code> relies on the <code class="hljs inline no-lang">Logic</code> to execute commands.</li> <li>depends on some classes in the <code class="hljs inline no-lang">Model</code> component, as it displays <code class="hljs inline no-lang">Person</code> objects residing in the <code class="hljs inline no-lang">Model</code>.</li></ul> <hr> <h3 id="logic-component">Logic component<a class="fa fa-anchor" href="#logic-component" onclick="event.stopPropagation()"></a></h3> <p><strong>API</strong> : <a href="https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/logic/Logic.java"><code class="hljs inline no-lang">Logic.java</code></a></p> <p>Here&#39;s a (partial) class diagram of the <code class="hljs inline no-lang">Logic</code> component:</p> <span class="image-wrapper"><img src="/tp/diagrams/LogicClassDiagram.png" width="550" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <p>The simplified sequence diagram below illustrates the interactions within the <code class="hljs inline no-lang">Logic</code> component, taking a delete
-command as an example.</p> <span class="image-wrapper"><img src="/tp/diagrams/DeleteSequenceDiagram.png" alt="Interactions Inside the Logic Component for a delete command" width="800" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <div class="alert box-container alert-info" style="" data-v-19514615><!--Icon and vertical divider for seamless header box--><!----><div class="header-and-body" data-v-19514615><!-- Header wrapper, not rendered if there is no header attribute --><!----><!-- Body wrapper --><div class="box-body-wrapper" data-v-19514615><!-- icon on the left, not shown if there is a header --><div class="icon-wrapper" style="" data-v-19514615><!--[--><i class="fas fa-info" data-v-19514615></i><!--]--></div><!-- Icon -- content divider for seamless boxes without the header attribute --><!----><!-- Content wrapper --><div class="contents" style="" data-v-19514615><!--[--><p><strong>Note:</strong> The lifeline for <code class="hljs inline no-lang">DeleteCommandParser</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.</p><!--]--></div><!-- dismiss button on the right, not shown if there is a header --><!----></div></div></div> <p>How the <code class="hljs inline no-lang">Logic</code> component works:</p> <ol><li>When <code class="hljs inline no-lang">Logic</code> is called upon to execute a command, it is passed to an <code class="hljs inline no-lang">AddressBookParser</code> object which in turn creates a parser that matches the command (e.g., <code class="hljs inline no-lang">DeleteCommandParser</code>) and uses it to parse the command.</li> <li>This results in a <code class="hljs inline no-lang">Command</code> object (more precisely, an object of one of its subclasses e.g., <code class="hljs inline no-lang">DeleteCommand</code>) which is executed by the <code class="hljs inline no-lang">LogicManager</code>.</li> <li>The command can communicate with the <code class="hljs inline no-lang">Model</code> when it is executed (e.g. to delete a person).<br>
-Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the <code class="hljs inline no-lang">Model</code>) to achieve.</li> <li>The result of the command execution is encapsulated as a <code class="hljs inline no-lang">CommandResult</code> object which is returned back from <code class="hljs inline no-lang">Logic</code>.</li></ol> <p>Here are the other classes in <code class="hljs inline no-lang">Logic</code> (omitted from the class diagram above) that are used for parsing a user command:</p> <span class="image-wrapper"><img src="/tp/diagrams/ParserClasses.png" width="600" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <p>How the parsing works:</p> <ul><li>When called upon to parse a user command, the <code class="hljs inline no-lang">AddressBookParser</code> class creates an <code class="hljs inline no-lang">XYZCommandParser</code> (<code class="hljs inline no-lang">XYZ</code> is a placeholder for the specific command name e.g., <code class="hljs inline no-lang">AddCommandParser</code>) which uses the other classes shown above to parse the user command and create a <code class="hljs inline no-lang">XYZCommand</code> object (e.g., <code class="hljs inline no-lang">AddCommand</code>) which the <code class="hljs inline no-lang">AddressBookParser</code> returns back as a <code class="hljs inline no-lang">Command</code> object.</li> <li>All <code class="hljs inline no-lang">XYZCommandParser</code> classes (e.g., <code class="hljs inline no-lang">AddCommandParser</code>, <code class="hljs inline no-lang">DeleteCommandParser</code>, ...) inherit from the <code class="hljs inline no-lang">Parser</code> interface so that they can be treated similarly where possible e.g., during testing.</li></ul> <hr> <h3 id="model-component">Model component<a class="fa fa-anchor" href="#model-component" onclick="event.stopPropagation()"></a></h3> <p><strong>API</strong> : <a href="https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/model/Model.java"><code class="hljs inline no-lang">Model.java</code></a></p> <span class="image-wrapper"><img src="/tp/diagrams/ModelClassDiagram.png" width="700" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <p>The <code class="hljs inline no-lang">Model</code> component:</p> <ul><li>stores Hall Ledger’s resident data as <code class="hljs inline no-lang">Person</code> objects,</li> <li>stores the currently displayed resident list as a filtered <code class="hljs inline no-lang">ObservableList&lt;Person&gt;</code>,</li> <li>stores the currently selected <code class="hljs inline no-lang">Person</code> for UI synchronization,</li> <li>stores a <code class="hljs inline no-lang">UserPrefs</code> object representing user preferences,</li> <li>stores a <code class="hljs inline no-lang">FilterDetails</code> object representing the most recent resident filter,</li> <li>and does not depend on the <code class="hljs inline no-lang">UI</code>, <code class="hljs inline no-lang">Logic</code>, or <code class="hljs inline no-lang">Storage</code> components.</li></ul> <p>Hall Ledger’s core domain entity is <code class="hljs inline no-lang">Person</code>, which represents a resident. In addition to basic contact information, a resident can also store:</p> <ul><li>typed tags such as year, major, and gender,</li> <li>a resident-level remark,</li> <li>and demerit incidents used to compute the total demerit points.</li></ul> <p>This keeps Hall Ledger’s domain model centered around hall-resident administration rather than a generic contact list.</p> <hr> <h3 id="storage-component">Storage component<a class="fa fa-anchor" href="#storage-component" onclick="event.stopPropagation()"></a></h3> <p><strong>API</strong> : <a href="https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/storage/Storage.java"><code class="hljs inline no-lang">Storage.java</code></a></p> <span class="image-wrapper"><img src="/tp/diagrams/StorageClassDiagram.png" width="550" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <p>The <code class="hljs inline no-lang">Storage</code> component:</p> <ul><li>saves resident data and user preference data in JSON format,</li> <li>reads them back into the corresponding in-memory objects,</li> <li>depends on some classes in the <code class="hljs inline no-lang">Model</code> component because it persists model data,</li> <li>and is responsible for preserving Hall Ledger-specific resident information such as tags, remarks, and demerit incidents.</li></ul> <p>This allows Hall Ledger to persist hall-administration data without coupling persistence logic to the model or UI layers.</p> <hr> <h3 id="common-classes">Common classes<a class="fa fa-anchor" href="#common-classes" onclick="event.stopPropagation()"></a></h3> <p>Classes used by multiple components are placed in the <code class="hljs inline no-lang">seedu.address.commons</code> package.</p></div> <hr> <div class="section"><h2 id="implementation"><strong>Implementation</strong><a class="fa fa-anchor" href="#implementation" onclick="event.stopPropagation()"></a></h2> <p>This section describes some noteworthy details on how certain features are implemented.</p> <h3 id="how-ui-triggers-command-execution">How UI triggers command execution<a class="fa fa-anchor" href="#how-ui-triggers-command-execution" onclick="event.stopPropagation()"></a></h3> <p>Hall Ledger uses callback-style dependency injection to keep low-level UI components decoupled from command execution
-details.</p> <p><code class="hljs inline no-lang">MainWindow</code> holds the reference to <code class="hljs inline no-lang">Logic</code> and implements small executor interfaces that match what child UI
-components need.</p> <p>The diagram below shows this flow: <code class="hljs inline no-lang">MainWindow</code> implements <code class="hljs inline no-lang">CommandExecutor</code> and <code class="hljs inline no-lang">FilterExecutor</code>, then injects
+command as an example.</p> <span class="image-wrapper"><img src="/tp/diagrams/DeleteSequenceDiagram.png" alt="Interactions Inside the Logic Component for a delete
+command" width="900" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <div class="alert box-container alert-info" style="" data-v-19514615><!--Icon and vertical divider for seamless header box--><!----><div class="header-and-body" data-v-19514615><!-- Header wrapper, not rendered if there is no header attribute --><!----><!-- Body wrapper --><div class="box-body-wrapper" data-v-19514615><!-- icon on the left, not shown if there is a header --><div class="icon-wrapper" style="" data-v-19514615><!--[--><i class="fas fa-info" data-v-19514615></i><!--]--></div><!-- Icon -- content divider for seamless boxes without the header attribute --><!----><!-- Content wrapper --><div class="contents" style="" data-v-19514615><!--[-->
+
+**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+
+<!--]--></div><!-- dismiss button on the right, not shown if there is a header --><!----></div></div></div>
+
+How the `Logic` component works:
+
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+   Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
+1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+
+Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+
+<span class="image-wrapper"><img src="/tp/diagrams/ParserClasses.png" width="600" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span>
+
+How the parsing works:
+
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g., during testing.
+
+---
+
+### Model component
+
+**API** : [
+`Model.java`](https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/model/Model.java)
+
+<span class="image-wrapper"><img src="/tp/diagrams/ModelClassDiagram.png" width="700" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span>
+
+The `Model` component:
+
+* stores Hall Ledger’s resident data as `Person` objects,
+* stores the currently displayed resident list as a filtered `ObservableList<person>`,
+* stores the currently selected `Person` for UI synchronization,
+* stores a `UserPrefs` object representing user preferences,
+* stores a `FilterDetails` object representing the most recent resident filter,
+* and does not depend on the `UI`, `Logic`, or `Storage` components.
+
+Hall Ledger’s core domain entity is `Person`, which represents a resident. In addition to basic contact information, a resident can also store:
+* typed tags such as year, major, and gender,
+* a resident-level remark,
+* and demerit incidents used to compute the total demerit points.
+
+This keeps Hall Ledger’s domain model centered around hall-resident administration rather than a generic contact list.
+
+---
+
+### Storage component
+
+**API** : [
+`Storage.java`](https://github.com/AY2526S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
+
+<span class="image-wrapper"><img src="/tp/diagrams/StorageClassDiagram.png" width="550" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span>
+
+The `Storage` component:
+
+* saves resident data and user preference data in JSON format,
+* reads them back into the corresponding in-memory objects,
+* depends on some classes in the `Model` component because it persists model data,
+* and is responsible for preserving Hall Ledger-specific resident information such as tags, remarks, and demerit incidents.
+
+This allows Hall Ledger to persist hall-administration data without coupling persistence logic to the model or UI layers.
+
+---
+
+### Common classes
+
+Classes used by multiple components are placed in the `seedu.address.commons` package.
+
+</person></div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+<div class="section">
+
+## **Implementation**
+
+This section describes some noteworthy details on how certain features are implemented.
+
+### How UI triggers command execution
+
+Hall Ledger uses callback-style dependency injection to keep low-level UI components decoupled from command execution
+details.
+
+`MainWindow` holds the reference to `Logic` and implements small executor interfaces that match what child UI
+components need.
+
+The diagram below shows this flow: `MainWindow` implements `CommandExecutor` and `FilterExecutor`, then injects
 itself into child components through their constructors. As a result, child components can request execution through
-interfaces without knowing about <code class="hljs inline no-lang">Logic</code> internals. For example, <code class="hljs inline no-lang">CommandBox</code> only knows it has a <code class="hljs inline no-lang">CommandExecutor</code> to
-call when the user submits a command, and &#39;FilterPanel&#39; only knows it has a <code class="hljs inline no-lang">FilterExecutor</code> to call when the user
-updates filter criteria.</p> <span class="image-wrapper"><img src="/tp/diagrams/find/UiExecutor.png" width="700" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span> <p><code class="hljs inline no-lang">MainWindow</code> wires dependencies and defines the execution logic, then passes them into child UI constructors as
-callbacks:</p> <pre><code class="hljs java"><span><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainWindow</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">UiPart</span>&lt;<span class="hljs-title">Stage</span>&gt;</span>
-</span><span><span class="hljs-class">        <span class="hljs-keyword">implements</span> <span class="hljs-title">CommandExecutor</span>, <span class="hljs-title">FilterExecutor</span> </span>{
-</span><span>
-</span><span>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MainWindow</span><span class="hljs-params">(Logic logic)</span> </span>{
-</span><span>        commandBox = <span class="hljs-keyword">new</span> CommandBox(<span class="hljs-keyword">this</span>); <span class="hljs-comment">// MainWindow as an instance of CommandExecutor</span>
-</span><span>        filterPanel = <span class="hljs-keyword">new</span> FilterPanel(logic.getFilterDetails(), <span class="hljs-keyword">this</span>); <span class="hljs-comment">// MainWindow as an instance of FilterExecutor</span>
-</span><span>    }
-</span><span>}
-</span></code></pre><p>Each child component triggers behavior only through these interfaces, without depending on parser or
-<code class="hljs inline no-lang">LogicManager</code> implementation details:</p> <pre><code class="hljs java"><span><span class="hljs-comment">// In CommandBox</span>
-</span><span>CommandResult result = commandExecutor.execute(commandText);
-</span><span>
-</span><span><span class="hljs-comment">// In FilterPanel</span>
-</span><span>CommandResult result = filterExecutor.executeFilter(updatedFilterDetails);
-</span></code></pre><p>This separation keeps responsibilities clear: UI components handle user input, while command and filter execution
-remain centralized behind injected callbacks.</p> <hr> <h3 id="demerit-point-tracking">Demerit point tracking<a class="fa fa-anchor" href="#demerit-point-tracking" onclick="event.stopPropagation()"></a></h3> <p>Hall Ledger stores demerit incidents as resident-level records instead of storing only a mutable running total.</p> <p>Each demerit incident records:</p> <ul><li>the DPS rule index,</li> <li>the rule title,</li> <li>the offence number for that resident and rule,</li> <li>the points applied for that occurrence,</li> <li>and an optional remark.</li></ul> <p>The resident’s total demerit points are <strong>derived</strong> by summing the points applied across all stored demerit incidents. This avoids duplicated derived state and keeps the resident’s demerit history auditable.</p> <p>The demerit feature is split into two user-facing commands:</p> <ul><li><code class="hljs inline no-lang">demeritlist</code> — displays the indexed demerit rule catalogue and point tiers.</li> <li><code class="hljs inline no-lang">demerit</code> — applies an indexed demerit rule to a resident identified by Student ID.</li></ul> <h4 id="rationale-for-the-current-design">Rationale for the current design<a class="fa fa-anchor" href="#rationale-for-the-current-design" onclick="event.stopPropagation()"></a></h4> <p>A resident may commit the same rule multiple times, and the DPS applies different point tiers based on repeated occurrences. Hence, storing only a running total would lose important context such as:</p> <ul><li>which rule was applied,</li> <li>how many times it has already been committed by that resident,</li> <li>and what exact points were awarded for that occurrence.</li></ul> <p>By storing incidents individually, Hall Ledger can:</p> <ul><li>reconstruct total demerit points at any time,</li> <li>preserve a readable incident history,</li> <li>and support future enhancements such as warnings, alerts, or administrative review.</li></ul> <h4 id="current-scope-note">Current scope note<a class="fa fa-anchor" href="#current-scope-note" onclick="event.stopPropagation()"></a></h4> <p>Hall Ledger currently records resident demerit incidents and computes accumulated totals. It does <strong>not</strong> yet
-automatically enforce semester-based or lifetime housing sanctions tied to DPS thresholds.</p> <hr> <h3 id="demerit-records-ui">Demerit records UI<a class="fa fa-anchor" href="#demerit-records-ui" onclick="event.stopPropagation()"></a></h3> <p>Hall Ledger provides a dedicated <strong>Demerit Records</strong> tab for the currently selected resident.</p> <p>This tab displays:</p> <ul><li>the resident’s accumulated total demerit points,</li> <li>the resident’s demerit incident history,</li> <li>the rule description,</li> <li>incident remarks,</li> <li>and the points applied for each incident.</li></ul> <p>The tab updates when the selected resident changes.</p> <p>This design was chosen because:</p> <ul><li>Residential assistants often need both the current total and the incident history,</li> <li>showing only a running total would hide important context,</li> <li>and separating demerit records into a dedicated tab keeps the interface organized.</li></ul></div> <hr> <div class="section"><h2 id="documentation-logging-testing-configuration-dev-ops"><strong>Documentation, logging, testing, configuration, dev-ops</strong><a class="fa fa-anchor" href="#documentation-logging-testing-configuration-dev-ops" onclick="event.stopPropagation()"></a></h2> <ul><li><a href="/tp/Documentation.html">Documentation guide</a></li> <li><a href="/tp/Testing.html">Testing guide</a></li> <li><a href="/tp/Logging.html">Logging guide</a></li> <li><a href="/tp/Configuration.html">Configuration guide</a></li> <li><a href="/tp/DevOps.html">DevOps guide</a></li></ul></div> <hr> <div class="section"><h2 id="appendix-requirements"><strong>Appendix: Requirements</strong><a class="fa fa-anchor" href="#appendix-requirements" onclick="event.stopPropagation()"></a></h2> <h3 id="product-scope">Product scope<a class="fa fa-anchor" href="#product-scope" onclick="event.stopPropagation()"></a></h3> <p>Hall Ledger is a desktop application for <strong>Resident Assistants (RAs)</strong> and other hall administrators who need to
-manage resident records in NUS halls efficiently.</p> <p>Beyond basic resident record management, Hall Ledger supports common hall-administration workflows such as:</p> <ul><li>organizing residents by typed tags,</li> <li>recording short operational remarks,</li> <li>and tracking demerit incidents in a structured way.</li></ul> <p>Hall Ledger is <strong>not</strong> intended to replace university-wide housing allocation systems, payment systems, or
-institutional access-control systems.</p> <p><strong>Target user profile</strong></p> <p>The target user:</p> <ul><li>manages many residents,</li> <li>frequently needs quick access to resident information,</li> <li>prefers keyboard-driven workflows where possible,</li> <li>and wants a local desktop tool rather than scattered spreadsheets or notes.</li></ul> <p><strong>Value proposition</strong></p> <p>Hall Ledger helps residential assistants (RAs) manage resident records faster and with fewer errors than spreadsheets
-or ad hoc note-taking workflows, while keeping hall-specific information such as tags, remarks, and demerit incidents in one place.</p> <hr> <h3 id="user-stories">User stories<a class="fa fa-anchor" href="#user-stories" onclick="event.stopPropagation()"></a></h3> <p>Priorities: High (<code class="hljs inline no-lang">***</code>), Medium (<code class="hljs inline no-lang">**</code>), Low (<code class="hljs inline no-lang">*</code>)</p> <div class="table-responsive"><table class="markbind-table table table-bordered table-striped"><thead><tr><th>Priority</th> <th>As a ...</th> <th>I want to ...</th> <th>So that I can ...</th></tr></thead> <tbody><tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>add resident records</td> <td>keep the resident list up to date</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>edit resident records</td> <td>correct outdated or incorrect information</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>delete resident records</td> <td>remove residents who are no longer in the hall</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>view all residents</td> <td>get a quick overview of the current resident list</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>find residents using key fields</td> <td>locate residents quickly</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>tag residents by year, major, and gender</td> <td>organize residents in hall-relevant ways</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>add remarks to residents</td> <td>store short operational notes</td></tr> <tr><td><code class="hljs inline no-lang">***</code></td> <td>RA</td> <td>add demerit incidents to residents</td> <td>keep track of rule breaches</td></tr> <tr><td><code class="hljs inline no-lang">**</code></td> <td>RA</td> <td>view a resident’s demerit history</td> <td>understand how the current total was formed</td></tr> <tr><td><code class="hljs inline no-lang">**</code></td> <td>RA</td> <td>view the demerit rule list</td> <td>apply the correct rule consistently</td></tr></tbody></table></div><hr> <h3 id="use-cases">Use cases<a class="fa fa-anchor" href="#use-cases" onclick="event.stopPropagation()"></a></h3> <p>For all use cases below, the <strong>System</strong> is Hall Ledger and the <strong>Actor</strong> is the Residential Assistant (RA) unless
-stated otherwise.</p> <p><strong>MSS</strong></p> <ol><li>RA requests to add a new resident, providing the resident&#39;s details (e.g., name, phone, email, room number, tags).</li> <li>Hall Ledger adds the new resident.</li> <li>Hall Ledger displays a success message with the added resident&#39;s details.</li></ol> <p>Use case ends.</p> <p><strong>Extensions</strong></p> <ul><li><p>1a. RA provides an invalid format for the details (e.g., incorrect phone number format).</p> <ul><li>1a1. Hall Ledger shows an error message indicating the correct format.
-Use case resumes from step 1.</li></ul></li> <li><p>1b. A resident with a provided unique identifier (Student ID, room) that already exists in the system.</p> <ul><li>1b1. Hall Ledger detects the duplicate entry and displays an error message. Use case ends.</li></ul></li> <li><p>1c. RA fails to provide compulsory details (name, phone, email, room number).</p> <ul><li>1c1. Hall Ledger shows an error message indicating the compulsory details.
-Use case resumes from step 1.</li></ul></li></ul> <p><strong>Use case: UC02 - View a resident&#39;s details (basic info, demerit records)</strong></p> <p><strong>MSS</strong></p> <ol><li>RA requests to list all residents.</li> <li>Hall Ledger shows the list of all residents.</li> <li>RA identifies a specific resident from the list.</li> <li>Hall Ledger displays the resident&#39;s basic information and demerit records in the UI.</li></ol> <p>Use case ends.</p> <p><strong>Use case: UC03 - Edit a resident&#39;s info</strong></p> <p><strong>MSS</strong></p> <ol><li>RA requests to edit specific details (e.g., phone, email, room number, tags) of a resident using their Student ID.</li> <li>Hall Ledger updates the resident&#39;s details.</li> <li>Hall Ledger displays a success message with the updated resident&#39;s details.</li></ol> <p>Use case ends.</p> <p><strong>Extensions</strong></p> <ul><li><p>1a. The given Student ID does not exist.</p> <ul><li>1a1. Hall Ledger shows an error message indicating that the resident was not found.
-Use case ends.</li></ul></li> <li><p>1b. RA provides an invalid format for the details to be updated.</p> <ul><li>1b1. Hall Ledger shows an error message indicating the correct format.
-Use case resumes from step 1.</li></ul></li></ul> <p><strong>Use case: UC04 - Delete a resident&#39;s record</strong></p> <p><strong>MSS</strong></p> <ol><li>RA requests to delete a specific resident record.</li> <li>Hall Ledger opens a confirmation dialog to confirm the deletion.</li> <li>RA confirms the action.</li> <li>Hall Ledger deletes the specified resident record.</li> <li>Hall Ledger displays a success message reflecting the changes.</li></ol> <p>Use case ends.</p> <p><strong>Extensions</strong></p> <ul><li><p>1a. The given student ID of the resident is invalid.</p> <ul><li>1a1. Hall Ledger shows an error message indicating that the resident was not found.
-Use case ends.</li></ul></li> <li><p>3a. RA cancels the deletion.</p> <ul><li>3a1. Hall Ledger aborts deletion and shows a cancellation message.</li> <li>Use case ends.</li></ul></li></ul> <p><strong>Use case: UC05 - Search and filter residents</strong></p> <p><strong>MSS</strong></p> <ol><li>RA requests to search by name or filter by specific attributes (e.g., room, year, tags).</li> <li>Hall Ledger processes the query.</li> <li>Hall Ledger shows a list of matching residents.</li></ol> <p>Use case ends.</p> <p><strong>Extensions</strong></p> <ul><li><p>1a. RA provides empty keywords or invalid command format.</p> <ul><li>1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
-Use case ends.</li></ul></li> <li><p>1b. RA provides invalid keywords for a field that only accepts a set of valid values (year, gender).</p> <ul><li>1b1. Hall Ledger shows a warning that invalid keywords in these fields would be ignored. Use case resumes from
-step 1.</li></ul></li> <li><p>1c. RA provides more than 10 filter keywords per field.</p> <ul><li>1c1. Hall Ledger shows an error message indicating that the RA has exceeded the maximum number of keywords for
-that field.</li></ul></li></ul> <p><strong>Use case: UC06 - Add a demerit incident</strong></p> <p><strong>MSS</strong></p> <ol><li>RA requests to add a demerit incident to a resident with a remark.</li> <li>Hall Ledger determines the offence number for that resident and rule based on number of past offences.</li> <li>Hall Ledger updates the resident’s demerit records.</li> <li>Hall Ledger shows a success message.</li></ol> <p>Use case ends.</p> <p><strong>Extensions</strong></p> <ul><li><p>1a. RA enters an invalid student ID.</p> <ul><li>1a1. Hall Ledger shows an error message.</li> <li>Use case ends.</li></ul></li> <li><p>1b. RA enters an invalid demerit rule index.</p> <ul><li>1b1. Hall Ledger shows an error message.</li> <li>Use case ends.</li></ul></li></ul> <hr> <h3 id="non-functional-requirements">Non-Functional Requirements<a class="fa fa-anchor" href="#non-functional-requirements" onclick="event.stopPropagation()"></a></h3> <ol><li>Hall Ledger should work on mainstream desktop operating systems that support Java 17.</li> <li>Hall Ledger should remain usable for a typical hall-level resident dataset.</li> <li>A fast typist should be able to complete common administrative tasks efficiently through commands.</li> <li>Hall Ledger should store data locally in a human-editable file.</li> <li>Hall Ledger should work without requiring internet access during normal usage.</li> <li>Hall Ledger should remain a single-user application.</li> <li>Hall Ledger should be able to comfortably perform with 200 residents, which is a typical hall population size.</li> <li>Hall Ledger should be able to provide feedback in less than 3 seconds.</li></ol> <hr> <h3 id="glossary">Glossary<a class="fa fa-anchor" href="#glossary" onclick="event.stopPropagation()"></a></h3> <ul><li><strong>Resident</strong>: A hall resident stored in Hall Ledger.</li> <li><strong>RA</strong>: Resident Assistant.</li> <li><strong>Student ID</strong>: The identifier used by Hall Ledger to target a resident.</li> <li><strong>Remark</strong>: A short resident-level operational note.</li> <li><strong>Demerit incident</strong>: A single recorded rule breach applied to a resident.</li> <li><strong>Demerit rule</strong>: A rule in the demerit catalogue that can be applied using <code class="hljs inline no-lang">demerit</code>.</li> <li><strong>DPS</strong>: Demerit Point Structure used as the source reference for Hall Ledger’s demerit rules.</li> <li><strong>Prefix</strong>: A keyword followed by an equals sign (<code class="hljs inline no-lang">=</code>) used to specify a field in a command. For example, <code class="hljs inline no-lang">n=</code> is the prefix for the name field, and <code class="hljs inline no-lang">i=</code> is the prefix for the Student ID field.</li> <li><strong>Field</strong>: A piece of information about a resident, such as name, phone number, email, room number, tags, remark, or demerit incidents.</li> <li><strong>Keyword</strong>: A string used to search for residents in the <code class="hljs inline no-lang">find</code> command. For example, <code class="hljs inline no-lang">John</code> is a keyword that can be used to find residents whose names contain &quot;John&quot;.</li></ul></div> <hr> <div class="section"><h2 id="appendix-instructions-for-manual-testing">Appendix: Instructions for Manual Testing<a class="fa fa-anchor" href="#appendix-instructions-for-manual-testing" onclick="event.stopPropagation()"></a></h2> <p>Given below are instructions to test the app manually.</p> <div class="alert box-container alert-info" style="" data-v-19514615><!--Icon and vertical divider for seamless header box--><!----><div class="header-and-body" data-v-19514615><!-- Header wrapper, not rendered if there is no header attribute --><!----><!-- Body wrapper --><div class="box-body-wrapper" data-v-19514615><!-- icon on the left, not shown if there is a header --><div class="icon-wrapper" style="" data-v-19514615><!--[--><i class="fas fa-info" data-v-19514615></i><!--]--></div><!-- Icon -- content divider for seamless boxes without the header attribute --><!----><!-- Content wrapper --><div class="contents" style="" data-v-19514615><!--[--><p>These instructions provide a starting point. Testers are expected to do exploratory testing beyond them.</p><!--]--></div><!-- dismiss button on the right, not shown if there is a header --><!----></div></div></div> <h3 id="launch-and-shutdown">Launch and shutdown<a class="fa fa-anchor" href="#launch-and-shutdown" onclick="event.stopPropagation()"></a></h3> <ol><li><p>Initial launch</p> <ol><li>Download the jar file into an empty folder.</li> <li>Run the app.
-Expected: Hall Ledger starts with sample data.</li></ol></li> <li><p>Closing and reopening</p> <ol><li>Close the app.</li> <li>Launch it again.
-Expected: previously saved data and preferences are restored.</li></ol></li></ol> <hr> <h3 id="adding-a-resident">Adding a resident<a class="fa fa-anchor" href="#adding-a-resident" onclick="event.stopPropagation()"></a></h3> <ol><li><p>Valid add</p> <ol><li>Enter
-<code class="hljs inline no-lang">add n=John Doe p=+6598765432 e=johnd@example.com i=A1234567X r=15R ec=+65 91234567</code></li> <li>Verify that the resident is added and the result box shows success.</li></ol></li> <li><p>Invalid add</p> <ol><li>Enter an add command with an invalid field value.</li> <li>Verify that Hall Ledger rejects the command.</li></ol></li></ol> <hr> <h3 id="finding-residents">Finding residents<a class="fa fa-anchor" href="#finding-residents" onclick="event.stopPropagation()"></a></h3> <ol><li><p>Enter
-<code class="hljs inline no-lang">find n=John</code></p></li> <li><p>Verify that the list is filtered appropriately.</p></li> <li><p>Enter
-<code class="hljs inline no-lang">find y=2 m=Computer Science</code></p></li> <li><p>Verify that the list is filtered accordingly.</p></li></ol> <hr> <h3 id="tagging-a-resident">Tagging a resident<a class="fa fa-anchor" href="#tagging-a-resident" onclick="event.stopPropagation()"></a></h3> <ol><li>Enter
-<code class="hljs inline no-lang">tag i=A1234567X y=2 m=Computer Science g=he/him</code></li> <li>Verify that the target resident’s tags are updated.</li></ol> <hr> <h3 id="adding-a-remark">Adding a remark<a class="fa fa-anchor" href="#adding-a-remark" onclick="event.stopPropagation()"></a></h3> <ol><li>Enter
-<code class="hljs inline no-lang">remark i=A1234567X rm=Peanut allergy</code></li> <li>Verify that the resident remark is updated.</li></ol> <hr> <h3 id="demerit-features">Demerit features<a class="fa fa-anchor" href="#demerit-features" onclick="event.stopPropagation()"></a></h3> <ol><li><p>Show demerit rules</p> <ol><li>Enter <code class="hljs inline no-lang">demeritlist</code></li> <li>Verify that Hall Ledger shows the supported rule list.</li></ol></li> <li><p>Add a demerit incident</p> <ol><li>Enter
-<code class="hljs inline no-lang">demerit i=A1234567X di=18 rm=Visitor during quiet hours</code></li> <li>Verify that:
-<ul><li>the command succeeds,</li> <li>the success message includes the remark,</li> <li>the resident’s demerit tab updates,</li> <li>and the total demerit points increase correctly.</li></ul></li></ol></li> <li><p>Repeated offence</p> <ol><li>Enter the same <code class="hljs inline no-lang">demerit</code> command again.</li> <li>Verify that the offence number and points reflect a repeated offence for that rule.</li></ol></li> <li><p>Invalid rule</p> <ol><li>Enter
-<code class="hljs inline no-lang">demerit i=A1234567X di=999</code></li> <li>Verify that Hall Ledger rejects the command.</li></ol></li></ol> <hr> <h3 id="deleting-a-resident">Deleting a resident<a class="fa fa-anchor" href="#deleting-a-resident" onclick="event.stopPropagation()"></a></h3> <ol><li>Enter
-<code class="hljs inline no-lang">delete i=A1234567X</code></li> <li>Verify that a confirmation dialog appears.</li> <li>Cancel the deletion.
-Expected: the resident remains.</li> <li>Repeat and confirm the deletion.
-Expected: the resident is removed.</li></ol></div> <hr> <div class="section"><h2 id="appendix-planned-enhancements">Appendix: Planned Enhancements<a class="fa fa-anchor" href="#appendix-planned-enhancements" onclick="event.stopPropagation()"></a></h2> <p>Team size: 5</p> <ol><li><p>Enable command to be executed by filtered list index instead of Student ID: Hall Ledger currently requires targeting residents by Student ID. We plan to also support targeting by the index shown in the currently displayed resident list, which may be more convenient for some users.</p></li> <li><p>Improve robustness when users manually edit <code class="hljs inline no-lang">hall-ledger.json</code>: Hall Ledger currently expects manually edited JSON
-data to
-remain logically valid. We plan to detect and explain more invalid manual edits instead of only failing at load time.</p></li> <li><p>Refine demerit-table behavior for extremely narrow layouts: The demerit tab currently keeps detailed incident information visible, but very narrow layouts can still feel cramped. We plan to improve the layout behavior further while keeping the incident history readable.</p></li> <li><p>Make tag-validation error messages more specific: Hall Ledger currently rejects invalid tag inputs, but some error messages can still be made more precise. We plan to state more clearly which tag field failed validation and why.</p></li> <li><p>Improve delete-confirmation feedback: Hall Ledger currently confirms deletion using a modal dialog. We plan to make the feedback around cancellation and confirmation even clearer so users can more easily distinguish between aborted and completed deletion flows.</p></li> <li><p>Make repeated-demerit feedback more informative: Hall Ledger currently shows the applied rule, remark, points added, and updated total. We plan to also surface the offence number more prominently in the success feedback for easier verification.</p></li> <li><p>Improve messaging for invalid resident targeting: Commands such as <code class="hljs inline no-lang">edit</code>, <code class="hljs inline no-lang">remark</code>, and <code class="hljs inline no-lang">demerit</code> reject
-nonexistent Student IDs. We plan to standardize those error messages further so the reason for failure is even
-clearer to users.</p></li> <li><p>Improve save-failure guidance for write-protected folders: Hall Ledger currently depends on write access to its home folder. We plan to provide clearer user-facing guidance when saving fails due to file-permission issues.</p></li> <li><p>Improve documentation alignment for platform-specific behavior: Hall Ledger currently documents known issues such as dialog behavior and write-protected folders. We plan to keep refining the UG/DG wording and screenshots so platform-specific caveats remain easy to understand.</p></li> <li><p>Improve handling of very long resident remarks: Hall Ledger currently stores and displays resident remarks, but very long remarks may be less readable in some UI contexts. We plan to improve readability for unusually long remarks without changing the underlying data model.</p></li></ol></div></div> <nav id="page-nav" data-v-6b1b63d2><!--[--><div class="nav-component slim-scroll"><nav id="mb-page-nav" class="nav nav-pills flex-column my-0 small no-flex-wrap" data-v-6b1b63d2><!--[--><a class="nav-link py-1" href="#hall-ledger-developer-guide">Hall Ledger Developer Guide‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#table-of-contents">Table of Contents‎</a></nav> <a class="nav-link py-1" href="#acknowledgements">Acknowledgements‎</a> <a class="nav-link py-1" href="#setting-up-getting-started">Setting up, getting started‎</a> <a class="nav-link py-1" href="#design">Design‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#architecture">Architecture‎</a> <a class="nav-link py-1" href="#ui-component">UI component‎</a> <a class="nav-link py-1" href="#logic-component">Logic component‎</a> <a class="nav-link py-1" href="#model-component">Model component‎</a> <a class="nav-link py-1" href="#storage-component">Storage component‎</a> <a class="nav-link py-1" href="#common-classes">Common classes‎</a></nav> <a class="nav-link py-1" href="#implementation">Implementation‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#how-ui-triggers-command-execution">How UI triggers command execution‎</a> <a class="nav-link py-1" href="#demerit-point-tracking">Demerit point tracking‎</a> <a class="nav-link py-1" href="#demerit-records-ui">Demerit records UI‎</a></nav> <a class="nav-link py-1" href="#documentation-logging-testing-configuration-dev-ops">Documentation, logging, testing, configuration, dev-ops‎</a> <a class="nav-link py-1" href="#appendix-requirements">Appendix: Requirements‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#product-scope">Product scope‎</a> <a class="nav-link py-1" href="#user-stories">User stories‎</a> <a class="nav-link py-1" href="#use-cases">Use cases‎</a> <a class="nav-link py-1" href="#non-functional-requirements">Non-Functional Requirements‎</a> <a class="nav-link py-1" href="#glossary">Glossary‎</a></nav> <a class="nav-link py-1" href="#appendix-instructions-for-manual-testing">Appendix: Instructions for Manual Testing‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#launch-and-shutdown">Launch and shutdown‎</a> <a class="nav-link py-1" href="#adding-a-resident">Adding a resident‎</a> <a class="nav-link py-1" href="#finding-residents">Finding residents‎</a> <a class="nav-link py-1" href="#tagging-a-resident">Tagging a resident‎</a> <a class="nav-link py-1" href="#adding-a-remark">Adding a remark‎</a> <a class="nav-link py-1" href="#demerit-features">Demerit features‎</a> <a class="nav-link py-1" href="#deleting-a-resident">Deleting a resident‎</a></nav> <a class="nav-link py-1" href="#appendix-planned-enhancements">Appendix: Planned Enhancements‎</a><!--]--><!--v-if--></nav></div><!--]--><!--v-if--></nav> <div class="scroll-top-button fa-lg d-print-none" style="display:none;bottom:2%;right:2%;position:fixed;" aria-hidden="true"><!--[--><i class="fas fa-arrow-circle-up"></i><!--]--></div></div> <footer><div class="text-center"><small>[<span><strong>Powered by</strong></span> <img src="https://markbind.org/favicon.ico" width="30"> <a href="https://markbind.org/">MarkBind 6.3.1</a>, generated on Fri, 10 Apr 2026, 6:25:10 GMT+8]</small></div></footer><!--]--></div>
+interfaces without knowing about `Logic` internals. For example, `CommandBox` only knows it has a `CommandExecutor` to
+call when the user submits a command, and &#39;FilterPanel&#39; only knows it has a `FilterExecutor` to call when the user
+updates filter criteria.
+
+<span class="image-wrapper"><img src="/tp/diagrams/find/UiExecutor.png" width="700" height="" loading="eager" class="img-fluid rounded"><span class="image-caption"><!--[--><!--]--></span></span>
+
+`MainWindow` wires dependencies and defines the execution logic, then passes them into child UI constructors as
+callbacks:
+
+```java
+public class MainWindow extends UiPart<stage>
+        implements CommandExecutor, FilterExecutor {
+
+    public MainWindow(Logic logic) {
+        commandBox = new CommandBox(this); // MainWindow as an instance of CommandExecutor
+        filterPanel = new FilterPanel(logic.getFilterDetails(), this); // MainWindow as an instance of FilterExecutor
+    }
+}
+```
+
+Each child component triggers behavior only through these interfaces, without depending on parser or
+`LogicManager` implementation details:
+
+```java
+// In CommandBox
+CommandResult result = commandExecutor.execute(commandText);
+
+// In FilterPanel
+CommandResult result = filterExecutor.executeFilter(updatedFilterDetails);
+```
+
+This separation keeps responsibilities clear: UI components handle user input, while command and filter execution
+remain centralized behind injected callbacks.
+
+---
+
+### Demerit point tracking
+
+Hall Ledger stores demerit incidents as resident-level records instead of storing only a mutable running total.
+
+Each demerit incident records:
+* the DPS rule index,
+* the rule title,
+* the offence number for that resident and rule,
+* the points applied for that occurrence,
+* and an optional remark.
+
+The resident’s total demerit points are **derived** by summing the points applied across all stored demerit incidents. This avoids duplicated derived state and keeps the resident’s demerit history auditable.
+
+The demerit feature is split into two user-facing commands:
+
+* `demeritlist` — displays the indexed demerit rule catalogue and point tiers.
+* `demerit` — applies an indexed demerit rule to a resident identified by Student ID.
+
+#### Rationale for the current design
+
+A resident may commit the same rule multiple times, and the DPS applies different point tiers based on repeated occurrences. Hence, storing only a running total would lose important context such as:
+* which rule was applied,
+* how many times it has already been committed by that resident,
+* and what exact points were awarded for that occurrence.
+
+By storing incidents individually, Hall Ledger can:
+* reconstruct total demerit points at any time,
+* preserve a readable incident history,
+* and support future enhancements such as warnings, alerts, or administrative review.
+
+#### Current scope note
+
+Hall Ledger currently records resident demerit incidents and computes accumulated totals. It does **not** yet 
+automatically enforce semester-based or lifetime housing sanctions tied to DPS thresholds.
+
+---
+
+### Demerit records UI
+
+Hall Ledger provides a dedicated **Demerit Records** tab for the currently selected resident.
+
+This tab displays:
+* the resident’s accumulated total demerit points,
+* the resident’s demerit incident history,
+* the rule description,
+* incident remarks,
+* and the points applied for each incident.
+
+The tab updates when the selected resident changes.
+
+This design was chosen because:
+
+* Residential assistants often need both the current total and the incident history,
+* showing only a running total would hide important context,
+* and separating demerit records into a dedicated tab keeps the interface organized.
+
+</stage></div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+<div class="section">
+
+## **Documentation, logging, testing, configuration, dev-ops**
+
+* [Documentation guide](Documentation.md)
+* [Testing guide](Testing.md)
+* [Logging guide](Logging.md)
+* [Configuration guide](Configuration.md)
+* [DevOps guide](DevOps.md)
+
+</div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+<div class="section">
+
+## **Appendix: Requirements**
+
+### Product scope
+
+Hall Ledger is a desktop application for **Resident Assistants (RAs)** and other hall administrators who need to 
+manage resident records in NUS halls efficiently.
+
+Beyond basic resident record management, Hall Ledger supports common hall-administration workflows such as:
+* organizing residents by typed tags,
+* recording short operational remarks,
+* and tracking demerit incidents in a structured way.
+
+Hall Ledger is **not** intended to replace university-wide housing allocation systems, payment systems, or 
+institutional access-control systems.
+
+**Target user profile**
+
+The target user:
+* manages many residents,
+* frequently needs quick access to resident information,
+* prefers keyboard-driven workflows where possible,
+* and wants a local desktop tool rather than scattered spreadsheets or notes.
+
+**Value proposition**
+
+Hall Ledger helps residential assistants (RAs) manage resident records faster and with fewer errors than spreadsheets 
+or ad hoc note-taking workflows, while keeping hall-specific information such as tags, remarks, and demerit incidents in one place.
+
+---
+
+### User stories
+
+Priorities: High (`***`), Medium (`**`), Low (`*`)
+
+| Priority | As a ... | I want to ... | So that I can ...                                 |
+| --- |----------| --- |---------------------------------------------------|
+| `***` | RA       | add resident records | keep the resident list up to date                 |
+| `***` | RA       | edit resident records | correct outdated or incorrect information         |
+| `***` | RA       | delete resident records | remove residents who are no longer in the hall    |
+| `***` | RA       | view all residents | get a quick overview of the current resident list |
+| `***` | RA       | find residents using key fields | locate residents quickly                          |
+| `***` | RA       | tag residents by year, major, and gender | organize residents in hall-relevant ways          |
+| `***` | RA       | add remarks to residents | store short operational notes                     |
+| `***` | RA       | add demerit incidents to residents | keep track of rule breaches                       |
+| `**` | RA       | view a resident’s demerit history | understand how the current total was formed       |
+| `**` | RA       | view the demerit rule list | apply the correct rule consistently               |
+
+---
+
+### Use cases
+
+For all use cases below, the **System** is Hall Ledger and the **Actor** is the Residential Assistant (RA) unless 
+stated otherwise.
+
+**MSS**
+
+1. RA requests to add a new resident, providing the resident&#39;s details (e.g., name, phone, email, room number, tags).
+2. Hall Ledger adds the new resident.
+3. Hall Ledger displays a success message with the added resident&#39;s details.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. RA provides an invalid format for the details (e.g., incorrect phone number format).
+    * 1a1. Hall Ledger shows an error message indicating the correct format.
+    Use case resumes from step 1.
+
+* 1b. A resident with a provided unique identifier (Student ID, room) that already exists in the system.
+    * 1b1. Hall Ledger detects the duplicate entry and displays an error message. Use case ends.
+
+* 1c. RA fails to provide compulsory details (name, phone, email, room number).
+    * 1c1. Hall Ledger shows an error message indicating the compulsory details.
+    Use case resumes from step 1.
+
+**Use case: UC02 - View a resident&#39;s details (basic info, demerit records)**
+
+**MSS**
+
+1. RA requests to list all residents.
+2. Hall Ledger shows the list of all residents.
+3. RA identifies a specific resident from the list.
+4. Hall Ledger displays the resident&#39;s basic information and demerit records in the UI.
+
+Use case ends.
+
+**Use case: UC03 - Edit a resident&#39;s info**
+
+**MSS**
+
+1. RA requests to edit specific details (e.g., phone, email, room number, tags) of a resident using their Student ID.
+2. Hall Ledger updates the resident&#39;s details.
+3. Hall Ledger displays a success message with the updated resident&#39;s details.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. The given Student ID does not exist.
+    * 1a1. Hall Ledger shows an error message indicating that the resident was not found.
+    Use case ends.
+
+* 1b. RA provides an invalid format for the details to be updated.
+    * 1b1. Hall Ledger shows an error message indicating the correct format.
+    Use case resumes from step 1.
+
+**Use case: UC04 - Delete a resident&#39;s record**
+
+**MSS**
+
+1. RA requests to delete a specific resident record.
+2. Hall Ledger opens a confirmation dialog to confirm the deletion.
+3. RA confirms the action.
+4. Hall Ledger deletes the specified resident record.
+5. Hall Ledger displays a success message reflecting the changes.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. The given student ID of the resident is invalid.
+    * 1a1. Hall Ledger shows an error message indicating that the resident was not found.
+      Use case ends.
+
+* 3a. RA cancels the deletion.
+    * 3a1. Hall Ledger aborts deletion and shows a cancellation message.
+    * Use case ends.
+
+**Use case: UC05 - Search and filter residents**
+
+**MSS**
+
+1. RA requests to search by name or filter by specific attributes (e.g., room, year, tags).
+2. Hall Ledger processes the query.
+3. Hall Ledger shows a list of matching residents.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. RA provides empty keywords or invalid command format.
+    * 1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
+    Use case ends.
+
+* 1b. RA provides invalid keywords for a field that only accepts a set of valid values (year, gender).
+    * 1b1. Hall Ledger shows a warning that invalid keywords in these fields would be ignored. Use case resumes from
+      step 1.
+
+* 1c. RA provides more than 10 filter keywords per field.
+    * 1c1. Hall Ledger shows an error message indicating that the RA has exceeded the maximum number of keywords for
+      that field.
+
+**Use case: UC06 - Add a demerit incident**
+
+**MSS**
+
+1. RA requests to add a demerit incident to a resident with a remark.
+2. Hall Ledger determines the offence number for that resident and rule based on number of past offences.
+3. Hall Ledger updates the resident’s demerit records.
+4. Hall Ledger shows a success message.
+
+Use case ends.
+
+**Extensions**
+
+* 1a. RA enters an invalid student ID.
+  * 1a1. Hall Ledger shows an error message.
+  * Use case ends.
+
+* 1b. RA enters an invalid demerit rule index.
+  * 1b1. Hall Ledger shows an error message.
+  * Use case ends.
+
+---
+
+### Non-Functional Requirements
+
+1. Hall Ledger should work on mainstream desktop operating systems that support Java 17.
+2. Hall Ledger should remain usable for a typical hall-level resident dataset.
+3. A fast typist should be able to complete common administrative tasks efficiently through commands.
+4. Hall Ledger should store data locally in a human-editable file.
+5. Hall Ledger should work without requiring internet access during normal usage.
+6. Hall Ledger should remain a single-user application.
+7. Hall Ledger should be able to comfortably perform with 200 residents, which is a typical hall population size.
+8. Hall Ledger should be able to provide feedback in less than 3 seconds.
+---
+
+### Glossary
+
+* **Resident**: A hall resident stored in Hall Ledger.
+* **RA**: Resident Assistant.
+* **Student ID**: The identifier used by Hall Ledger to target a resident.
+* **Remark**: A short resident-level operational note.
+* **Demerit incident**: A single recorded rule breach applied to a resident.
+* **Demerit rule**: A rule in the demerit catalogue that can be applied using `demerit`.
+* **DPS**: Demerit Point Structure used as the source reference for Hall Ledger’s demerit rules.
+* **Prefix**: A keyword followed by an equals sign (`=`) used to specify a field in a command. For example, `n=` is the prefix for the name field, and `i=` is the prefix for the Student ID field.
+* **Field**: A piece of information about a resident, such as name, phone number, email, room number, tags, remark, or demerit incidents.
+* **Keyword**: A string used to search for residents in the `find` command. For example, `John` is a keyword that can be used to find residents whose names contain &quot;John&quot;.
+
+</div>
+
+---
+
+<div class="section">
+
+## Appendix: Instructions for Manual Testing
+
+Given below are instructions to test the app manually.
+
+<div class="alert box-container alert-info" style="" data-v-19514615><!--Icon and vertical divider for seamless header box--><!----><div class="header-and-body" data-v-19514615><!-- Header wrapper, not rendered if there is no header attribute --><!----><!-- Body wrapper --><div class="box-body-wrapper" data-v-19514615><!-- icon on the left, not shown if there is a header --><div class="icon-wrapper" style="" data-v-19514615><!--[--><i class="fas fa-info" data-v-19514615></i><!--]--></div><!-- Icon -- content divider for seamless boxes without the header attribute --><!----><!-- Content wrapper --><div class="contents" style="" data-v-19514615><!--[-->
+
+These instructions provide a starting point. Testers are expected to do exploratory testing beyond them.
+
+<!--]--></div><!-- dismiss button on the right, not shown if there is a header --><!----></div></div></div>
+
+### Launch and shutdown
+
+1. Initial launch
+   1. Download the jar file into an empty folder.
+   2. Run the app.
+      Expected: Hall Ledger starts with sample data.
+
+2. Closing and reopening
+   1. Close the app.
+   2. Launch it again.
+      Expected: previously saved data and preferences are restored.
+
+---
+
+### Adding a resident
+
+1. Valid add
+   1. Enter
+      `add n=John Doe p=+6598765432 e=johnd@example.com i=A1234567X r=15R ec=+65 91234567`
+   2. Verify that the resident is added and the result box shows success.
+
+2. Invalid add
+   1. Enter an add command with an invalid field value.
+   2. Verify that Hall Ledger rejects the command.
+
+---
+
+### Finding residents
+
+1. Enter
+   `find n=John`
+2. Verify that the list is filtered appropriately.
+
+3. Enter
+   `find y=2 m=Computer Science`
+4. Verify that the list is filtered accordingly.
+
+---
+
+### Tagging a resident
+
+1. Enter
+   `tag i=A1234567X y=2 m=Computer Science g=he/him`
+2. Verify that the target resident’s tags are updated.
+
+---
+
+### Adding a remark
+
+1. Enter
+   `remark i=A1234567X rm=Peanut allergy`
+2. Verify that the resident remark is updated.
+
+---
+
+### Demerit features
+
+1. Show demerit rules
+   1. Enter `demeritlist`
+   2. Verify that Hall Ledger shows the supported rule list.
+
+2. Add a demerit incident
+   1. Enter
+      `demerit i=A1234567X di=18 rm=Visitor during quiet hours`
+   2. Verify that:
+      * the command succeeds,
+      * the success message includes the remark,
+      * the resident’s demerit tab updates,
+      * and the total demerit points increase correctly.
+
+3. Repeated offence
+   1. Enter the same `demerit` command again.
+   2. Verify that the offence number and points reflect a repeated offence for that rule.
+
+4. Invalid rule
+   1. Enter
+      `demerit i=A1234567X di=999`
+   2. Verify that Hall Ledger rejects the command.
+
+---
+
+### Deleting a resident
+
+1. Enter
+   `delete i=A1234567X`
+2. Verify that a confirmation dialog appears.
+3. Cancel the deletion.
+   Expected: the resident remains.
+4. Repeat and confirm the deletion.
+   Expected: the resident is removed.
+
+</div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+<div class="section">
+
+## Appendix: Planned Enhancements
+
+Team size: 5
+
+1. Enable command to be executed by filtered list index instead of Student ID: Hall Ledger currently requires targeting residents by Student ID. We plan to also support targeting by the index shown in the currently displayed resident list, which may be more convenient for some users.
+
+2. Improve robustness when users manually edit `hall-ledger.json`: Hall Ledger currently expects manually edited JSON
+   data to
+   remain logically valid. We plan to detect and explain more invalid manual edits instead of only failing at load time.
+
+3. Refine demerit-table behavior for extremely narrow layouts: The demerit tab currently keeps detailed incident information visible, but very narrow layouts can still feel cramped. We plan to improve the layout behavior further while keeping the incident history readable.
+
+4. Make tag-validation error messages more specific: Hall Ledger currently rejects invalid tag inputs, but some error messages can still be made more precise. We plan to state more clearly which tag field failed validation and why.
+
+5. Improve delete-confirmation feedback: Hall Ledger currently confirms deletion using a modal dialog. We plan to make the feedback around cancellation and confirmation even clearer so users can more easily distinguish between aborted and completed deletion flows.
+
+6. Make repeated-demerit feedback more informative: Hall Ledger currently shows the applied rule, remark, points added, and updated total. We plan to also surface the offence number more prominently in the success feedback for easier verification.
+
+7. Improve messaging for invalid resident targeting: Commands such as `edit`, `remark`, and `demerit` reject 
+   nonexistent Student IDs. We plan to standardize those error messages further so the reason for failure is even 
+   clearer to users.
+
+8. Improve save-failure guidance for write-protected folders: Hall Ledger currently depends on write access to its home folder. We plan to provide clearer user-facing guidance when saving fails due to file-permission issues.
+
+9. Improve documentation alignment for platform-specific behavior: Hall Ledger currently documents known issues such as dialog behavior and write-protected folders. We plan to keep refining the UG/DG wording and screenshots so platform-specific caveats remain easy to understand.
+
+10. Improve handling of very long resident remarks: Hall Ledger currently stores and displays resident remarks, but very long remarks may be less readable in some UI contexts. We plan to improve readability for unusually long remarks without changing the underlying data model.
+
+</div></div> <nav id="page-nav" data-v-6b1b63d2><!--[--><div class="nav-component slim-scroll"><nav id="mb-page-nav" class="nav nav-pills flex-column my-0 small no-flex-wrap" data-v-6b1b63d2><!--[--><a class="nav-link py-1" href="#hall-ledger-developer-guide">Hall Ledger Developer Guide‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#table-of-contents">Table of Contents‎</a></nav> <a class="nav-link py-1" href="#acknowledgements">Acknowledgements‎</a> <a class="nav-link py-1" href="#setting-up-getting-started">Setting up, getting started‎</a> <a class="nav-link py-1" href="#design">Design‎</a> <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap"><a class="nav-link py-1" href="#architecture">Architecture‎</a> <a class="nav-link py-1" href="#ui-component">UI component‎</a> <a class="nav-link py-1" href="#logic-component">Logic component‎</a></nav><!--]--><!--v-if--></nav></div><!--]--><!--v-if--></nav> <div class="scroll-top-button fa-lg d-print-none" style="display:none;bottom:2%;right:2%;position:fixed;" aria-hidden="true"><!--[--><i class="fas fa-arrow-circle-up"></i><!--]--></div></div> <footer><div class="text-center"><small>[<span><strong>Powered by</strong></span> <img src="https://markbind.org/favicon.ico" width="30"> <a href="https://markbind.org/">MarkBind 6.3.1</a>, generated on Fri, 10 Apr 2026, 7:08:11 GMT+8]</small></div></footer><!--]--></div>
 </body><script src="/tp/markbind/js/bootstrap-utility.min.js"></script>
 <script src="/tp/markbind/js/polyfill.min.js"></script>
 <script src="/tp/markbind/js/vue.global.prod.min.js"></script>
