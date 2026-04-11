@@ -41,7 +41,7 @@ public interface Logic {
      * Returns true if the given command is a valid delete command targeting an existing resident,
      * and therefore should trigger a delete confirmation dialog.
      */
-    boolean requiresDeleteConfirmation(String commandText);
+    boolean requiresConfirmation(String commandText);
 
     /**
      * Returns the AddressBook.
