@@ -18,10 +18,9 @@ import java.util.Objects;
  */
 public class Tag {
 
-    public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric. "
-            + "\nGender tags can be: she/her, he/him or they/them"
+    public static final String MESSAGE_CONSTRAINTS = "Gender tags can be: she/her, he/him or they/them"
             + "\nYear tags should be a positive integer between 1 and 6 inclusive."
-            + "\nMajor tags should be less than 100 characters long.";
+            + "\nMajor tags should be less than 100 characters and must contain letters or special characters & or ,";
 
     private final String tagContent;
     private final TagType tagType;
