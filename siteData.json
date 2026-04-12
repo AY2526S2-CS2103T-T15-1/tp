@@ -137,7 +137,7 @@
         "5-tagging-a-resident": "5. Tagging a Resident",
         "6-viewing-residents": "6. Viewing Residents",
         "7-finding-residents": "7. Finding Residents",
-        "8-managing-resident-remarks": "8. Managing Resident Remarks:",
+        "8-managing-resident-remarks": "8. Managing Resident Remarks",
         "9-adding-a-demerit-record-to-a-resident": "9. Adding a Demerit Record to a Resident",
         "10-deleting-a-resident": "10. Deleting a Resident",
         "11-clearing-all-residents": "11. Clearing all Residents",
@@ -156,30 +156,6 @@
       "title": "",
       "headings": {
         "hall-ledger": "Hall Ledger"
-      },
-      "headingKeywords": {}
-    },
-    {
-      "src": "team/ananyaj1515.md",
-      "title": "John Doe's Project Portfolio Page",
-      "headings": {
-        "project-addressbook-level-3": "Project: AddressBook Level 3"
-      },
-      "headingKeywords": {}
-    },
-    {
-      "src": "team/dinhcodes.md",
-      "title": "John Doe's Project Portfolio Page",
-      "headings": {
-        "project-addressbook-level-3": "Project: AddressBook Level 3"
-      },
-      "headingKeywords": {}
-    },
-    {
-      "src": "team/pr8190.md",
-      "title": "Pooja Rajus's Project Portfolio Page",
-      "headings": {
-        "project-addressbook-level-3": "Project: AddressBook Level 3"
       },
       "headingKeywords": {}
     }
