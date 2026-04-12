@@ -272,8 +272,8 @@ public class MainWindow extends UiPart<Stage> implements CommandExecutor, Filter
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(primaryStage);
         alert.setTitle("Confirm Action");
-        alert.setHeaderText("Perform this action?");
-        alert.setContentText("Are you sure you want to perform this action? This cannot be undone.");
+        alert.setHeaderText("Are you sure you want to perform this action?");
+        alert.setContentText("Alternatively, press 'Enter' to confirm or 'Escape' to cancel.");
         alert.getButtonTypes().setAll(confirmButton, cancelButton);
 
         Optional<ButtonType> result = alert.showAndWait();
