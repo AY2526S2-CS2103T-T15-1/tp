@@ -25,7 +25,7 @@ public class Profile extends UiPart<Region> {
     private TextField phoneField;
 
     @FXML
-    private TextField nameField;
+    private TextArea nameField;
 
     @FXML
     private TextField studentIdField;
