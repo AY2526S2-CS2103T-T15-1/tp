@@ -94,7 +94,7 @@ To start, type the following instructions into the command box (in the given ord
 4. Finally, `delete i=A1234567X` to delete Vera from the ledger. After entering this command, a confirmation dialog will appear. Click **Confirm** to proceed with the deletion, or click **Cancel** to stop the deletion.
 
 <box type="tip">
-<b>Tip:  </b>  Type and enter `help` in the command box to see a list of available commands and their usage formats.
+<b>Tip:  </b>  Type and enter <code>help</code> in the command box to see a list of available commands and their usage formats.
 </box>
 
 </div>
@@ -222,6 +222,8 @@ Displays all residents the resident list panel on the right
 
 **Command:** `list`
 
+<box type="tip">
+<b>Note:</b> <code>list</code> will ignore any extraneous input provided. For example, <code>list 123</code> will be treated the same as <code>list</code>.</box>
 </div>
 
 ***
@@ -336,10 +338,12 @@ You can view remarks in the resident's profile tab.
 
 - Adds or edits a remark for the resident uniquely identified by `STUDENT_ID`.
 - If a remark **already exists** for the resident, it will be **overwritten** by the new remark.
-- There is no character limit for remarks, but keeping them concise is recommended for readability.
-<box type="warning">
-Remarks can contain any content. However, <b>avoid using special characters</b> that may interfere with the command format (e.g., <code>=</code> or <code>i=</code>), as they may cause issues when editing or clearing remarks.
-</box>
+- There is no character limit for remarks, but keeping them concise is recommended for readability.  
+  
+
+  <box type="warning">
+  Remarks can contain any content. However, <b>avoid using the character <code>=</code></b>, as it may interfere with the command format and cause issues when editing or clearing remarks.
+  </box>
 
 Example usages:
 - `remark i=A1234567X rm=Allergic to peanuts`
@@ -440,6 +444,11 @@ This action **permanently deletes all resident data**. We recommend creating a b
 
 </box>
 
+<box type="tip">
+<b>Note:</b> <code>clear</code> will ignore any extraneous input provided. For example, <code>clear 123</code> will be treated the same as <code>clear</code>.
+</box>
+
+
 </div>
 
 ***
@@ -455,8 +464,9 @@ Opens the Hall Ledger Help window, which displays the available commands and the
 <img src="images/help-window.png" alt="Help Window 2" width="500" align="center"/>      
 </div>
 <br>
-<br>
-
+<box type="tip">
+<b>Note:</b> <code>help</code> will ignore any extraneous input provided. For example, <code>help 123</code> will be treated the same as <code>help</code>.
+</box>
 </div>
 
 ***
@@ -553,5 +563,6 @@ Action     | Format, Examples
 **[Delete](#10-deleting-a-resident)** | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`
 **[Clear](#11-clearing-all-residents)** | `clear`
 **[Help](#12-viewing-help)** | `help`
+**[Exit](#13-exiting-the-program)** | `exit`
   
 </div>
