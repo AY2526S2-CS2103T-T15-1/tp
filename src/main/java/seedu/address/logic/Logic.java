@@ -38,8 +38,8 @@ public interface Logic {
     CommandResult executeFilter(FilterDetails filterDetails) throws CommandException;
 
     /**
-     * Returns true if the given command is a valid delete and clear command targeting an existing resident,
-     * and therefore should trigger a delete confirmation dialog.
+     * Returns true if the given command is a valid delete or clear command,
+     * and therefore should trigger a confirmation dialog.
      */
     boolean requiresConfirmation(String commandText);
 
