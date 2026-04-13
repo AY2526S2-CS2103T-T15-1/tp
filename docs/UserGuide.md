@@ -345,6 +345,8 @@ The Filter Panel supports the same search behaviour as the typed `find` command.
 
 Entering a command in the command box can reset the Filter panel.
 
+</box>
+
 </div>
 
 ***
