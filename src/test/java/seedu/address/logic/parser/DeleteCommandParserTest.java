@@ -32,4 +32,10 @@ public class DeleteCommandParserTest {
     public void parse_invalidStudentId_throwsParseException() {
         assertParseFailure(parser, " i=", StudentId.MESSAGE_CONSTRAINTS);
     }
+
+    @Test
+    public void parse_duplicateStudentIdPrefix_throwsParseException() {
+        assertParseFailure(parser, " i=A1234567X i=A7654321X",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
 }
