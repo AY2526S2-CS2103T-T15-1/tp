@@ -54,7 +54,7 @@ public class PersonMatchesDetailsPredicate implements Predicate<Person> {
                 && isFuzzyMatch(personRoomNumberString, filterDetails.getRoomNumberKeywords())
                 && isExactMatch(personStudentIdString, filterDetails.getStudentIdKeywords())
                 && isFuzzyMatch(personEmergencyContactString, filterDetails.getEmergencyContactKeywords())
-                && isFuzzyMatch(personYearString, filterDetails.getTagYearKeywords())
+                && isExactMatch(personYearString, filterDetails.getTagYearKeywords())
                 && isFuzzyMatch(personMajorString, filterDetails.getTagMajorKeywords())
                 && isExactMatch(personGenderString, filterDetails.getTagGenderKeywords());
     }
