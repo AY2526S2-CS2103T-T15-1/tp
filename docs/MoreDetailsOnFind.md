@@ -128,6 +128,7 @@ If you enter an invalid year or gender keyword, Hall Ledger will not throw an er
     - `find n=Alice n=Bob` → name matches `Alice` **or** `Bob`.
 
 <br>
+
 - Combining both of the above rules, **multiple filters with repeated prefixes** combine in a way that is best
   described as "AND of ORs" — a resident must match **all** fields, but for each field, they can match **any one** of
   the specified keywords.
