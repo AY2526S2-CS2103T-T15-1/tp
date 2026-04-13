@@ -9,6 +9,48 @@ pageNav: 3
 <!-- * Table of Contents -->
 <page-nav-print />
 
+---
+<!-- * Table of Contents -->
+
+<div class="section table-of-contents">
+
+### **Table of Contents**
+
+1. [Acknowledgements](#acknowledgements)
+2. [Setting up, getting started](#setting-up-getting-started)
+3. [Design](#design)  
+   3.1. [Architecture](#architecture)  
+   3.2. [UI component](#ui-component)  
+   3.3. [Logic component](#logic-component)  
+   3.4. [Model component](#model-component)  
+   3.5. [Storage component](#storage-component)  
+   3.6. [Common classes](#common-classes)
+4. [Implementation](#implementation)  
+   4.1. [How UI triggers command execution](#how-ui-triggers-command-execution)  
+   4.2. [Demerit point tracking](#demerit-point-tracking)  
+   4.2.1. [Rationale for the current design](#rationale-for-the-current-design)  
+   4.2.2. [Current scope note](#current-scope-note)  
+   4.3. [Demerit records UI](#demerit-records-ui)
+5. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+6. [Appendix: Requirements](#appendix-requirements)  
+   6.1. [Product scope](#product-scope)  
+   6.2. [User stories](#user-stories)  
+   6.3. [Use cases](#use-cases)  
+   6.4. [Non-Functional Requirements](#non-functional-requirements)  
+   6.5. [Glossary](#glossary)
+7. [Appendix: Instructions for Manual Testing](#appendix-instructions-for-manual-testing)  
+   7.1. [Launch and shutdown](#launch-and-shutdown)  
+   7.2. [Adding a resident](#adding-a-resident)  
+   7.3. [Finding residents](#finding-residents)  
+   7.4. [Tagging a resident](#tagging-a-resident)  
+   7.5. [Adding a remark](#adding-a-remark)  
+   7.6. [Demerit features](#demerit-features)  
+   7.7. [Deleting a resident](#deleting-a-resident)
+8. [Appendix: Planned Enhancements](#appendix-planned-enhancements)
+
+</div>
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
@@ -383,6 +425,8 @@ access-control systems. Its scope is limited to block-level or hall-level reside
 **Value proposition:** Hall Ledger helps hall administrators manage resident records faster and with fewer errors than
 spreadsheets or manual lists, while providing a centralized and command-driven workflow tailored to hall operations.
 
+--- 
+
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
@@ -407,164 +451,158 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* `     | RA              | generate occupancy reports by floor and room | plan housing allocation more effectively for the next semester |
 | `* `     | RA              | export all data to a downloadable file       | share or analyse resident data externally                   |
 
+--- 
+
 ### Use cases
 
-(For all use cases below, the **System** is Hall Ledger and the **Actor** is the Residential Assistant (RA), unless
-specified otherwise)
+For all use cases below, the **System** is Hall Ledger and the **Actor** is the Residential Assistant (RA), unless specified otherwise.
 
-**Use case: UC01 - Add a new resident**
+#### UC01 — Add a New Resident
 
-**MSS**
+**Main Success Scenario (MSS):**
 
 1. RA requests to add a new resident by providing the resident's details.
 2. Hall Ledger adds the new resident.
-3. Hall Ledger displays a success message with the added student's details.
+3. Hall Ledger signals success and displays the newly added resident.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. RA provides an invalid format for the details (e.g., incorrect phone number format).
-    * 1a1. Hall Ledger shows an error message indicating the correct format.
-    Use case resumes from step 1.
+- **1a.** Hall Ledger detects an error in the entered data.
+    - 1a1. Hall Ledger informs the RA of the error and reminds RA of the correct format. 
+    - Use case resumes from step 1.
+- **1b.** Hall Ledger detects a resident with the same identification already exists.
+    - 1b1. Hall Ledger informs the RA and cancels the addition. 
+    - Use case resumes from step 1.
 
-* 1b. A student with a provided unique identifier (Student ID, room) already exists in the system.
-    * 1b1. Hall Ledger detects the duplicate entry and displays an errors message. Use case ends.
+#### UC02 — View a Resident's Details
 
-* 1c. RA fails to provide compulsory details (name, phone, email, room number).
-    * 1c1. Hall Ledger shows an error message indicating the compulsory details.
-    Use case resumes from step 1.
+**Main Success Scenario (MSS):**
 
-**Use case: UC02 - View a student's details (basic info, demerit records)**
-
-**MSS**
-
-1. RA requests to list all students.
-2. Hall Ledger shows a list of students.
-3. RA identifies a specific student from the list.
-4. Hall Ledger displays the student's basic information and current demerit total in the UI.
+1. RA requests to list all residents.
+2. Hall Ledger shows a list of residents.
+3. RA identifies a specific resident from the list.
+4. Hall Ledger displays the specified resident's details.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 2a. The student list is empty.
-    * 2a1. Hall Ledger indicates that the student list is empty.
-    Use case ends.
+- **1a.** The resident list is empty.
+    - 1a1. Hall Ledger indicates that the resident list is empty. 
+    - Use case ends.
+- **3a.** Hall Ledger cannot find the specified resident.
+    - 3a1. Hall Ledger informs the RA that the resident cannot be found and cancels the view. 
+    - Use case ends.
 
-**Use case: UC03 - Edit a student's info**
+#### UC03 — Edit a Resident's Info
 
-**MSS**
+**Main Success Scenario (MSS):**
 
-1. RA requests to edit specific details (e.g., phone, email, room number, tags) of a student using their student ID.
-2. Hall Ledger updates the student's details.
-3. Hall Ledger displays a success message with the updated student's details.
+1. RA requests to edit a resident by providing the details to be edited.
+2. Hall Ledger updates the resident's details.
+3. Hall Ledger signals success and shows the edited resident.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. The given student ID does not exist.
-    * 1a1. Hall Ledger shows an error message indicating that the student was not found.
-    Use case ends.
+- **1a.** Hall Ledger cannot find the resident.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the edit. 
+    - Use case resumes from step 1.
+- **1b.** Hall Ledger detects an error in the entered data.
+    - 1b1. Hall Ledger informs the RA of the error and cancels the edit. 
+    - Use case resumes from step 1.
 
-* 1b. RA provides an invalid format for the details to be updated.
-    * 1b1. Hall Ledger shows an error message indicating the correct format.
-    Use case resumes from step 1.
+#### UC04 — Delete a Resident
 
-* 1c. RA provides details that are exactly the same as the existing ones, resulting in no changes.
-  Use case resumes from step 1.
-
-**Use case: UC04 - Delete resident**
-
-**MSS**
+**Main Success Scenario (MSS):**
 
 1. RA requests to delete a resident.
-2. Hall Ledger asks for confirmation
+2. Hall Ledger asks for confirmation.
 3. RA confirms the deletion.
 4. Hall Ledger deletes the resident.
-5. Hall Ledger signals successful deletion to the RA. 
+5. Hall Ledger signals success and shows the updated resident list.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. Hall Ledger cannot find the resident.
-  Use case ends.
+- **1a.** Hall Ledger cannot find the resident.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the deletion. 
+    - Use case ends.
+- **1b.** Hall Ledger detects an error in the entered data.
+    - 1b1. Hall Ledger informs the RA of the error and cancels the deletion. 
+    - Use case resumes from step 1.
+- **2a.** RA cancels the deletion.
+    - 2a1. Hall Ledger cancels the deletion. 
+    - Use case ends.
 
-* 1b. If deleting, the given student ID is invalid.
-    * 1b1. Hall Ledger shows an error message.
-    Use case resumes from step 1.
-* 2a. RA cancels the deletion.
-    * 2a1. Hall Ledger cancels the deletion and returns to the previous state.
-    Use case ends.
+#### UC05 — Find Residents
 
-**Use case: UC05 - Search and filter students**
+**Main Success Scenario (MSS):**
 
-**MSS**
-
-1. RA requests to search by name or filter by specific attributes (e.g., room, year, tags).
-2. Hall Ledger processes the query.
-3. Hall Ledger shows a list of matching students.
+1. RA requests to find residents by name or another specific attribute.
+2. Hall Ledger finds residents matching the criteria.
+3. Hall Ledger shows a list of matching residents.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. RA provides empty keywords or invalid command format.
-    * 1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
-    Use case ends.
+- **1a.** RA provides empty keywords or an invalid command format.
+    - 1a1. Hall Ledger shows an error message indicating correct usage. 
+    - Use case ends.
+- **1b.** RA provides invalid keywords for attributes with fixed values (e.g. year, gender).
+    - 1b1. Hall Ledger displays a warning that invalid keywords will be ignored. 
+    - Use case ends.
+- **2a.** No residents match the given criteria.
+    - 2a1. Hall Ledger shows an empty result and indicates that no residents were found. 
+    - Use case ends.
 
-* 1b. RA provides invalid keywords for an attribute that only accept a fixed set of values (year, gender).
-    * 1b1. Hall Ledger displays a warning that invalid keywords will be ignored in search.
-      Use case ends.
+#### UC06 — Add a Demerit Record
 
-* 2a. No students match the given criteria.
-    * 2a1. Hall Ledger shows an empty list and indicates that 0 students were found.
-    Use case ends.
-
-**Use case: UC06 - Add a demerit record**
-
-**MSS**
+**Main Success Scenario (MSS):**
 
 1. RA requests to list the available demerit rules.
-2. Hall Ledger displays the indexed demerit rule catalogue.
-3. RA requests to add a demerit record to a specific student using the student's ID and the rule index.
-4. Hall Ledger records the demerit incident for that student.
+2. Hall Ledger displays the demerit rule list.
+3. RA requests to add a demerit rule breach for a specific resident.
+4. Hall Ledger records the demerit breach for the resident.
 5. Hall Ledger updates the resident's total demerit points.
-6. Hall Ledger displays a success message showing the applied rule and updated total.
+6. Hall Ledger signals success and displays the updated demerit points and breaches.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. No demerit rules are available.
-    * 1a1. Hall Ledger displays an empty result.
-    Use case ends.
+- **3a.** Hall Ledger cannot find the specified resident.
+    - 3a1. Hall Ledger informs the RA that the resident cannot be found and cancels the demerit addition. 
+    - Use case resumes from step 3.
+- **3b.** The given demerit breach does not exist in the demerit rules.
+    - 3b1. Hall Ledger informs the RA that the breach cannot be found and cancels the demerit addition. 
+    - Use case resumes from step 2.
 
-* 3a. The given student ID is invalid.
-    * 3a1. Hall Ledger shows an error message indicating that the student was not found.
-    Use case resumes at step 2.
+#### UC07 — Add a Tag to a Resident
 
-* 3b. The given rule index does not exist.
-    * 3b1. Hall Ledger shows an error message indicating that the rule index is invalid.
-    Use case resumes at step 2.
+**Main Success Scenario (MSS):**
 
-**Use case: UC07 - Export data**
-
-**MSS**
-
-1. RA requests to export all student details data to a CSV file.
-2. Hall Ledger gathers the relevant data.
-3. Hall Ledger exports the file to the user's system.
+1. RA requests to tag a resident by providing tag value(s).
+2. Hall Ledger updates the tag(s) for the resident.
+3. Hall Ledger signals success and shows the updated resident record.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. The student list is empty.
-    * 1a1. Hall Ledger indicates that there is no data to generate a report or export.
-    Use case ends.
+- **1a.** Hall Ledger cannot find the specified resident.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the tagging. 
+    - Use case resumes from step 1.
+- **1b.** Hall Ledger detects an error in the entered tag value(s).
+    - 1b1. Hall Ledger informs the RA of the error and cancels the tagging. 
+    - Use case resumes from step 1.
+
+---
 
 ### Non-Functional Requirements
 
@@ -591,8 +629,6 @@ Use case ends.
 * **CCA** : Co-Curricular Activities, which are activities that students participate in outside of their academic curriculum.
 * **DPS** : Demerit Point Structure used as the source reference for Hall Ledger’s demerit rule catalogue.
 * **Mainstream OS** : Windows, Linux, Unix, macOS.
-* **Non-technical users** : Users who are not familiar with technical jargon, command-line interfaces, or programming concepts.
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
