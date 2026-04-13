@@ -64,10 +64,13 @@
    this [link](https://github.com/AY2526S2-CS2103T-T15-1/tp/releases/download/v1.5.1/hall-ledger.jar). The download
    should start immedietely.
 5. On your computer, move the ``hall-ledger.jar`` file into an empty folder.
-6. Using the Terminal (refer to step 1), navigate to the folder where you placed the ``hall-ledger.jar`` file. Use the [`cd`](https://www.geeksforgeeks.org/linux-unix/cd-command-in-linux-with-examples/) command for this step.
+6. Using the Terminal (refer to step 1), enter the folder where you placed the ``hall-ledger.jar`` file. Use the [`cd`](https://www.geeksforgeeks.org/linux-unix/cd-command-in-linux-with-examples/) command for this step.
 7. Type `java -jar hall-ledger.jar` in the Terminal and enter to start the application. 
 8. A Hall Ledger window similar to the below should appear in a few seconds. Note that the app will contain some sample
    data.
+
+
+<img src="/images/startup-ui.png" width="80%" align="center"/>
 
 
 ##### 1.2 Understanding the Interface
@@ -125,7 +128,7 @@ The commands used in Hall Ledger generally follow the format: `COMMAND i=STUDENT
 <br>
 <br>
 <box type="info">
-<b>Note:</b> This is a general command format, not all commands follow this format. For example, the `list` command does not require a student ID or any prefixes. Refer to the specific command's usage format for details.
+<b>Note:</b> This is a general command format, <b>not all commands follow this format</b>. For example, the <code>list</code> command does not require a student ID or any prefixes. Refer to the specific command's usage format for details.
 </box>
 </div>
 
@@ -274,7 +277,7 @@ Suppose you want to find all residents named "Alex":
 **Example: Finding residents with different prefixes**
 Suppose you want to find residents named "Alex" who are in Year 2. You can search for both criteria at once:
 
-* Type in the command box: `find n=Alex y=Y2`
+* Type in the command box: `find n=Alex y=2`
 * The resident list updates to show only residents who match **both** the name "Alex" **and** Year 2
 
 **Example: Finding residents using multiple keywords within the same criterion**
@@ -562,19 +565,19 @@ carefully, because invalid edits may prevent Hall Ledger from loading the data c
 
 ### 18. Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**[Add](#3-adding-a-resident)** | `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT` <br> e.g., `add n=James Lee p=+6598765432 e=james@example.com i=A1234567X r=15R ec=+65 98765432`
-**[Edit](#4-editing-a-resident)** | `edit i=STUDENT_ID [n=NAME] [p=PHONE_NUMBER] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`<br> e.g., `edit i=A1234567X n=James Lee e=jameslee@example.com`
-**[Tag](#5-tagging-a-resident)** | `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`<br> e.g., `tag i=A1234567X m=Computer Science y=3`
-**[List](#6-viewing-residents)** | `list`
-**[Find](#7-finding-residents)** | `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=1`
-**[Remark](#8-managing-resident-remarks-)** | `remark i=STUDENT_ID rm=REMARK`<br> e.g., `remark i=A1234567X rm=Allergic to peanuts`
-**[Demerit List](#91-listing-demerit-rules)** | `demeritlist`
+Action                                         | Format, Examples
+-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**[Add](#3-adding-a-resident)**                | `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT` <br> e.g., `add n=James Lee p=+6598765432 e=james@example.com i=A1234567X r=15R ec=+65 98765432`
+**[Edit](#4-editing-a-resident)**              | `edit i=STUDENT_ID [n=NAME] [p=PHONE_NUMBER] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`<br> e.g., `edit i=A1234567X n=James Lee e=jameslee@example.com`
+**[Tag](#5-tagging-a-resident)**               | `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`<br> e.g., `tag i=A1234567X m=Computer Science y=3`
+**[List](#6-viewing-residents)**               | `list`
+**[Find](#7-finding-residents)**               | `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=1`
+**[Remark](#8-managing-resident-remarks-)**    | `remark i=STUDENT_ID rm=REMARK`<br> e.g., `remark i=A1234567X rm=Allergic to peanuts`
+**[Demerit List](#91-listing-demerit-rules)**  | `demeritlist`
 **[Add Demerit](#92-adding-a-demerit-record)** | `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`<br> e.g., `demerit i=A1234567X di=18 rm=Visitor during quiet hours`
-**[Delete](#10-deleting-a-resident)** | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`
-**[Clear](#11-clearing-all-residents)** | `clear`
-**[Help](#12-viewing-help)** | `help`
-**[Exit](#13-exiting-the-program)** | `exit`
+**[Delete](#10-deleting-a-resident)**          | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`
+**[Clear](#11-clearing-all-residents)**        | `clear`
+**[Help](#12-viewing-help)**                   | `help`
+**[Exit](#13-exiting-the-program)**            | `exit`
   
 </div>
