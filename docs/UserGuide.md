@@ -263,6 +263,8 @@ after using the Filter panel. This will allow you to see all residents again.
 
 ##### 7.1 Using the Command Line
 
+<div>
+
 **Command:** `find`
 
 **Usage:** `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`
@@ -299,6 +301,22 @@ Suppose you want to find residents named "Alex" **or** "Bernice", who are in "Ye
   and
   the year criteria (1 or 3).
 
+<box type="tip">
+
+**Tips:**
+
+* Matching ignores letter case, and keywords order does not matter.
+* Hall Ledger supports fuzzy matching, so you may find results even with incomplete keywords or a small typo.
+* **Student ID** and **Year** uses exact matching (case-insensitive). Partial keywords or
+  typos might not return desired results.
+* **Gender** also uses exact matching, but allows some flexibility in what is considered a valid input. For example,
+  `find g=she/her` is the same as `find g=she` or `find g=her`.
+* For more details, read the advanced guide in [More Details on Find](MoreDetailsOnFind.md)
+
+</box>
+
+</div>
+
 ##### 7.2 Using the User Interface
 
 The Filter Panel supports the same search behaviour as the typed `find` command.
@@ -325,23 +343,7 @@ The Filter Panel supports the same search behaviour as the typed `find` command.
 
 <box type="warning">
 
-Entering a command in the command box will reset the Filter panel.
-
-</box>
-
-<box type="tip">
-
-**Tips:**
-
-* Matching ignores letter case, and keyword order does not matter.
-* Hall Ledger supports fuzzy matching, so you may find results even with incomplete keywords or a small typo.
-* **Student ID** and **Year** uses exact matching (case-insensitive). Partial keywords or
-  typos might not return desired results.
-* **Gender** also uses exact matching, but allows some flexibility in what is considered a valid input. For example,
-  `find g=she/her` is the same as `find g=she` or `find g=her`.
-* For more details, read the advanced guide in [More Details on Find](MoreDetailsOnFind.md)
-
-</box>
+Entering a command in the command box can reset the Filter panel.
 
 </div>
 
