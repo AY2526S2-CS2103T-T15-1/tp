@@ -467,152 +467,214 @@ The target user:
 Hall Ledger helps residential assistants (RAs) manage resident records faster and with fewer errors than spreadsheets 
 or ad hoc note-taking workflows, while keeping hall-specific information such as tags, remarks, and demerit incidents in one place.
 
----
+--- 
 
 ### User stories
 
-Priorities: High (`***`), Medium (`**`), Low (`*`)
+Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a ... | I want to ... | So that I can ...                                 |
-| --- |----------| --- |---------------------------------------------------|
-| `***` | RA       | add resident records | keep the resident list up to date                 |
-| `***` | RA       | edit resident records | correct outdated or incorrect information         |
-| `***` | RA       | delete resident records | remove residents who are no longer in the hall    |
-| `***` | RA       | view all residents | get a quick overview of the current resident list |
-| `***` | RA       | find residents using key fields | locate residents quickly                          |
-| `***` | RA       | tag residents by year, major, and gender | organize residents in hall-relevant ways          |
-| `***` | RA       | add remarks to residents | store short operational notes                     |
-| `***` | RA       | add demerit incidents to residents | keep track of rule breaches                       |
-| `**` | RA       | view a resident’s demerit history | understand how the current total was formed       |
-| `**` | RA       | view the demerit rule list | apply the correct rule consistently               |
+| Priority | As a(n)…        | I want to…                                   | So that I can…                                              |
+|----------|-----------------|----------------------------------------------|-------------------------------------------------------------|
+| `* * *`  | forgetful user  | see usage instructions                       | refer to them when I forget how to use the app              |
+| `* * *`  | RA              | add new residents                            | start tracking and supporting students under my care quickly|
+| `* * *`  | RA              | view all residents at once                   | get a clear overview of all residents assigned to me        |
+| `* * *`  | RA              | search for existing residents                | quickly find a specific resident’s information when needed  |
+| `* * *`  | RA              | delete residents                             | remove residents who no longer stay in hall                 |
+| `* * *`  | RA              | clear all residents                          | reset the system efficiently for a new semester             |
+| `* * *`  | RA              | edit existing residents' information         | correct or update resident details when they change         |
+| `* * *`  | RA              | administer demerit points to residents       | accurately track and record behavioural incidents           |
+| `* * *`  | RA              | filter residents                             | easily view residents based on relevant criteria            |
+| `* * *`  | RA              | add custom tags to residents                 | organise residents based on categories that matter to me    |
+| `* * *`  | RA              | add notes to residents                       | record important context or conversations for future reference |
+| `* *`    | RA              | administer CCA points to residents           | track resident involvement in hall activities               |
+| `* *`    | RA              | view residents' CCA records                  | review residents' involvement when making retention decisions |
+| `* `     | RA              | rank residents by accumulated CCA points     | compare residents more easily during evaluations            |
+| `* *`    | RA              | view resident demerit records                | understand a resident’s behavioural history at a glance     |
+| `* `     | RA              | generate occupancy reports by floor and room | plan housing allocation more effectively for the next semester |
+| `* `     | RA              | export all data to a downloadable file       | share or analyse resident data externally                   |
 
----
+--- 
 
 ### Use cases
 
-For all use cases below, the **System** is Hall Ledger and the **Actor** is the Residential Assistant (RA) unless 
-stated otherwise.
+For all use cases below, the **System** is Hall Ledger and the **Actor** is the Residential Assistant (RA), unless specified otherwise.
 
-**MSS**
+#### UC01 — Add a New Resident
 
-1. RA requests to add a new resident, providing the resident's details (e.g., name, phone, email, room number, tags).
+**Main Success Scenario (MSS):**
+
+1. RA requests to add a new resident by providing the resident's details.
 2. Hall Ledger adds the new resident.
-3. Hall Ledger displays a success message with the added resident's details.
+3. Hall Ledger signals success and displays the newly added resident.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. RA provides an invalid format for the details (e.g., incorrect phone number format).
-    * 1a1. Hall Ledger shows an error message indicating the correct format.
-    Use case resumes from step 1.
+- **1a.** Hall Ledger detects an error in the entered data.
+    - 1a1. Hall Ledger informs the RA of the error and reminds RA of the correct format.
+    - Use case resumes from step 1.
+- **1b.** Hall Ledger detects a resident with the same identification already exists.
+    - 1b1. Hall Ledger informs the RA and cancels the addition.
+    - Use case resumes from step 1.
 
-* 1b. A resident with a provided unique identifier (Student ID, room) that already exists in the system.
-    * 1b1. Hall Ledger detects the duplicate entry and displays an error message. Use case ends.
+#### UC02 — View a Resident's Details
 
-* 1c. RA fails to provide compulsory details (name, phone, email, room number).
-    * 1c1. Hall Ledger shows an error message indicating the compulsory details.
-    Use case resumes from step 1.
-
-**Use case: UC02 - View a resident's details (basic info, demerit records)**
-
-**MSS**
+**Main Success Scenario (MSS):**
 
 1. RA requests to list all residents.
-2. Hall Ledger shows the list of all residents.
+2. Hall Ledger shows a list of residents.
 3. RA identifies a specific resident from the list.
-4. Hall Ledger displays the resident's basic information and demerit records in the UI.
+4. Hall Ledger displays the specified resident's details.
 
 Use case ends.
 
-**Use case: UC03 - Edit a resident's info**
+**Extensions:**
 
-**MSS**
+- **1a.** The resident list is empty.
+    - 1a1. Hall Ledger indicates that the resident list is empty.
+    - Use case ends.
+- **3a.** Hall Ledger cannot find the specified resident.
+    - 3a1. Hall Ledger informs the RA that the resident cannot be found and cancels the view.
+    - Use case ends.
 
-1. RA requests to edit specific details (e.g., phone, email, room number, tags) of a resident using their Student ID.
+#### UC03 — Edit a Resident's Info
+
+**Main Success Scenario (MSS):**
+
+1. RA requests to edit a resident by providing the details to be edited.
 2. Hall Ledger updates the resident's details.
-3. Hall Ledger displays a success message with the updated resident's details.
+3. Hall Ledger signals success and shows the edited resident.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. The given Student ID does not exist.
-    * 1a1. Hall Ledger shows an error message indicating that the resident was not found.
-    Use case ends.
+- **1a.** Hall Ledger cannot find the resident.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the edit.
+    - Use case resumes from step 1.
+- **1b.** Hall Ledger detects an error in the entered data.
+    - 1b1. Hall Ledger informs the RA of the error and cancels the edit.
+    - Use case resumes from step 1.
 
-* 1b. RA provides an invalid format for the details to be updated.
-    * 1b1. Hall Ledger shows an error message indicating the correct format.
-    Use case resumes from step 1.
+#### UC04 — Delete a Resident
 
-**Use case: UC04 - Delete a resident's record**
+**Main Success Scenario (MSS):**
 
-**MSS**
-
-1. RA requests to delete a specific resident record.
-2. Hall Ledger opens a confirmation dialog to confirm the deletion.
-3. RA confirms the action.
-4. Hall Ledger deletes the specified resident record.
-5. Hall Ledger displays a success message reflecting the changes.
+1. RA requests to delete a resident.
+2. Hall Ledger asks for confirmation.
+3. RA confirms the deletion.
+4. Hall Ledger deletes the resident.
+5. Hall Ledger signals success and shows the updated resident list.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. The given student ID of the resident is invalid.
-    * 1a1. Hall Ledger shows an error message indicating that the resident was not found.
-      Use case ends.
+- **1a.** Hall Ledger cannot find the resident.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the deletion.
+    - Use case ends.
+- **1b.** Hall Ledger detects an error in the entered data.
+    - 1b1. Hall Ledger informs the RA of the error and cancels the deletion.
+    - Use case resumes from step 1.
+- **2a.** RA cancels the deletion.
+    - 2a1. Hall Ledger cancels the deletion.
+    - Use case ends.
 
-* 3a. RA cancels the deletion.
-    * 3a1. Hall Ledger aborts deletion and shows a cancellation message.
-    * Use case ends.
+#### UC05 — Find Residents
 
-**Use case: UC05 - Search and filter residents**
+**Main Success Scenario (MSS):**
 
-**MSS**
-
-1. RA requests to search by name or filter by specific attributes (e.g., room, year, tags).
-2. Hall Ledger processes the query.
+1. RA requests to find residents by name or another specific attribute.
+2. Hall Ledger finds residents matching the criteria.
 3. Hall Ledger shows a list of matching residents.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. RA provides empty keywords or invalid command format.
-    * 1a1. Hall Ledger shows an error message indicating how to use the specific command correctly.
-    Use case ends.
+- **1a.** RA provides empty keywords or an invalid command format.
+    - 1a1. Hall Ledger shows an error message indicating correct usage.
+    - Use case ends.
+- **1b.** RA provides invalid keywords for attributes with fixed values (e.g. year, gender).
+    - 1b1. Hall Ledger displays a warning that invalid keywords will be ignored.
+    - Use case ends.
+- **2a.** No residents match the given criteria.
+    - 2a1. Hall Ledger shows an empty result and indicates that no residents were found.
+    - Use case ends.
 
-* 1b. RA provides invalid keywords for a field that only accepts a set of valid values (year, gender).
-    * 1b1. Hall Ledger shows a warning that invalid keywords in these fields would be ignored. Use case resumes from
-      step 1.
+#### UC06 — Add a Demerit Record
 
-* 1c. RA provides more than 10 filter keywords per field.
-    * 1c1. Hall Ledger shows an error message indicating that the RA has exceeded the maximum number of keywords for
-      that field.
+**Main Success Scenario (MSS):**
 
-**Use case: UC06 - Add a demerit incident**
-
-**MSS**
-
-1. RA requests to add a demerit incident to a resident with a remark.
-2. Hall Ledger determines the offence number for that resident and rule based on number of past offences.
-3. Hall Ledger updates the resident’s demerit records.
-4. Hall Ledger shows a success message.
+1. RA requests to list the available demerit rules.
+2. Hall Ledger displays the demerit rule list.
+3. RA requests to add a demerit rule breach for a specific resident.
+4. Hall Ledger records the demerit breach for the resident.
+5. Hall Ledger updates the resident's total demerit points.
+6. Hall Ledger signals success and displays the updated demerit points and breaches.
 
 Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 1a. RA enters an invalid student ID.
-  * 1a1. Hall Ledger shows an error message.
-  * Use case ends.
+- **3a.** Hall Ledger cannot find the specified resident.
+    - 3a1. Hall Ledger informs the RA that the resident cannot be found and cancels the demerit addition.
+    - Use case resumes from step 3.
+- **3b.** The given demerit breach does not exist in the demerit rules.
+    - 3b1. Hall Ledger informs the RA that the breach cannot be found and cancels the demerit addition.
+    - Use case resumes from step 2.
 
-* 1b. RA enters an invalid demerit rule index.
-  * 1b1. Hall Ledger shows an error message.
-  * Use case ends.
+#### UC07 — Add a Tag to a Resident
+
+**Main Success Scenario (MSS):**
+
+1. RA requests to tag a resident by providing tag value(s).
+2. Hall Ledger updates the tag(s) for the resident.
+3. Hall Ledger signals success and shows the updated resident record.
+
+Use case ends.
+
+**Extensions:**
+
+- **1a.** Hall Ledger cannot find the specified resident.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the tagging.
+    - Use case resumes from step 1.
+- **1b.** Hall Ledger detects an error in the entered tag value(s).
+    - 1b1. Hall Ledger informs the RA of the error and cancels the tagging.
+    - Use case resumes from step 1.
 
 ---
+
+### Non-Functional Requirements
+
+1. Should work on any mainstream OS as long as it has Java 17 or above installed.
+
+2. Should be able to store up to 250 students without noticeable sluggishness in performance for typical usage.
+
+3. Should have a response time of < 3 seconds for all instructions.
+
+4. A user with above-average typing speed for regular English text (i.e., not code, not system admin commands) should be able to accomplish most tasks faster using commands than using the mouse.
+
+5. Interaction with the product should be intuitive even for non-technical users, e.g., simple error messages should be displayed and help should be easily available when needed.
+
+6. The product is not required to handle more than one user at a time.
+
+7. The product should be free to use and open source.
+
+8. The product should not need an internet connection to use.
+
+---
+
+### Glossary
+
+* **Hall** : A residential building on campus that houses students. Each hall is made up of multiple blocks, and each block is made up of multiple rooms.
+* **RA** : Resident Assistant, a student leader who is responsible for managing a block of rooms in a hall and the students living in those rooms.
+* **CCA** : Co-Curricular Activities, which are activities that students participate in outside of their academic curriculum.
+* **DPS** : Demerit Point Structure used as the source reference for Hall Ledger’s demerit rule catalogue.
+* **Mainstream OS** : Windows, Linux, Unix, macOS.
+--------------------------------------------------------------------------------------------------------------------
+
 
 ### Non-Functional Requirements
 
