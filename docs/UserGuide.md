@@ -15,9 +15,9 @@
 ### **Table of Contents**
 
 1. [Quick Start](#1-quick-start)  
-   1.1. [Installation Guide](#1-1-installation-guide)  
-   1.2. [Understanding the Interface](#1-2-understanding-the-interface)  
-   1.3. [Brief Walkthrough](#1-3-brief-walkthrough)  
+   1.1. [Installation Guide](#11-installation-guide)  
+   1.2. [Understanding the Interface](#12-understanding-the-interface)  
+   1.3. [Brief Walkthrough](#13-brief-walkthrough)
 2. [General Command Format](#2-general-command-format)  
 3. [Adding a Resident](#3-adding-a-resident)  
 4. [Editing a Resident](#4-editing-a-resident)
@@ -26,9 +26,9 @@
 5.2 [Clearing Tags](#52-clearing-tags)
 6. [Viewing Residents](#6-viewing-residents)
 7. [Finding Residents](#7-finding-residents)  
-7.1. [Using the Command Line](#71-using-typed-commands)  
-7.2 [Using the User Interface](#72-using-the-filter-panel)
-8. [Managing Resident Remarks](#8-managing-resident-remarks-)  
+   7.1. [Using the Command Line](#71-using-the-command-line)  
+   7.2 [Using the User Interface](#72-using-the-user-interface)
+8. [Managing Resident Remarks](#8-managing-resident-remarks)  
    8.1. [Adding or Editing a Remark](#81-adding-or-editing-a-remark)  
    8.2. [Clearing a Remark](#82-clearing-a-remark)  
 9. [Adding a Demerit Record to a Resident](#9-adding-a-demerit-record-to-a-resident)  
@@ -261,8 +261,7 @@ You can perform searches either through the **typed commands** or through the **
 after using the Filter panel. This will allow you to see all residents again.
 </box>
 
-
-##### 7.1 Using Typed Commands
+##### 7.1 Using the Command Line
 
 **Command:** `find`
 
@@ -295,7 +294,7 @@ Suppose you want to find residents named "Alex" **or** "Bernice", who are in "Ye
   updates to show only "Alex", because he is the only resident that matches both the name criteria (A or B) and
   the year criteria (1 or 3).
 
-##### 7.2 Using the Filter Panel
+##### 7.2 Using the User Interface
 
 The Filter Panel supports the same search behaviour as the typed `find` command.
 
@@ -333,9 +332,11 @@ Entering a command in the command box will reset the Filter panel.
 * Using more than one filter field narrows your search results.
 * Using more keywords in one field widens your search results.
 * Hall Ledger supports fuzzy matching, so you may find results even with incomplete keywords or a small typo.
-* **Student ID** and **Gender**, and **Year** uses exact matching (case-insensitive). Partial keywords or
-  typos might not return desired results. To search these fields, enter the valid values (e.g. `i=A1234567X`,
-  `g=she/her`, `y=1`).
+* **Student ID** and **Year** uses exact matching (case-insensitive). Partial keywords or
+  typos might not return desired results. To search these fields, you are recommended to type in the correct and full
+  keywords (e.g. `find i=A1234567X` instead of `find i=A123`, or `find y=1` instead of `find y=Y1`).
+* **Gender** also uses exact matching, but allows some flexibility in what is considered a valid input. For example,
+  `find g=she/her` is the same as `find g=she` or `find g=her`.
 * For more details, see [More Details on Find](MoreDetailsOnFind.md)
 
 </box>
@@ -576,19 +577,19 @@ carefully, because invalid edits may prevent Hall Ledger from loading the data c
 
 ### 18. Command summary
 
-Action                                         | Format, Examples
------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**[Add](#3-adding-a-resident)**                | `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT` <br> e.g., `add n=James Lee p=+6598765432 e=james@example.com i=A1234567X r=15R ec=+65 98765432`
-**[Edit](#4-editing-a-resident)**              | `edit i=STUDENT_ID [n=NAME] [p=PHONE_NUMBER] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`<br> e.g., `edit i=A1234567X n=James Lee e=jameslee@example.com`
-**[Tag](#5-tagging-a-resident)**               | `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`<br> e.g., `tag i=A1234567X m=Computer Science y=3`
-**[List](#6-viewing-residents)**               | `list`
-**[Find](#7-finding-residents)**               | `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=1`
-**[Remark](#8-managing-resident-remarks-)**    | `remark i=STUDENT_ID rm=REMARK`<br> e.g., `remark i=A1234567X rm=Allergic to peanuts`
-**[Demerit List](#91-listing-demerit-rules)**  | `demeritlist`
-**[Add Demerit](#92-adding-a-demerit-record)** | `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`<br> e.g., `demerit i=A1234567X di=18 rm=Visitor during quiet hours`
-**[Delete](#10-deleting-a-resident)**          | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`
-**[Clear](#11-clearing-all-residents)**        | `clear`
-**[Help](#12-viewing-help)**                   | `help`
-**[Exit](#13-exiting-the-program)**            | `exit`
-  
+| Action                                         | Format, Examples                                                                                                                                                                     |
+|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **[Add](#3-adding-a-resident)**                | `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT` <br> e.g., `add n=James Lee p=+6598765432 e=james@example.com i=A1234567X r=15R ec=+65 98765432` |
+| **[Edit](#4-editing-a-resident)**              | `edit i=STUDENT_ID [n=NAME] [p=PHONE_NUMBER] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`<br> e.g., `edit i=A1234567X n=James Lee e=jameslee@example.com`                       |
+| **[Tag](#5-tagging-a-resident)**               | `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`<br> e.g., `tag i=A1234567X m=Computer Science y=3`                                                                                  |
+| **[List](#6-viewing-residents)**               | `list`                                                                                                                                                                               |
+| **[Find](#7-finding-residents)**               | `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=1`                                 |
+| **[Remark](#8-managing-resident-remarks)**     | `remark i=STUDENT_ID rm=REMARK`<br> e.g., `remark i=A1234567X rm=Allergic to peanuts`                                                                                                |
+| **[Demerit List](#91-listing-demerit-rules)**  | `demeritlist`                                                                                                                                                                        |
+| **[Add Demerit](#92-adding-a-demerit-record)** | `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`<br> e.g., `demerit i=A1234567X di=18 rm=Visitor during quiet hours`                                                                 |
+| **[Delete](#10-deleting-a-resident)**          | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`                                                                                                                                 |
+| **[Clear](#11-clearing-all-residents)**        | `clear`                                                                                                                                                                              |
+| **[Help](#12-viewing-help)**                   | `help`                                                                                                                                                                               |
+| **[Exit](#13-exiting-the-program)**            | `exit`                                                                                                                                                                               |
+
 </div>
