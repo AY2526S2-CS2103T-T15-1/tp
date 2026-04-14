@@ -121,6 +121,7 @@ To start, type the following instructions into the command box (in the given ord
 
 The commands used in Hall Ledger generally follow the format: `COMMAND i=STUDENT_ID [PREFIX=...]` where:
 * `COMMAND` is the action you want to perform (e.g. `add`, `edit`, `delete`, etc.)
+  *  All commands are case-insensitive, i.e `add`, `ADD`, and `aDd` are all valid and equivalent.
 * `i=STUDENT_ID` is used to specify the resident you want to perform the action on.
   * The student ID must start with an uppercase 'A', followed by 6-8 digits, and end with an uppercase letter (e.g. `A1234567X`).
 * `PREFIX=...` are used to specify the details of the action you want to perform. The specific prefixes used depend on the command.
@@ -190,7 +191,7 @@ Edits an existing resident in the Hall Ledger.
 * At least one of the optional fields must be provided.
 
 Examples:
-* `edit i=A1234567X p=+6591234567 e=johndoe@example.com` edits the phone number and email address of the resident with student ID A1234567X to be +6591234567 and johndoe@example.com respectively.
+* `edit i=A101010X p=+6591234567 e=johndoe@example.com` edits the phone number and email address of the resident with student ID A101010X to be +6591234567 and johndoe@example.com respectively.
 * `edit i=A8765432Y n=Betsy Crower ec=+6598765432` edits the name and emergency contact of the resident with student ID A8765432Y to be Betsy Crower and +6598765432 respectively.
  
 </div>
@@ -227,7 +228,7 @@ For residents with <b>double majors</b>, you can separate the two majors with an
 
 Usage Examples:
 * `tag i=A0123456N y=3 m=Information Systems` 
-* `tag i=A0101010X g=she/her`
+* `tag i=A101010X g=she/her`
 
 ##### 5.2 Clearing Tags
 
@@ -237,7 +238,7 @@ Usage Examples:
 
 Example usage:
 * `tag i=A0123456N y=` clears the Year tag but leaves Major and Gender tag unchanged.
-* `tag i=A0101010X g= y= m=` clears all tags for the resident
+* `tag i=A101010X g= y= m=` clears all tags for the resident
 
 </div>
 

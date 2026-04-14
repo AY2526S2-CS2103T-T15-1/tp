@@ -9,86 +9,82 @@ pageNav: 3
 <page-nav-print />
 <!-- * Table of Contents -->
 
-[//]: # (---)
+<!-- * Table of Contents -->
 
-[//]: # ()
+---
 
-[//]: # (<div class="section table-of-contents">)
+<div class="section table-of-contents">
 
-[//]: # ()
+### **Table of Contents**
 
-[//]: # (### **Table of Contents**)
+1. [Acknowledgements](#acknowledgements)
 
-[//]: # ()
+2. [Setting up, getting started](#setting-up-getting-started)
+
+3. [Design](#design)  
+
+   3.1. [Architecture](#architecture)  
+
+   3.2. [UI component](#ui-component)  
+
+   3.3. [Logic component](#logic-component)  
+
+   3.4. [Model component](#model-component)  
+
+   3.5. [Storage component](#storage-component)  
+
+   3.6. [Common classes](#common-classes)
+
+4. [Implementation](#implementation)  
+
+   4.1. [How UI triggers command execution](#how-ui-triggers-command-execution)  
+
+   4.3. [How the list command works](#how-the-list-command-works)  
+
+   4.2. [Demerit point tracking](#demerit-point-tracking)  
+
+   4.2.1. [Rationale for the current design](#rationale-for-the-current-design)  
+
+   4.2.2. [Current scope note](#current-scope-note)  
+
+   4.3. [Demerit records UI](#demerit-records-ui)
+
+5. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+
+6. [Appendix: Requirements](#appendix-requirements)  
+
+   6.1. [Product scope](#product-scope)  
+
+   6.2. [User stories](#user-stories)  
+
+   6.3. [Use cases](#use-cases)  
+
+   6.4. [Non-Functional Requirements](#non-functional-requirements)  
+
+   6.5. [Glossary](#glossary)
+
+7. [Appendix: Instructions for Manual Testing](#appendix-instructions-for-manual-testing)  
+
+   7.1. [Launch and shutdown](#launch-and-shutdown)  
+
+   7.2. [Adding a resident](#adding-a-resident)  
+
+   7.3. [Finding residents](#finding-residents)  
+
+   7.4. [Tagging a resident](#tagging-a-resident)  
+
+   7.5. [Adding a remark](#adding-a-remark)  
+
+   7.6. [Demerit features](#demerit-features)  
+
+   7.7. [Deleting a resident](#deleting-a-resident)
+
+8. [Effort](#appendix-effort)
+9.  [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 
 
-[//]: # (1. [Acknowledgements]&#40;#acknowledgements&#41;)
 
-[//]: # (2. [Setting up, getting started]&#40;#setting-up-getting-started&#41;)
-
-[//]: # (3. [Design]&#40;#design&#41;  )
-
-[//]: # (   3.1. [Architecture]&#40;#architecture&#41;  )
-
-[//]: # (   3.2. [UI component]&#40;#ui-component&#41;  )
-
-[//]: # (   3.3. [Logic component]&#40;#logic-component&#41;  )
-
-[//]: # (   3.4. [Model component]&#40;#model-component&#41;  )
-
-[//]: # (   3.5. [Storage component]&#40;#storage-component&#41;  )
-
-[//]: # (   3.6. [Common classes]&#40;#common-classes&#41;)
-
-[//]: # (4. [Implementation]&#40;#implementation&#41;  )
-
-[//]: # (   4.1. [How UI triggers command execution]&#40;#how-ui-triggers-command-execution&#41;  )
-
-[//]: # (   4.3. [How the list command works]&#40;#how-the-list-command-works;  )
-
-[//]: # (   4.2. [Demerit point tracking]&#40;#demerit-point-tracking&#41;  )
-
-[//]: # (   4.2.1. [Rationale for the current design]&#40;#rationale-for-the-current-design&#41;  )
-
-[//]: # (   4.2.2. [Current scope note]&#40;#current-scope-note&#41;  )
-
-[//]: # (   4.3. [Demerit records UI]&#40;#demerit-records-ui&#41;)
-
-[//]: # (5. [Documentation, logging, testing, configuration, dev-ops]&#40;#documentation-logging-testing-configuration-dev-ops&#41;)
-
-[//]: # (6. [Appendix: Requirements]&#40;#appendix-requirements&#41;  )
-
-[//]: # (   6.1. [Product scope]&#40;#product-scope&#41;  )
-
-[//]: # (   6.2. [User stories]&#40;#user-stories&#41;  )
-
-[//]: # (   6.3. [Use cases]&#40;#use-cases&#41;  )
-
-[//]: # (   6.4. [Non-Functional Requirements]&#40;#non-functional-requirements&#41;  )
-
-[//]: # (   6.5. [Glossary]&#40;#glossary&#41;)
-
-[//]: # (7. [Appendix: Instructions for Manual Testing]&#40;#appendix-instructions-for-manual-testing&#41;  )
-
-[//]: # (   7.1. [Launch and shutdown]&#40;#launch-and-shutdown&#41;  )
-
-[//]: # (   7.2. [Adding a resident]&#40;#adding-a-resident&#41;  )
-
-[//]: # (   7.3. [Finding residents]&#40;#finding-residents&#41;  )
-
-[//]: # (   7.4. [Tagging a resident]&#40;#tagging-a-resident&#41;  )
-
-[//]: # (   7.5. [Adding a remark]&#40;#adding-a-remark&#41;  )
-
-[//]: # (   7.6. [Demerit features]&#40;#demerit-features&#41;  )
-
-[//]: # (   7.7. [Deleting a resident]&#40;#deleting-a-resident&#41;)
-
-[//]: # (8. [Appendix: Planned Enhancements]&#40;#appendix-planned-enhancements&#41;)
-
-[//]: # ()
-
-[//]: # (</div>)
+</div>
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -97,12 +93,14 @@ pageNav: 3
 
 ## **Acknowledgements**
 
-
-
-* Hall Ledger is based on the AddressBook-Level3 (AB3) project from [se-education/addressbook-level3](https://github.com/se-edu/addressbook-level3). Our team would like to show our gratitude to the original authors for providing a solid foundation for our project.
+* Hall Ledger is based on the `AddressBook-Level3 (AB3)` project and codebase from [se-education/addressbook-level3](https://github.com/se-edu/addressbook-level3). Our team would like to show our gratitude to the original authors for providing a solid foundation for our project.
 * Hall Ledger’s demerit rule catalogue is adapted from the NUS Office of Student Affairs `Demerit Point Structure (DPS)
   for Breach of Housing Agreement`, dated 9 January 2026.
-* The team has used Github co-pilot to assist with the code in this project, as well as to answer
+* In addition, we would like to acknowledge the following resources that have been used in the development of Hall Ledger:
+  * `JavaFX`
+  * `JUnit`
+  * `Jackson Library` 
+* The team has used `Github co-pilot` to assist with the code in this project, as well as to answer
   questions on architectural, class designs, and menial tasks such as enhancing css styles, but the team has made
   sure to understand and review all code written by co-pilot.
 * The Remark feature has been adapted from the [tutorial](https://se-education.org/guides/tutorials/ab3AddRemark.html) provided by the teaching team
@@ -440,7 +438,7 @@ The demerit feature is split into two user-facing commands:
 * `demeritlist` — displays the indexed demerit rule catalogue and point tiers.
 * `demerit` — applies an indexed demerit rule to a resident identified by Student ID.
 
-#### Rationale for the current design
+##### Rationale for the current design
 
 A resident may commit the same rule multiple times, and the DPS applies different point tiers based on repeated occurrences. Hence, storing only a running total would lose important context such as:
 * which rule was applied,
@@ -452,7 +450,7 @@ By storing incidents individually, Hall Ledger can:
 * preserve a readable incident history,
 * and support future enhancements such as warnings, alerts, or administrative review.
 
-#### Current scope note
+##### Current scope note
 
 Hall Ledger currently records resident demerit incidents and computes accumulated totals. It does **not** yet 
 automatically enforce semester-based or lifetime housing sanctions tied to DPS thresholds.
@@ -677,7 +675,7 @@ Use case ends.
     - 1a1. Hall Ledger informs the RA of the error and reminds RA of the correct format.
     - Use case resumes from step 1.
 - **1b.** Hall Ledger detects a resident with the same identification already exists.
-    - 1b1. Hall Ledger informs the RA and cancels the addition.
+    - 1b1. Hall Ledger informs the RA.
     - Use case resumes from step 1.
 
 #### UC02 — View a Resident's Details
@@ -686,7 +684,7 @@ Use case ends.
 
 1. RA requests to list all residents.
 2. Hall Ledger shows a list of residents.
-3. RA identifies a specific resident from the list.
+3. RA identifies a specific resident from the list and requests to view them.
 4. Hall Ledger displays the specified resident's details.
 
 Use case ends.
@@ -697,7 +695,7 @@ Use case ends.
     - 1a1. Hall Ledger indicates that the resident list is empty.
     - Use case ends.
 - **3a.** Hall Ledger cannot find the specified resident.
-    - 3a1. Hall Ledger informs the RA that the resident cannot be found and cancels the view.
+    - 3a1. Hall Ledger informs the RA that the resident cannot be found.
     - Use case ends.
 
 #### UC03 — Edit a Resident's Info
@@ -713,10 +711,10 @@ Use case ends.
 **Extensions:**
 
 - **1a.** Hall Ledger cannot find the resident.
-    - 1a1. Hall Ledger informs the RA that the resident cannot be found and cancels the edit.
+    - 1a1. Hall Ledger informs the RA that the resident cannot be found.
     - Use case resumes from step 1.
 - **1b.** Hall Ledger detects an error in the entered data.
-    - 1b1. Hall Ledger informs the RA of the error and cancels the edit.
+    - 1b1. Hall Ledger informs the RA of the error.
     - Use case resumes from step 1.
 
 #### UC04 — Delete a Resident
@@ -747,7 +745,7 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 
-1. RA requests to find residents by name or another specific attribute.
+1. RA requests to find residents by a specific detail.
 2. Hall Ledger finds residents matching the criteria.
 3. Hall Ledger shows a list of matching residents.
 
@@ -755,14 +753,11 @@ Use case ends.
 
 **Extensions:**
 
-- **1a.** RA provides empty keywords or an invalid command format.
-    - 1a1. Hall Ledger shows an error message indicating correct usage.
-    - Use case ends.
-- **1b.** RA provides invalid keywords for attributes with fixed values (e.g. year, gender).
-    - 1b1. Hall Ledger displays a warning that invalid keywords will be ignored.
-    - Use case ends.
+- **1a.** Hall Ledger detects an error in the entered data.
+    - 1a1. Hall Ledger informs the RA of the error and reminds them of the correct format.
+    - Use case resumes from step 1.
 - **2a.** No residents match the given criteria.
-    - 2a1. Hall Ledger shows an empty result and indicates that no residents were found.
+    - 2a1. Hall Ledger indicates that no residents were found.
     - Use case ends.
 
 #### UC06 — Add a Demerit Record
@@ -781,10 +776,10 @@ Use case ends.
 **Extensions:**
 
 - **3a.** Hall Ledger cannot find the specified resident.
-    - 3a1. Hall Ledger informs the RA that the resident cannot be found and cancels the demerit addition.
+    - 3a1. Hall Ledger informs the RA that the resident cannot be found.
     - Use case resumes from step 3.
 - **3b.** The given demerit breach does not exist in the demerit rules.
-    - 3b1. Hall Ledger informs the RA that the breach cannot be found and cancels the demerit addition.
+    - 3b1. Hall Ledger informs the RA that the breach cannot be found.
     - Use case resumes from step 2.
 
 #### UC07 — Add a Tag to a Resident
@@ -861,7 +856,7 @@ These instructions provide a starting point. Testers are expected to do explorat
 
 1. Initial launch
    1. Download the jar file into an empty folder.
-   2. Run the app.
+   2. Run the app by executing the command `java --jar hall-ledger.jar` in the Terminal.
       Expected: Hall Ledger starts with sample data.
 
 2. Closing and reopening
@@ -1030,35 +1025,28 @@ We estimate that the project required significantly more effort than AB3 due to 
 
 Team size: 5
 
-1. Enable command to be executed by filtered list index instead of Student ID: Hall Ledger currently requires targeting residents by Student ID. We plan to also support targeting by the index shown in the currently displayed resident list, which may be more convenient for some users.
+1. Enable command to be executed by filtered list `index` along with `Student ID`: Hall Ledger currently requires identifying residents by Student ID to execute commands on them (eg edit). We plan to also support identifying by the index shown in the currently displayed resident list (as was originally implemented in AB3), which may be more convenient for some users.
 
-2. Improve robustness when users manually edit `hall-ledger.json`: Hall Ledger currently expects manually edited JSON
-   data to
-   remain logically valid. We plan to detect and explain more invalid manual edits instead of only failing at load time.
+2. Handle invalid changes to `keys` in the `hall-ledger.json` file: While invalid values in the json are handled, Hall Ledger currently does not handle changes to keys such as `studentId` and `tagContent` in the data file. We plan to add error handling for such cases.
 
-3. Currently, in order to toggle and/or view certain UI components without a mouse (dashboard, details,
+3. Currently, in order to view or toggle certain UI components without a mouse (dashboard, details,
    profile, demerit records, filter panel), users can only do so through arrow keys or pressing Tab with a lot of
-   maneuver. We plan to add specific CLI commands to toggle and/or view these components, which may improve
-   efficiency for typing-preferred users.
+   maneuver. We plan to add specific CLI commands to view and/or toggle these components, which may improve
+   efficiency
+4. Improve error messages for empty or missing prefixes/values : The error messages displayed when any prefix or value is missing or invalid is quite generic. We plan to make it more specific by clearly mentioning which prefix/value is missing or wrong.
 
-4. Make tag-validation error messages more specific: Hall Ledger currently rejects invalid tag inputs, but some error messages can still be made more precise. We plan to state more clearly which tag field failed validation and why.
-
-5. Make delete confirmation more typing-efficient: Hall Ledger currently confirms deletion using a modal dialog. Although the dialog supports keyboard input, it still interrupts the command-line workflow. We plan to revise the delete confirmation flow so users can confirm or cancel deletion more efficiently while still protecting against accidental deletion.
+5. Make tag-validation error messages more specific: Hall Ledger currently rejects invalid tag inputs, but some error messages can still be made more precise. We plan to state more clearly which tag field failed validation and why.
 
 6. Make repeated-demerit feedback more informative: Hall Ledger currently shows the applied rule, remark, points added, and updated total. We plan to also surface the offence number more prominently in the success feedback for easier verification.
 
-7. Improve messaging for invalid resident targeting: Commands such as `edit`, `remark`, and `demerit` reject 
-   nonexistent Student IDs. We plan to standardize those error messages further so the reason for failure is even 
-   clearer to users.
+7. Expand current find functionality : Hall Ledger currently supports searching for most, not all, fields. We plan to add support for searching by fields like demerit and remark.
 
-8. Improve save-failure guidance for write-protected folders: Hall Ledger currently depends on write access to its home folder. We plan to provide clearer user-facing guidance when saving fails due to file-permission issues.
-
-9. Improve documentation alignment for platform-specific behavior: Hall Ledger currently documents known issues such as dialog behavior and write-protected folders. We plan to keep refining the UG/DG wording and screenshots so platform-specific caveats remain easy to understand.
-
+8. Detect duplicate residents by more fields : Currently, Hall Ledger defines duplicates as residents with the same Student ID or Room Number. We plan to also consider residents with the same email and phone number as duplicates, as this may help catch more accidental duplicates.
+9. Support more Hall/Hostels in NUS: Hall Ledger currently supports only single-roomed NUS Halls. We plan to expand this to include shared rooms, along with making the input validation more flexible to handle different room-numbering schemes across different halls and hostels.
 10. Long names and emails may seem cut off in the resident list section and profile details. To make the residents'
     details
     selectable, we had to use `TextField` rather than `Label` to represent the residents' details. However, JavaFx
-    does not allow text-wrapping or elipsis-creation for `TextField`, so users may have the impression that these
+    does not allow text-wrapping or ellipsis-creation for `TextField`, so users may have the impression that these
     personal fields are cut off, when they are actually fully visible if one were to select the text and scroll
     horizontally. In the future, we might consider implementing a custom text component that allows text selection and
     horizontal scrolling while also showing an ellipsis when the text exceeds the available width.
