@@ -50,7 +50,7 @@ destroy AddCommandParser
 AddressBookParser --> LogicManager : a
 deactivate AddressBookParser
 
-LogicManager -> AddCommand : execute(model)
+LogicManager -> AddCommand : execute(m)
 activate AddCommand
 
 AddCommand -> Model : hasPerson(...)
