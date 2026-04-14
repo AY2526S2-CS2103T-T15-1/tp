@@ -359,7 +359,13 @@ Hall Ledger leverages JavaFX's `ObservableList`, `ListView`, and property bindin
 UI with changes in the Model. When the `Model` updates any of its observable values, registered UI observers are
 notified and refresh their displays accordingly—without any passing of properties or callbacks.
 
-<puml src="diagrams/find/FindUiFilterDetailsSequenceDiagram.puml" width="650" />
+[//]: # (Due to a PUML limitation, the activation bar for `PersonListPanel` extends beyond the point where the class 
+calls a method upon itself. Therefore, we patch the issue using an image of the intended diagram instead of the actual 
+PUML output.)
+
+![Find UI Filter Details Sequence Diagram](images/FindUiFilterDetailsSequenceDiagram.png)
+
+[//]: # (<puml src="diagrams/find/FindUiFilterDetailsSequenceDiagram.png" width="650" />)
 
 ---
 
@@ -838,7 +844,10 @@ Team size: 5
    data to
    remain logically valid. We plan to detect and explain more invalid manual edits instead of only failing at load time.
 
-3. Refine demerit-table behavior for extremely narrow layouts: The demerit tab currently keeps detailed incident information visible, but very narrow layouts can still feel cramped. We plan to improve the layout behavior further while keeping the incident history readable.
+3. Currently, in order to toggle and/or view certain UI components without a mouse (dashboard, details,
+   profile, demerit records, filter panel), users can only do so through arrow keys or pressing Tab with a lot of
+   maneuver. We plan to add specific CLI commands to toggle and/or view these components, which may improve
+   efficiency for typing-preferred users.
 
 4. Make tag-validation error messages more specific: Hall Ledger currently rejects invalid tag inputs, but some error messages can still be made more precise. We plan to state more clearly which tag field failed validation and why.
 
@@ -854,7 +863,13 @@ Team size: 5
 
 9. Improve documentation alignment for platform-specific behavior: Hall Ledger currently documents known issues such as dialog behavior and write-protected folders. We plan to keep refining the UG/DG wording and screenshots so platform-specific caveats remain easy to understand.
 
-10. Improve handling of very long resident remarks: Hall Ledger currently stores and displays resident remarks, but very long remarks may be less readable in some UI contexts. We plan to improve readability for unusually long remarks without changing the underlying data model.
+10. Long names and emails may seem cut off in the resident list section and profile details. To make the residents'
+    details
+    selectable, we had to use `TextField` rather than `Label` to represent the residents' details. However, JavaFx
+    does not allow text-wrapping or elipsis-creation for `TextField`, so users may have the impression that these
+    personal fields are cut off, when they are actually fully visible if one were to select the text and scroll
+    horizontally. In the future, we might consider implementing a custom text component that allows text selection and
+    horizontal scrolling while also showing an ellipsis when the text exceeds the available width.
 
 </div>
 
