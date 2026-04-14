@@ -359,7 +359,13 @@ Hall Ledger leverages JavaFX's `ObservableList`, `ListView`, and property bindin
 UI with changes in the Model. When the `Model` updates any of its observable values, registered UI observers are
 notified and refresh their displays accordingly—without any passing of properties or callbacks.
 
-<puml src="diagrams/find/FindUiFilterDetailsSequenceDiagram.puml" width="650" />
+[//]: # (Due to a PUML limitation, the activation bar for `PersonListPanel` extends beyond the point where the class 
+calls a method upon itself. Therefore, we patch the issue using an image of the intended diagram instead of the actual 
+PUML output.)
+
+![Find UI Filter Details Sequence Diagram](images/FindUiFilterDetailsSequenceDiagram.png)
+
+[//]: # (<puml src="diagrams/find/FindUiFilterDetailsSequenceDiagram.png" width="650" />)
 
 ---
 
