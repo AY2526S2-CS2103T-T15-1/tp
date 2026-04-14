@@ -7,6 +7,7 @@ pageNav: 3
 ## **Hall Ledger Developer Guide**
 
 <page-nav-print />
+<!-- * Table of Contents -->
 
 [//]: # (---)
 
@@ -19,7 +20,7 @@ pageNav: 3
 [//]: # (### **Table of Contents**)
 
 [//]: # ()
-<!-- * Table of Contents -->
+
 
 [//]: # (1. [Acknowledgements]&#40;#acknowledgements&#41;)
 
@@ -96,14 +97,15 @@ pageNav: 3
 
 ## **Acknowledgements**
 
-* Hall Ledger’s demerit rule catalogue is adapted from the NUS Office of Student Affairs **Demerit Point Structure (DPS)
-  for Breach of Housing Agreement**, dated 9 January 2026.
-* This project is based on the **AddressBook-Level3 (AB3)** codebase from [se-education/addressbook-level3](https://github.com/se-edu/addressbook-level3).
-* The team has used Github co-pilot to assist with the code in this project, as well as to answer 
-  questions on architectural, class designs, and menial tasks such as enhancing css styles, but the team has made 
+
+
+* Hall Ledger is based on the AddressBook-Level3 (AB3) project from [se-education/addressbook-level3](https://github.com/se-edu/addressbook-level3). Our team would like to show our gratitude to the original authors for providing a solid foundation for our project.
+* Hall Ledger’s demerit rule catalogue is adapted from the NUS Office of Student Affairs `Demerit Point Structure (DPS)
+  for Breach of Housing Agreement`, dated 9 January 2026.
+* The team has used Github co-pilot to assist with the code in this project, as well as to answer
+  questions on architectural, class designs, and menial tasks such as enhancing css styles, but the team has made
   sure to understand and review all code written by co-pilot.
 * The Remark feature has been adapted from the [tutorial](https://se-education.org/guides/tutorials/ab3AddRemark.html) provided by the teaching team
-
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
