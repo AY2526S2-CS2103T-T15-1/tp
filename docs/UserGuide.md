@@ -5,8 +5,14 @@
  ---
 
 ## **Hall Ledger User Guide**
+Are you a NUS Resident Assistant **struggling to manage** all of your residents? **Wasting too much time** lost in a sea of spreadsheets and documents and can't actually connect with them? 
 
-**Hall Ledger (HL)** is a desktop application that helps **Resident Assistants (RAs) efficiently manage residents in NUS halls**. It is optimised for users who prefer typing commands, while still offering an intuitive visual interface for viewing resident data at a glance.
+Just use **Hall Ledger (HL)**! 
+
+Hall Ledger is a desktop application that helps Resident Assistants (RAs) efficiently manage residents in NUS halls. It is optimised for fast text based commands making it perfect for users who want to work quickly and efficiently while still offering an intuitive visual interface.
+
+We provide support for all your resident management needs, from adding residents and tags to keeping note of remarks and demerits. Try the app [now](#1-quick-start)!
+
 <!-- * Table of Contents -->
 
 ---
@@ -143,14 +149,29 @@ Adds a new person to the hall ledger.
 
 **Usage**: `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT`
 * All fields are required.
+* No value can be left blank. For example, `add n=John Doe p=
 
-<box type="wrong">
-<b>Duplicate student IDs and room numbers are not allowed.</b> If you try to add a resident with a student ID/room number that already exists in the ledger, Hall Ledger will show an error message and the command will fail.
+Details of the various fields are as follows:
+| Field              | Constraints                                                                 | Examples                          | Prefix |
+|---------------------|------------------------------------------------------------------------------|-----------------------------------|-------|
+| **Name**           | Should only contain alphanumeric characters, spaces, and the following symbols: . , ' ( ) & @ / -. .       | Alice Tan, Ben (Benjamin), Anne-Marie | `n=`   |
+| **Phone**          | Phone numbers should be in the format of `+<country code> <number>`, with the <country code> being between `1-3` digits and the <number> between `3-15` digits. It should only contain numbers, spaces, and the following symbols: `'+', '-'`. |+65 12345678, +912345 43567, +1-598-7654-321 | `p=`   |
+| **Email** |        Accepts `he/him`, `she/her`, or `they/them`. Input is flexible (e.g. `he`, `her`), and will be standardised automatically. | she/her, they/them | `g=`   |
+| **Student Id** | The student ID should only contain alphanumeric characters, and it should be in the form of `A (case-insensitive)` followed by 6 to 8 digits and a letter at the end. " | A1234567X, a0123456n | `i=`   |
+| **Room Number** | "Room numbers should only contain alphanumeric characters, with one or two digits followed by a single alphabet (no space). | 10A, 3d, 20N | `r=`   |
+| **Emergency Contact** | Refer to `Phone` above |  | `ec=`   |
+
+<box type="info">
+Clusters of digits in the phone number (i.e digits separated by spaces or '-') must be 3+ digits.
 </box>
+<br>
 
 Examples:
 * `add n=John Doe p=+6598765432 e=johnd@example.com i=A101010X r=10A ec=+9123459876`
 
+<box type="wrong">
+<b>Duplicate student IDs and room numbers are not allowed.</b> If you try to add a resident with a student ID/room number that already exists in the ledger, Hall Ledger will show an error message and the command will fail.
+</box>
 
 </div>
 
