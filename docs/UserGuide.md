@@ -301,13 +301,13 @@ Suppose you want to find residents named "Alex" **or** "Bernice", who are in "Ye
   and
   the year criteria (1 or 3).
 
-<box type="tip">
-
 <box type="warning">
 
 You are only allowed to enter at most 10 keywords per field.
 
 </box>
+
+<box type="tip">
 
 **Tips:**
 
