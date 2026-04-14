@@ -123,7 +123,7 @@ public class TagCommandParserTest {
     @Test
     public void parse_invalidTagValues_failure() {
         // EP: Invalid year
-        assertParseFailure(parser, " i=A1234567Y y=7", Tag.MESSAGE_CONSTRAINTS); // boundary value
+        assertParseFailure(parser, " i=A1234567Y y=7", Tag.MESSAGE_CONSTRAINTS);
 
         // EP: Unrecognised gender
         assertParseFailure(parser, " i=A1234567Y g=invalid", Tag.MESSAGE_CONSTRAINTS);
