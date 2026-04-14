@@ -149,6 +149,10 @@ The bulk of the app's work is done by the following four components:
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues an add command.
 
+<box type="info">
+<b>Note:</b> For simplicity, we are using shortened form <code>add n=...`</code> to represent the user input for the diagram below
+</box>
+
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="600" />
 
 Each of the four main components (also shown in the diagram above),
