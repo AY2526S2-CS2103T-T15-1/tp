@@ -147,7 +147,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues a delete command.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues an add command.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="600" />
 
@@ -362,6 +362,10 @@ notified and refresh their displays accordingly—without any passing of propert
 <puml src="diagrams/find/FindUiFilterDetailsSequenceDiagram.puml" width="650" />
 
 ---
+
+### Clear and List Features
+
+
 
 ### Demerit point tracking
 
