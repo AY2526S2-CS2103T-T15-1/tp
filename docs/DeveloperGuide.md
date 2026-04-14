@@ -376,6 +376,30 @@ PUML output.)
 
 ---
 
+### How Add feature works
+
+The implementation of the `Add Command` follows the general command execution flow described [above](#logic-component).
+As an example, the sequence diagram below illustrates the flow when a user inputs `add n=Alice Tan p=+65 91234567 e=alice.tan@gmail.com i=A1234567X r=15R ec=+65 91234567`:
+
+<puml src="diagrams/AddSequenceDiagram.puml" width="850" />
+
+<box type="info">
+Note: We use `add n=Alice Tan ...` in the diagram for simplicity's sake
+</box>
+
+The main execution steps are:
+1. User enters the command `add n=Alice Tan p=+65 91234567 e=alice.tan@gmail.com i=A1234567X r=15R ec=+65 91234567` to add a new resident.
+2. `LogicManager` receives the input and calls `parseCommand` in the `AddressBookParser`.
+3. `AddressBookParser` recognizes the command as `add` command and creates an `AddCommandParser` instance to parse the input.
+4. `AddCommandParser` processes and validates the input, and on successful parsing, creates an `AddCommand` object with the details of the new `Person`.
+5. The `AddCommand` instance is returned to `LogicManager`, which then calls its `execute` method.
+6. `AddCommand` checks if the given `Person` causes duplicates in the `Model`. 
+7. If not, it adds the new `Person` to the `Model`
+8. Once the adding is completed, `AddCommand` returns a `CommandResult` indicating that the execution was successful.
+9. The result is then returned to LogicManager.
+
+
+---
 ### How the `list` command works
 
 Implementation of `list` **differs** slightly from the general command format described in the Logic Implementation. As `list` does not take any arguments, it does not require its own `Parser` class to manage inputs.
@@ -453,6 +477,72 @@ This design was chosen because:
 * and separating demerit records into a dedicated tab keeps the interface organized.
 
 </div>
+
+---
+
+### How data is stored
+
+Hall Ledger uses `JSON` files to store resident data using the `Jackson` library.
+
+Hall Ledger stores all data in a single object type `Person`. Two more types `Tag` and `DemeritIncidents` are contained within this object. The structure of the JSON file is given below:
+```
+{
+    "persons": [...]
+}
+```
+
+Within the `Person` object, data is stored in the following format:
+```
+{
+    "name" : "Charlotte Oliveiro",
+    "phone" : "+65 93210283",
+    "email" : "charlotte@example.com",
+    "studentId" : "A1246354T",
+    "roomNumber" : "3D",
+    "emergencyContact" : "+65 87654321",
+    "remark" : "Really funny person",
+    "tags" : [...],
+    "demeritIncidents" : [ ... ]
+}
+```
+
+<box type="info">   
+Hall Ledger does not allow duplicates to be stored. Duplicates are defined as residents with either the same `Student ID` or `Room Number`.
+</box>
+
+<br/>
+
+Within the `Tag` object, data is stored in the following format:
+```
+{
+  "tagType" : "GENDER",
+  "tagContent" : "they/them"
+}, {
+  "tagType" : "YEAR",
+  "tagContent" : "4"
+}, {
+  "tagType" : "MAJOR",
+  "tagContent" : "Psychology"
+}
+```
+
+* Hall Ledger supports three types of tags: `GENDER`, `YEAR`, and `MAJOR`.
+
+
+<br/>
+
+Within the `DemeritIncidents` object, data is stored in the following format:
+```
+{
+  "ruleIndex" : 18,
+  "ruleTitle" : "Visit by non-residents of the hostel or visiting a resident of another hostel during quiet hours",
+  "offenceNumber" : 1,
+  "pointsApplied" : 6,
+  "remark" : "Quiet-hours visitor warning"
+}
+```
+
+* The `pointsApplied` field depends on the `ruleIndex` and increases with increase in `offenseNumber`. See the [Demerit Implementation] for more details.
 
 --------------------------------------------------------------------------------------------------------------------
 
