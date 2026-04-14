@@ -367,8 +367,21 @@ notified and refresh their displays accordingly—without any passing of propert
 
 ---
 
-### Clear and List Features
+### How the `list` command works
 
+Implementation of `list` **differs** slightly from the general command format described in the Logic Implementation. As `list` does not take any arguments, it does not require a `Parser` class to manage inputs.
+
+<puml src="diagrams/ListSequenceDiagram.puml" width="650"/>
+
+Main Execution Steps:
+1. User enters the `list` command to view all residents
+2. `LogicManager` receives the input and calls `parseCommand("list")` on `AddressBookParser`
+3. `AddressBookParser` recognises the command as a `list` command and creates a `ListCommand` instance directly as no arguments need to be parsed
+4. The created `ListCommand` is returned to the `LogicManager`
+5. `LogicManager` invokes `execute(model)` on `ListCommand` to perform the listing
+6. `ListCommand` calls `model.showAllPersons` to update the displayed list of residents
+7. After updating the list, `ListCommand` creates and returns a `CommandResult` indicating that the execution was successful
+8. The result is then returned to `LogicManager`
 
 
 ### Demerit point tracking

@@ -27,7 +27,7 @@ create ListCommand
 AddressBookParser -> ListCommand
 activate ListCommand
 
-ListCommand --> AddressBookParser
+ListCommand --> AddressBookParser :
 deactivate ListCommand
 
 AddressBookParser --> LogicManager : l
@@ -45,14 +45,13 @@ create CommandResult
 ListCommand -> CommandResult
 activate CommandResult
 
-CommandResult --> ListCommand:
+CommandResult --> ListCommand
 deactivate CommandResult
 
-ListCommand --> LogicManager: r
+ListCommand --> LogicManager : r
 deactivate ListCommand
 
 [<-- LogicManager
 deactivate LogicManager
-destroy ListCommand
 
 @enduml
