@@ -998,7 +998,33 @@ This section provides instructions on how to do simple testing with the find com
 
 --------------------------------------------------------------------------------------------------------------------
 
+
 <div class = section>
+
+
+## Appendix: Effort
+
+Difficulty Level: The project was moderately to highly challenging due to significant extensions beyond AddressBook-Level3 (AB3), including UI expansion, stricter validation requirements, and the integration of multiple new features that interact with one another.
+
+**Challenges Faced:**
+
+* **User Interface Expansion:** We expanded the UI by introducing multiple tabs (like `DemeritRecords`, `Dashboard`, etc) to better organise functionality and improve usability. This required restructuring the existing layout and ensuring smooth navigation and consistency across different views.
+
+* **Feature Development:** We implemented several new features, including tags, remarks and demerit tracking, which significantly increased system complexity. The tag feature was particularly challenging due to its strictly defined validation rules across different tag types (e.g., year, gender, and major). Ensuring consistent behaviour across parsing, validation, and execution required careful design.
+
+* **Data Validation and Model Changes:** We added new attributes (`EmergencyContact`, `StudentId`, etc) to the Person model, each requiring strict validation. This increased the complexity of maintaining data integrity, especially when handling edge cases and ensuring compatibility with existing commands.
+
+* **Enhanced Find Functionality:** We implemented an ambitious find feature that supports both command-line input and a GUI-based filter panel. Ensuring both approaches produced consistent results required additional coordination in design and testing.
+
+* **Refactoring Core Identification Logic:** Unlike AB3, which relies on an index-based approach to identify persons, we refactored the system to use a unique student ID as the primary identifier. This required significant changes across the parser, command logic, and model layers, as well as careful handling to ensure consistency and correctness across all operations.
+
+**Effort Required:**
+
+We estimate that the project required significantly more effort than AB3 due to the expanded feature set, increased validation complexity, and UI enhancements. Additional time was also spent on testing, refining features, and maintaining high code quality through collaborative reviews. The team consistently went beyond the baseline requirements to implement more advanced and user-friendly features.
+
+<div class = section>
+
+--- 
 
 ## Appendix: Planned Enhancements
 
