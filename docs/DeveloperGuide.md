@@ -854,7 +854,12 @@ Team size: 5
 
 9. Improve documentation alignment for platform-specific behavior: Hall Ledger currently documents known issues such as dialog behavior and write-protected folders. We plan to keep refining the UG/DG wording and screenshots so platform-specific caveats remain easy to understand.
 
-10. Improve handling of very long resident remarks: Hall Ledger currently stores and displays resident remarks, but very long remarks may be less readable in some UI contexts. We plan to improve readability for unusually long remarks without changing the underlying data model.
+10. Long names and emails may seem cut off in the student list and profile details. To make the residents' details
+    selectable, we had to use `TextField` rather than `Label` to represent the residents' details. However, JavaFx
+    does not allow text-wrapping or elipsis-creation for `TextField`, so users may have the impression that these
+    personal fields are cut off, when they are actually fully visible if one were to select the text and scroll
+    horizontally. In the future, we might consider implementing a custom text component that allows text selection and
+    horizontal scrolling while also showing an ellipsis when the text exceeds the available width.
 
 </div>
 
