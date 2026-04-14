@@ -15,25 +15,25 @@
 ### **Table of Contents**
 
 1. [Quick Start](#1-quick-start)  
-   1.1. [Installation Guide](#11-installation-guide)  
-   1.2. [Understanding the Interface](#12-understanding-the-interface)  
-   1.3. [Brief Walkthrough](#13-brief-walkthrough)
+   1.1. [Installation Guide](#1-1-installation-guide)  
+   1.2. [Understanding the Interface](#1-2-understanding-the-interface)  
+   1.3. [Brief Walkthrough](#1-3-brief-walkthrough)
 2. [General Command Format](#2-general-command-format)  
 3. [Adding a Resident](#3-adding-a-resident)  
 4. [Editing a Resident](#4-editing-a-resident)
 5. [Tagging a Resident](#5-tagging-a-resident)  
-5.1. [Adding or Editing Tags](#51-adding-or-editing-tags)  
-5.2 [Clearing Tags](#52-clearing-tags)
+5.1. [Adding or Editing Tags](#5-1-adding-or-editing-tags)  
+5.2. [Clearing Tags](#5-2-clearing-tags)
 6. [Viewing Residents](#6-viewing-residents)
 7. [Finding Residents](#7-finding-residents)  
-   7.1. [Using the Command Line](#71-using-the-command-line)  
-   7.2 [Using the User Interface](#72-using-the-user-interface)
+   7.1. [Using the Command Line](#7-1-using-typed-commands)  
+   7.2. [Using the User Interface](#7-2-using-the-filter-panel)
 8. [Managing Resident Remarks](#8-managing-resident-remarks)  
-   8.1. [Adding or Editing a Remark](#81-adding-or-editing-a-remark)  
-   8.2. [Clearing a Remark](#82-clearing-a-remark)  
+   8.1. [Adding or Editing a Remark](#8-1-adding-or-editing-a-remark)  
+   8.2. [Clearing a Remark](#8-2-clearing-a-remark)  
 9. [Adding a Demerit Record to a Resident](#9-adding-a-demerit-record-to-a-resident)  
-   9.1. [Listing Demerit Rules](#91-listing-demerit-rules)  
-   9.2. [Adding a Demerit Record](#92-adding-a-demerit-record)  
+   9.1. [Listing Demerit Rules](#9-1-listing-demerit-rules)  
+   9.2. [Adding a Demerit Record](#9-2-adding-a-demerit-record)  
 10. [Deleting a Resident](#10-deleting-a-resident)  
 11. [Clearing All Residents](#11-clearing-all-residents)  
 12. [Viewing Help](#12-viewing-help)  
@@ -70,8 +70,7 @@
    data.
 
 
-<img src="/images/startup-ui.png" width="80%" align="center"/>
-
+<img src="images/startup-ui.png" alt="Start Up View" width="80%" align="center"/>
 
 ##### 1.2 Understanding the Interface
 
@@ -101,7 +100,7 @@ To start, type the following instructions into the command box (in the given ord
 1. `add n=Vera Tan i=A1234567X e=vera.tan@gmail.com p=+6598765432 r=1A ec=+6512345678` to add a resident named `Vera Tan` to the ledger.
 2. `edit i=A1234567X p=+6512345678` to edit Vera's phone number to `+6512345678`.
 3. `tag i=A1234567X m=Computer Science` to tag Vera's major as `Computer Science`
-4. Finally, `delete i=A1234567X` to delete Vera from the ledger. After entering this command, a confirmation dialog will appear. Click **Confirm** to proceed with the deletion, or click **Cancel** to stop the deletion.
+4. Finally, `delete i=A1234567X` to delete Vera from the ledger. After entering this command, a confirmation dialog will appear. Press `Enter` to proceed with the deletion, or `Esc` to stop the deletion. If you prefer mouse clicks, you can Click **Confirm** to proceed or click **Cancel** to stop instead.
 
 <box type="tip">
 <b>Tip:  </b>  Type and enter <code>help</code> in the command box to see a list of available commands and their usage formats.
@@ -139,7 +138,7 @@ The commands used in Hall Ledger generally follow the format: `COMMAND i=STUDENT
 
 ### 3. Adding a Resident
 
-Adds a new person to the hall ledger.
+Adds a new person to the Hall Ledger.
 
 **Command:** `add`
 
@@ -161,13 +160,12 @@ Examples:
 ***
 ### 4. Editing a Resident
 
-Edits an existing resident in the _Hall Ledger_.
+Edits an existing resident in the Hall Ledger.
 
 **Command:** `edit`
 
 **Usage**: `edit i=STUDENT_ID [n=NAME] [i=STUDENT_ID] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`
 
-* Edits the resident with the specified `STUDENT_ID`.
 * At least one of the optional fields must be provided.
 
 Examples:
@@ -189,7 +187,7 @@ Tags are **optional labels** that can be added to a resident’s profile.
 There are three types of tags in Hall Ledger:
 | Tag Type            | Constraints                                                                 | Examples                          | Prefix |
 |---------------------|------------------------------------------------------------------------------|-----------------------------------|-------|
-| **Major**           | Must be a valid academic major. Letters, spaces, and `&` are allowed.       | Computer Science, Economics & Business | `m=`   |
+| **Major**           | Must be a valid academic major. Letters, spaces, commas, and `&` are allowed.       | Computer Science, Economics & Business | `m=`   |
 | **Year**            | Must be a number from 1 to 6 (inclusive).                                   | 1, 4                              | `y=`   |
 | **Gender Pronouns** | Accepts `he/him`, `she/her`, or `they/them`. Input is flexible (e.g. `he`, `her`), and will be standardised automatically. | she/her, they/them | `g=`   |
 
@@ -228,7 +226,7 @@ Example usage:
 
 ### 6. Viewing Residents
 
-Displays all residents the resident list panel on the right 
+Displays all residents the Residents List.
 
 
 **Command:** `list`
@@ -261,7 +259,7 @@ You can perform searches either through the **typed commands** or through the **
 after using the Filter panel. This will allow you to see all residents again.
 </box>
 
-##### 7.1 Using the Command Line
+##### 7.1 Using typed commands
 
 <div>
 
@@ -323,7 +321,7 @@ You are only allowed to enter at most 10 keywords per field.
 
 </div>
 
-##### 7.2 Using the User Interface
+##### 7.2 Using the Filter Panel
 
 The Filter Panel supports the same search behaviour as the typed `find` command.
 
@@ -411,7 +409,7 @@ Shows the indexed demerit rules available in Hall Ledger.
 
 * Displays the demerit rule catalogue together with the rule index and point tiers.
 * You can use the displayed rule index together with the `demerit` command when recording a resident’s demerit incident.
-* This list can also be viewed in the Demerit List tab
+* This list can also be viewed in the Demerit List Tab
 
 ##### 9.2 Adding a Demerit Record
 
@@ -422,7 +420,6 @@ Adds a demerit record to an existing resident.
 **Usage:** `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`
 
 * Applies the demerit rule identified by `RULE_INDEX` to the resident identified by `STUDENT_ID`.
-* `STUDENT_ID` must refer to an existing resident in Hall Ledger.
 * `RULE_INDEX` must match one of the indexed rules shown by `demeritlist`.
 * If the same resident receives the same rule again, Hall Ledger automatically applies the next offence tier for that
   rule.
@@ -452,9 +449,10 @@ Example:
 After a valid delete command is entered, Hall Ledger shows a confirmation dialog before the resident is actually
 removed.
 
-* Click **Confirm** to proceed with the deletion.
-* Click **Cancel** to stop the deletion. Hall Ledger will display the message `Deletion cancelled.` and no resident will
-  be removed.
+* Press `Enter` or click **Confirm** to proceed with the deletion.
+* Press `Esc` or click **Cancel** to stop the deletion. 
+  * Hall Ledger will display the message `Deletion cancelled.` and no resident will
+    be removed.
 
 If the command format is invalid, Hall Ledger will show an error message instead of opening the confirmation dialog.
 
@@ -472,6 +470,13 @@ Clears all residents from Hall Ledger all at once.
 
 Command: `clear`
 
+After a clear command is entered, Hall Ledger shows a confirmation dialog before all residents are actually removed.
+
+* Press `Enter` or click **Confirm** to proceed with the clearing.
+* Press `Esc` or click **Cancel** to stop the clearing.
+    * Hall Ledger will display the message `Deletion cancelled.` and no resident will
+      be removed.
+  
 <box type="wrong">
 
 **Caution:**
@@ -566,10 +571,6 @@ the data of your previous Hall Ledger home folder.
 **Q**: Can I edit the data file manually?  
 **A**: Yes. Hall Ledger stores data locally in a human-editable text file. However, manual edits should be done
 carefully, because invalid edits may prevent Hall Ledger from loading the data correctly.
-
-**Q**: How do I go back to seeing the list of all residents after running `find`?  
-**A**: Run the `list` command to see the full list of residents again.
-
 </div>
 
 
@@ -589,19 +590,19 @@ carefully, because invalid edits may prevent Hall Ledger from loading the data c
 
 ### 18. Command summary
 
-| Action                                         | Format, Examples                                                                                                                                                                     |
-|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **[Add](#3-adding-a-resident)**                | `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT` <br> e.g., `add n=James Lee p=+6598765432 e=james@example.com i=A1234567X r=15R ec=+65 98765432` |
-| **[Edit](#4-editing-a-resident)**              | `edit i=STUDENT_ID [n=NAME] [p=PHONE_NUMBER] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`<br> e.g., `edit i=A1234567X n=James Lee e=jameslee@example.com`                       |
-| **[Tag](#5-tagging-a-resident)**               | `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`<br> e.g., `tag i=A1234567X m=Computer Science y=3`                                                                                  |
-| **[List](#6-viewing-residents)**               | `list`                                                                                                                                                                               |
-| **[Find](#7-finding-residents)**               | `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=1`                                 |
-| **[Remark](#8-managing-resident-remarks)**     | `remark i=STUDENT_ID rm=REMARK`<br> e.g., `remark i=A1234567X rm=Allergic to peanuts`                                                                                                |
-| **[Demerit List](#91-listing-demerit-rules)**  | `demeritlist`                                                                                                                                                                        |
-| **[Add Demerit](#92-adding-a-demerit-record)** | `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`<br> e.g., `demerit i=A1234567X di=18 rm=Visitor during quiet hours`                                                                 |
-| **[Delete](#10-deleting-a-resident)**          | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`                                                                                                                                 |
-| **[Clear](#11-clearing-all-residents)**        | `clear`                                                                                                                                                                              |
-| **[Help](#12-viewing-help)**                   | `help`                                                                                                                                                                               |
-| **[Exit](#13-exiting-the-program)**            | `exit`                                                                                                                                                                               |
+| Action                                          | Format, Examples                                                                                                                                                                     |
+|-------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **[Add](#3-adding-a-resident)**                 | `add n=NAME p=PHONE_NUMBER e=EMAIL i=STUDENT_ID r=ROOM_NUMBER ec=EMERGENCY_CONTACT` <br> e.g., `add n=James Lee p=+6598765432 e=james@example.com i=A1234567X r=15R ec=+65 98765432` |
+| **[Edit](#4-editing-a-resident)**               | `edit i=STUDENT_ID [n=NAME] [p=PHONE_NUMBER] [e=EMAIL] [r=ROOM_NUMBER] [ec=EMERGENCY_CONTACT]`<br> e.g., `edit i=A1234567X n=James Lee e=jameslee@example.com`                       |
+| **[Tag](#5-tagging-a-resident)**                | `tag i=STUDENT_ID [m=MAJOR] [y=YEAR] [g=GENDER]`<br> e.g., `tag i=A1234567X m=Computer Science y=3`                                                                                  |
+| **[List](#6-viewing-residents)**                | `list`                                                                                                                                                                               |
+| **[Find](#7-finding-residents)**                | `find [n=NAME] [p=PHONE] [e=EMAIL] [r=ROOM_NUMBER] [i=STUDENT_ID] [ec=EMERGENCY_CONTACT] [y=YEAR] [m=MAJOR] [g=GENDER]`<br> e.g., `find n=James y=1`                                 |
+| **[Remark](#8-managing-resident-remarks)**      | `remark i=STUDENT_ID rm=REMARK`<br> e.g., `remark i=A1234567X rm=Allergic to peanuts`                                                                                                |
+| **[Demerit List](#9-1-listing-demerit-rules)**  | `demeritlist`                                                                                                                                                                        |
+| **[Add Demerit](#9-2-adding-a-demerit-record)** | `demerit i=STUDENT_ID di=RULE_INDEX [rm=REMARK]`<br> e.g., `demerit i=A1234567X di=18 rm=Visitor during quiet hours`                                                                 |
+| **[Delete](#10-deleting-a-resident)**           | `delete i=STUDENT_ID`<br> e.g., `delete i=A1234567X`                                                                                                                                 |
+| **[Clear](#11-clearing-all-residents)**         | `clear`                                                                                                                                                                              |
+| **[Help](#12-viewing-help)**                    | `help`                                                                                                                                                                               |
+| **[Exit](#13-exiting-the-program)**             | `exit`                                                                                                                                                                               |
 
 </div>
